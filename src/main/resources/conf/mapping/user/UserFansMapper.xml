@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserFansMapper">
+	<select id="findByUserIdAndFansId" resultType="com.photo.api.model.user.UserFans">
+		select * from user_fans where user_id = #{userId} and fans_id = #{fansId}
+	</select>
+	<select id="findByPage" resultType="com.photo.api.model.user.UserFans">
+		select * from user_fans
+		<where>
+			<trim prefixOverrides="and">
+				<if test="fansId != null and fansId != ''">
+					and fans_id = #{fansId}
+				</if>
+				<if test="userId != null and userId != ''">
+					and user_id = #{userId}
+				</if>
+				<if test="status != null">
+					and status = #{status}
+				</if>
+			</trim>
+		</where>
+		 limit #{offset},#{limit}
+	</select>
+	<select id="findCountByPage" resultType="Integer">
+		select count(*) from user_fans
+		<where>
+			<trim prefixOverrides="and">
+				<if test="fansId != null and fansId != ''">
+					and fans_id = #{fansId}
+				</if>
+				<if test="userId != null and userId != ''">
+					and user_id = #{userId}
+				</if>
+				<if test="status != null">
+					and status = #{status}
+				</if>
+			</trim>
+		</where>
+	</select>
+	
+	<select id="findFansCountByFansId" resultType="Integer">
+		select count(*) from user_fans where user_id = #{userId} and status = 1
+	</select>
+	<select id="findCountByUserId" resultType="Integer">
+		select count(*) from user_fans where fans_id = #{fansId} and status = 1
+	</select>
+	
+	<insert id="add" parameterType="com.photo.api.model.user.UserFans">
+		insert into user_fans
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="fansId != null and fansId != ''">
+				fans_id,
+			</if>
+			<if test="userId != null and userId != ''">
+				user_id,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			<if test="fansId != null and fansId != ''">
+				#{fansId},
+			</if>
+			<if test="userId != null and userId != ''">
+				#{userId},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="com.photo.api.model.user.UserFans">
+		update user_fans 
+		<set>
+			<trim suffixOverrides=",">
+				<if test="status != null">
+					status = #{status},
+				</if>
+			</trim>
+		</set>
+		<where>
+			<trim prefixOverrides="and ">
+				<if test="userId != null and userId != ''">
+					and user_id = #{userId}
+				</if>
+				<if test="fansId != null and fansId != ''">
+					and fans_id = #{fansId}
+				</if>
+			</trim>
+		</where>
+	</update>
+</mapper>

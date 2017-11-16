@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserLikeMapper">
+	<select id="findByUserIdAndLikerId" resultType="com.photo.api.model.user.UserLike">
+		select * from user_like where user_id = #{userId} and liker_id = #{likerId}
+	</select>
+	<select id="findByPage" resultType="com.photo.api.model.user.UserLike">
+		select * from user_like limit #{offset},#{limit}
+	</select>
+	<select id="findCountByPage" resultType="Integer">
+		select count(*) from user_like
+	</select>
+	
+	<select id="findLikeCountByLikerId" resultType="Integer">
+		select count(*) from user_like where liker_id = #{likerId}
+	</select>
+	
+	<insert id="add" parameterType="com.photo.api.model.user.UserLike">
+		insert into user_like
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="likerId != null and likerId != ''">
+				liker_id,
+			</if>
+			<if test="userId != null and userId != ''">
+				user_id,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			<if test="likerId != null and likerId != ''">
+				#{likerId},
+			</if>
+			<if test="userId != null and userId != ''">
+				#{userId},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="com.photo.api.model.user.UserLike">
+		update user_like 
+		<set>
+			<trim suffixOverrides=",">
+				<if test="status != null">
+					status = #{status},
+				</if>
+			</trim>
+		</set>
+		<where>
+			<trim prefixOverrides="and ">
+				<if test="userId != null and userId != ''">
+					and user_id = #{userId}
+				</if>
+				<if test="likerId != null and likerId != ''">
+					and liker_id = #{likerId}
+				</if>
+			</trim>
+		</where>
+	</update>
+</mapper>

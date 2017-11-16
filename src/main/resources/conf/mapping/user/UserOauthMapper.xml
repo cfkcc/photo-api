@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserOauthMapper">
+	<select id="findById" resultType="com.photo.api.model.user.UserOauth">
+		select * from photo where photo_id = #{photoId}
+	</select>
+	<select id="findWithMap" resultType="map">
+		select * from user where user_id = #{userId}
+	</select>
+	<select id="findByPage" resultType="com.photo.api.model.user.UserOauth">
+		select * from user limit #{offset},#{limit}
+	</select>
+	<select id="findCountByPage" resultType="Integer">
+		select count(*) from user
+	</select>
+</mapper>

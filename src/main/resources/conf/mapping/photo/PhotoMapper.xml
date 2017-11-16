@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PhotoMapper">
+	<select id="findById" resultType="com.photo.api.model.photo.Photo">
+		select * from photo where photo_id = #{photoId}
+	</select>
+	<select id="findPhotosByGroupId" resultType="com.photo.api.model.photo.Photo">
+		select * from photo where group_id = #{groupId}
+	</select>
+	<select id="findByPage" resultType="com.photo.api.model.photo.Photo">
+		select * from photo
+		<where>
+			<trim prefixOverrides="and ">
+				<if test="userId != null and userId != ''">
+					and user_id = #{userId}
+				</if>
+				<if test="groupId != null and groupId != ''">
+					and group_id = #{groupId}
+				</if>
+				<if test="isHot != null">
+					and is_hot = #{isHot}
+				</if>
+				<if test="status != null">
+					and status = #{status}
+				</if>
+				<if test="flag != null">
+					and flag = #{flag}
+				</if>
+				<if test="isFree != null">
+					and is_free = #{isFree}
+				</if>
+			</trim>
+		</where>
+		limit #{offset},#{limit}
+	</select>
+	<select id="findCountByPage" resultType="Integer">
+		select count(*) from photo
+		<where>
+			<trim prefixOverrides="and ">
+				<if test="userId != null and userId != ''">
+					and user_id = #{userId}
+				</if>
+				<if test="groupId != null and groupId != ''">
+					and group_id = #{groupId}
+				</if>
+				<if test="isHot != null">
+					and is_hot = #{isHot}
+				</if>
+				<if test="status != null">
+					and status = #{status}
+				</if>
+				<if test="flag != null">
+					and flag = #{flag}
+				</if>
+				<if test="isFree != null">
+					and is_free = #{isFree}
+				</if>
+			</trim>
+		</where>
+	</select>
+	
+	<select id="findCoinsByPhotoIds" resultType="Integer">
+		select sum(coins) from photo
+		<where>
+			status = 1 
+			and flag = 0
+			and is_free = 1
+			and photo_id in
+			<foreach item="photoId" collection="array" open="(" separator="," close=")">
+				#{photoId}
+			</foreach>
+		</where>
+	</select>
+	<select id="findCoinsByGroupId" resultType="Integer">
+		select sum(coins) from photo
+		where
+			status = 1 
+			and flag = 0 
+			and is_free = 1
+			and group_id = #{groupId}
+	
+	</select>
+</mapper>
