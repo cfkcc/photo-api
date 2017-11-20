@@ -1,5 +1,5 @@
 package com.photo.api.service.pay;
 
-public interface PayGroupService {
-
+public interface PayApiService {
+	
 }

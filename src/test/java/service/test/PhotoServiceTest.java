@@ -121,7 +121,7 @@ public class PhotoServiceTest {
 		System.out.println("########################################");
 	}
 	
-	@Test
+//	@Test
 	public void findPhotosByPage(){
 		String uid = "00004c879b3d4697add98d47cde5f1d0";
 		Page page = new Page();
@@ -133,6 +133,16 @@ public class PhotoServiceTest {
 		page.getParams().put("uid", uid);
 		page.setOrderBy(" create_time desc");
 		Map<String, Object> map = photosApiService.findPhotosByPage(page);
+		JSONObject json = new JSONObject();
+		json.putAll(map);
+		System.out.println("########################################");
+		System.out.println(json);
+		System.out.println("########################################");
+	}
+	@Test
+	public void findChoices(){
+		String photoId = "00001b536889420f9daea97f7e23981e";
+		Map<String, Object> map = photosApiService.findChoices(photoId);
 		JSONObject json = new JSONObject();
 		json.putAll(map);
 		System.out.println("########################################");

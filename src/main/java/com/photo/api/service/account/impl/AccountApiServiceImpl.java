@@ -1,6 +1,8 @@
 package com.photo.api.service.account.impl;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -16,6 +18,7 @@ import com.photo.api.common.constant.CommonConsts;
 import com.photo.api.common.enums.LoginTypeEnum;
 import com.photo.api.common.error.ErrorCode;
 import com.photo.api.common.exception.ServiceException;
+import com.photo.api.common.util.Arith;
 import com.photo.api.common.util.CryptalUtil;
 import com.photo.api.common.util.HttpClientUtil;
 import com.photo.api.model.user.ThirdPartyUser;
@@ -109,5 +112,17 @@ public class AccountApiServiceImpl implements AccountApiService {
         User user = userService.findUserById(userId);
         return user;
     }
+
+	@Override
+	public Map<String, Object> getBalance(String userId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		User user = userService.findUserById(userId);
+		double coins = 0;
+		if (user != null) {
+			coins = Arith.round(user.getCoins().doubleValue(), 2);
+		}
+		result.put("coins", coins);
+		return result;
+	}
 
 }

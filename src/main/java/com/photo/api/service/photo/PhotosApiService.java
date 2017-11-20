@@ -20,13 +20,13 @@ public interface PhotosApiService {
 	 * @param isSingle 是否单张购买(对于已购买无效)
 	 */
 	public void saveOrUpdateRecord(String userId, String photoId, Boolean isBuy, Boolean isSingle);
-	/**
-	 * 判断是否购买
-	 * @param userId
-	 * @param photoId
-	 * @return
-	 */
-	public Boolean isBuy(String userId, String photoId);
+//	/**
+//	 * 判断是否购买
+//	 * @param userId
+//	 * @param photoId
+//	 * @return
+//	 */
+//	public Boolean isBuy(String userId, String photoId);
 	/**
 	 * 根据用户的金币判断是否可以购买
 	 * @param userId
@@ -57,5 +57,11 @@ public interface PhotosApiService {
 	 * @return
 	 */
 	public Map<String, Object> findPhotoBuyRecordsByPage(Page page);
+	/**
+	 * 根据图片ID获取购买选择建议信息
+	 * @param photoId
+	 * @return
+	 */
+	public Map<String, Object> findChoices(String photoId);
 
 }

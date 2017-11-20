@@ -1,6 +1,7 @@
 package com.photo.api.model.user;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class User implements Serializable {
@@ -19,7 +20,7 @@ public class User implements Serializable {
 
     private Date createTime;
     
-    private Integer coins;
+    private BigDecimal coins;
 
     public String getUserId() {
         return userId;
@@ -69,18 +70,18 @@ public class User implements Serializable {
         this.status = status;
     }
 
-	public Integer getCoins() {
+	public BigDecimal getCoins() {
 		return coins;
 	}
 
-	public void setCoins(Integer coins) {
+	public void setCoins(BigDecimal coins) {
 		this.coins = coins;
 	}
 
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", nickname=" + nickname + ", headImg=" + headImg + ", userType=" + userType
-				+ ", status=" + status + ", createTime=" + createTime + ", coins=" + coins + "]";
+				+ ", status=" + status + ", createTime=" + createTime + ", coins=" + coins.doubleValue() + "]";
 	}
 
 }

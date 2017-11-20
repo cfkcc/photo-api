@@ -1,6 +1,5 @@
 package com.photo.api.service.photo.impl;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,6 +9,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.photo.api.common.util.Arith;
@@ -42,22 +42,54 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 	@Resource(name="userService")
 	private UserService userService;
 
-	@Override
-	public Boolean isBuy(String userId, String photoId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public Boolean isBuy(String userId, String photoId) {
+//		return photoBuyRecordService.isBuy(userId, photoId);
+//	}
 
 	@Override
 	public Boolean getPurchasingPower(String userId, String[] photoIds) {
-		// TODO Auto-generated method stub
-		return null;
+		boolean isCan = Boolean.FALSE;
+		User user = userService.findUserById(userId);
+		if (user != null) {
+			double userTotalCoins = user.getCoins().doubleValue();
+			if (photoIds!=null&&photoIds.length>0) {
+				String photoId = photoIds[0];
+				Photo p = photoService.findById(photoId);
+				double price = Arith.mul(p.getCoins().doubleValue(), 1-p.getSale(), 2);
+				
+				if(Arith.sub(userTotalCoins, price)<0){
+					//金币不够提示用户去充值	
+				}else{
+					//金币充足，进行图片购买行为
+					
+				}
+				
+			}
+		}
+		return isCan;
 	}
 
 	@Override
 	public Boolean getPurchasingPower(String userId, String photoGroupId) {
-		// TODO Auto-generated method stub
-		return null;
+		boolean isCan = Boolean.FALSE;
+		User user = userService.findUserById(userId);
+		if (user != null) {
+			double userTotalCoins = user.getCoins().doubleValue();
+			if (StringUtils.isNotBlank(photoGroupId)) {
+				PhotoGroup pg = photoGroupService.findById(photoGroupId);
+				double price = Arith.mul(pg.getCoins().doubleValue(), 1-pg.getSale(), 2);
+				
+				if(Arith.sub(userTotalCoins, price)<0){
+					//金币不够提示用户去充值	
+				}else{
+					//金币充足，进行图片购买行为
+//					photoService.
+				}
+				
+			}
+		}
+		return isCan;
 	}
 
 	@Override
@@ -75,6 +107,14 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 			while(it.hasNext()){
 				Photo p = it.next();
 				Map<String, Object> photoMap = new HashMap<String, Object>();
+				photoMap.put("sale", Arith.round(1-p.getSale(),2));
+				photoMap.put("photoId", p.getPhotoId());
+				photoMap.put("imgUrl", p.getImgUrl());
+				photoMap.put("origPrice", p.getCoins());
+				photoMap.put("publishTime", p.getCreateTime());
+				double price = Arith.mul(p.getCoins().doubleValue(), 1-p.getSale(), 2);
+				photoMap.put("price", price);
+				
 				User user = userService.findUserById(p.getUserId());
 				boolean isFollowed = Boolean.FALSE;
 				boolean isLike = Boolean.FALSE;
@@ -91,19 +131,13 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 				if (!isBuy&&isFree) {
 					totalCoins = Arith.add(totalCoins, p.getCoins().doubleValue());
 				}
+				photoMap.put("isFree", isFree);
 				photoMap.put("isFollowed", isFollowed);
 				photoMap.put("isLike", isLike);
-				photoMap.put("sale", Arith.round(1-p.getSale(),2));
-				photoMap.put("isFree", isFree);
-				photoMap.put("photoId", p.getPhotoId());
-				photoMap.put("imgUrl", p.getImgUrl());
 				photoMap.put("isBuy", isBuy);
-				photoMap.put("coins", p.getCoins());
-				photoMap.put("publishTime", p.getCreateTime());
-				double price = Arith.mul(p.getCoins().doubleValue(), 1-p.getSale(), 2);
-				photoMap.put("price", price);
 				//此处添加分享的跳转次数
 				photoMap.put("shareCount", 18238);
+				
 				photoList.add(photoMap);
 			}
 			result.put("totalCoins", totalCoins);
@@ -130,6 +164,14 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 				Map<String, Object> photoGroupMap = new HashMap<String, Object>();
 				List<Map<String, Object>> photoList = new ArrayList<Map<String, Object>>();
 				PhotoGroup pg = it.next();
+				photoGroupMap.put("groupId", pg.getGroupId());
+				photoGroupMap.put("sale", Arith.round(1-pg.getSale(),2));
+				photoGroupMap.put("origPrice", pg.getCoins());
+				photoGroupMap.put("publishTime", this.publishTimeFormat(pg.getCreateTime()));
+				double price = Arith.mul(pg.getCoins().doubleValue(), 1-pg.getSale(), 2);
+				photoGroupMap.put("price", price);
+				
+				
 				User user = userService.findUserById(pg.getUserId());
 				boolean isFollowed = Boolean.FALSE;
 				boolean isLike = Boolean.FALSE;
@@ -143,10 +185,7 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 				}
 				photoGroupMap.put("isFollowed", isFollowed);
 				photoGroupMap.put("isLike", isLike);
-				photoGroupMap.put("groupId", pg.getGroupId());
-				photoGroupMap.put("sale", Arith.round(1-pg.getSale(),2));
-				photoGroupMap.put("coins", pg.getCoins());
-				photoGroupMap.put("publishTime", this.publishTimeFormat(pg.getCreateTime()));
+				
 				
 				Page photoPage = new Page();
 				photoPage.setPageNo(1);
@@ -163,8 +202,6 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 					photoGroupMap.put("totalCount", photoListmap.get("totalCount"));
 					photoGroupMap.put("totalPage", photoListmap.get("totalPage"));
 					photoGroupMap.put("totalCoins", totalCoins);
-					double price = Arith.mul(pg.getCoins().doubleValue(), 1-pg.getSale(), 2);
-					photoGroupMap.put("price", price);
 				}
 				//此处添加分享的跳转次数
 				photoGroupMap.put("shareCount", 18238);
@@ -201,6 +238,10 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 			while(it.hasNext()){
 				PhotoBuyRecord pbr = it.next();
 				
+				String photoId = pbr.getPhotoId();
+				
+				
+				
 			}
 		}
 		return null;
@@ -233,6 +274,36 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 			flag = Boolean.TRUE;
 		}
 		return sb.toString();
+	}
+
+	@Override
+	public Map<String, Object> findChoices(String photoId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		Photo p = photoService.findById(photoId);
+		if (p != null) {
+			Map<String, Object> singleMap = new HashMap<String, Object>();
+			double singlePrice = Arith.mul(p.getCoins().doubleValue(), 1-p.getSale(), 2);
+			if (p.getSale()!=0) {
+				singleMap.put("origPrice", Arith.round(p.getCoins().doubleValue(), 2));
+			}
+			singleMap.put("price", singlePrice);
+			singleMap.put("choice", PhotoBuyRecord.Choice.Single.getChoices());
+			singleMap.put("photoId", photoId);
+			result.put("single", singleMap);
+			PhotoGroup pg = photoGroupService.findById(p.getGroupId());
+			if (pg != null) {
+				Map<String, Object> groupMap = new HashMap<String, Object>();
+				double groupPrice = Arith.mul(pg.getCoins().doubleValue(), 1-pg.getSale(), 2);
+				if (pg.getSale()!=0) {
+					groupMap.put("origPrice", Arith.round(pg.getCoins().doubleValue(), 2));
+				}
+				groupMap.put("choice", PhotoBuyRecord.Choice.Group.getChoices());
+				groupMap.put("price", groupPrice);
+				groupMap.put("groupId", pg.getGroupId());
+				result.put("group", groupMap);
+			}
+		}
+		return result;
 	}
 
 }
