@@ -1,12 +1,12 @@
 package com.photo.api.dao.photo.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.stereotype.Repository;
 
-import com.photo.api.common.constant.CommonConsts;
 import com.photo.api.dao.PageDaoAbstract;
 import com.photo.api.dao.photo.PhotoDao;
 import com.photo.api.model.photo.Photo;
@@ -23,6 +23,16 @@ public class PhotoDaoImpl extends PageDaoAbstract<Photo> implements PhotoDao {
 	@Override
 	public List<Photo> findPhotosByGroupId(String groupId) {
 		return (List<Photo>) findList("findPhotosByGroupId", groupId);
+	}
+	
+	@Override
+	public List<String> findPhotoIdsByGroupId(String groupId) {
+		List<Photo> objectList = this.findPhotosByGroupId(groupId);
+		List<String> result = new ArrayList<String>();
+		for (Photo photo : objectList) {
+			result.add(photo.getPhotoId());
+		}
+		return result;
 	}
 
 	@Override

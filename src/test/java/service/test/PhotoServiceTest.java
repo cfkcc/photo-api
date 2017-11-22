@@ -139,7 +139,7 @@ public class PhotoServiceTest {
 		System.out.println(json);
 		System.out.println("########################################");
 	}
-	@Test
+//	@Test
 	public void findChoices(){
 		String photoId = "00001b536889420f9daea97f7e23981e";
 		Map<String, Object> map = photosApiService.findChoices(photoId);
@@ -148,5 +148,40 @@ public class PhotoServiceTest {
 		System.out.println("########################################");
 		System.out.println(json);
 		System.out.println("########################################");
+	}
+	@Test
+	public void saveOrUpdateRecord(){
+		String groupId ="0007567e749245eda79161882891a21d";
+		String[] photoIds =new String[]{
+				"0000012e4e0c4f3c8c18a88ca55f26fa",
+				"0000014a8cc34799b2cf5af38009ed19",
+				"0000041cfd6f49a8bbb80e586d581de1",
+				"0000043ac9714e66a81fd9205c1e4a88",
+				"00000474f66c43d68a41a7b566526e02",
+				"00000704ab6d4f58a187e7b740b1fdea",
+				"00000be7d62c46f3974227ae260927fd",
+				"00000ff5656e403bbd482b428caf6184",
+				"00001048094341c2988ab814b80e1c9c"
+				};
+		String[] photoId =new String[]{
+//				"0000012e4e0c4f3c8c18a88ca55f26fa"
+		};
+		String uid = "05117794f7b544239a241aa3432479aa";
+//		boolean isBuy =  photosApiService.saveOrUpdateRecord(uid, "0000012e4e0c4f3c8c18a88ca55f26fa");
+		boolean isBuy =  photosApiService.saveOrUpdateRecord(uid, groupId, Boolean.FALSE);
+		if (isBuy) {
+			Page page = new Page();
+			page.getParams().put("status", 1);
+			page.getParams().put("groupId", "0004c8748gtf434697add98d47cde5f");
+			page.getParams().put("uid", uid);
+			page.setOrderBy(" create_time desc");
+			
+			Map<String, Object> result = photosApiService.findPhotoBuyRecordsByPage(page);
+			JSONObject json = new JSONObject();
+			json.putAll(result);
+			System.out.println("########################################");
+			System.out.println(json);
+			System.out.println("########################################");
+		}
 	}
 }

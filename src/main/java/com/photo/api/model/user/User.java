@@ -22,6 +22,7 @@ public class User implements Serializable {
     
     private BigDecimal coins;
 
+    private String sign;
     public String getUserId() {
         return userId;
     }
@@ -77,11 +78,19 @@ public class User implements Serializable {
 	public void setCoins(BigDecimal coins) {
 		this.coins = coins;
 	}
+	
+	public String getSign() {
+		return sign;
+	}
+
+	public void setSign(String sign) {
+		this.sign = sign;
+	}
 
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", nickname=" + nickname + ", headImg=" + headImg + ", userType=" + userType
-				+ ", status=" + status + ", createTime=" + createTime + ", coins=" + coins.doubleValue() + "]";
+				+ ", status=" + status + ", createTime=" + createTime + ", coins=" + coins + ", sign=" + sign + "]";
 	}
 
 }

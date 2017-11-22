@@ -13,4 +13,35 @@
 	<select id="findCountByPage" resultType="Integer">
 		select count(*) from user
 	</select>
+	
+	<update id="update" parameterType="com.photo.api.model.user.User">
+		update user 
+		<set>
+			<trim suffixOverrides=",">
+				<if test="nickname != null and nickname!=''">
+					nickname = #{nickname},
+				</if>
+				<if test="headImg != null  and headImg!=''">
+					head_img = #{headImg},
+				</if>
+				<if test="coins != null">
+					coins = #{coins},
+				</if>
+				<if test="sign != null and sign!=''">
+					sign = #{sign},
+				</if>
+				<if test="status != null">
+					status = #{status},
+				</if>
+					sign = NOW(),
+			</trim>
+		</set>
+		<where>
+			<trim prefixOverrides="and ">
+				<if test="userId != null and userId != ''">
+					and user_id = #{userId}
+				</if>
+			</trim>
+		</where>
+	</update>
 </mapper>

@@ -1,6 +1,7 @@
 package com.photo.api.dao;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface BaseDao<T> {
 	
@@ -13,7 +14,11 @@ public interface BaseDao<T> {
 	
 	Object find(String statement, Object parameter);
 	
+	Collection<T> findList();
+	
 	Collection<T> findList(Object obj);
+	
+	Collection<T> findList(String statement);
 	
 	Collection<T> findList(String statement, Object obj);
 	
@@ -29,9 +34,9 @@ public interface BaseDao<T> {
 	
 	int update(String statement, T t);
 	
-	int updateBatch(Collection<T> t);
+	int updateBatch(List<T> t);
 	
-	int updateBatch(String statement, Collection<T> t);
+	int updateBatch(String statement, List<T> t);
 	
 	int delete(Object[] parameter);
 	

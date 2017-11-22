@@ -1,5 +1,7 @@
 package com.photo.api.service.account;
 
+import java.util.Map;
+
 import com.photo.api.model.user.User;
 
 public interface UserService {
@@ -11,4 +13,6 @@ public interface UserService {
     void addUser(User user);
     
     User addUser(String nickname,String headImg,int userType);
+    
+    Map<String, Object> findUserInfoById(String userId);
 }

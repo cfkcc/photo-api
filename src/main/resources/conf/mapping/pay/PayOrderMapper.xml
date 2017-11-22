@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PayOrderMapper">
+
+	<select id="findByOrderNo" resultType="com.photo.api.model.pay.PayOrder">
+		select * from pay_order where order_no = #{orderNo}
+	</select>
+	<select id="findByPayId" resultType="com.photo.api.model.pay.PayOrder">
+		select * from pay_order where pay_id = #{payId}
+	</select>
+	<select id="findByTransactionId" resultType="com.photo.api.model.pay.PayOrder">
+		select * from pay_order where transaction_id = #{transactionId}
+	</select>
+	<select id="findListByUserId" resultType="com.photo.api.model.pay.PayOrder">
+		select * from pay_order where user_id = #{userId}
+	</select>
+	<select id="findByPage" resultType="com.photo.api.model.pay.PayOrder">
+		select * from pay_order
+		<where>
+			<trim prefixOverrides="and ">
+				<if test="userId != null and userId != ''">
+					and user_id = #{userId}
+				</if>
+				<if test="payChannelId != null and payChannelId != ''">
+					and pay_channel_id = #{payChannelId}
+				</if>
+				<if test="orderState != null">
+					and order_state = #{orderState}
+				</if>
+			</trim>
+			<if test="ordering != null">
+				order by #{ordering}
+			</if>
+		</where>
+		
+		limit #{offset},#{limit}
+	</select>
+	
+	<select id="findCountByPage" resultType="Integer">
+		select count(*) from pay_order
+		<where>
+			<trim prefixOverrides="and ">
+				<if test="userId != null and userId != ''">
+					and user_id = #{userId}
+				</if>
+				<if test="payChannelId != null and payChannelId != ''">
+					and pay_channel_id = #{payChannelId}
+				</if>
+				<if test="orderState != null">
+					and order_state = #{orderState}
+				</if>
+			</trim>
+		</where>
+	</select>
+	
+	
+	<insert id="add" parameterType="com.photo.api.model.pay.PayOrder">
+		insert into pay_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderNo != null and orderNo != ''">
+				order_no,
+			</if>
+			<if test="userId != null and userId != ''">
+				user_id,
+			</if>
+			<if test="payId != null and payId != ''">
+				pay_id,
+			</if>
+			<if test="productId != null and productId != ''">
+				product_id,
+			</if>
+			<if test="orderAmount != null">
+				order_amount,
+			</if>
+			<if test="payChannelId != null and payChannelId != ''">
+				pay_channel_id,
+			</if>
+			<if test="orderDesc != null and orderDesc != ''">
+				order_desc,
+			</if>
+			<if test="orderState != null">
+				order_state,
+			</if>
+			<if test="deliverState != null">
+				deliver_state,
+			</if>
+			<if test="operator != null and operator != ''">
+				operator,
+			</if>
+			<if test="payStatusCode != null">
+				pay_status_code,
+			</if>
+			<if test="payStatusMsg != null and payStatusMsg != ''">
+				pay_status_msg,
+			</if>
+			<if test="transactionId != null and transactionId != ''">
+				transaction_id,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="currency != null and currency != ''">
+				currency,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="endTime != null">
+				end_time,
+			</if>
+			<if test="systemType != null and systemType != ''">
+				system_type,
+			</if>
+		</trim>
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			<if test="orderNo != null and orderNo != ''">
+				#{orderNo},
+			</if>
+			<if test="userId != null and userId != ''">
+				#{userId},
+			</if>
+			<if test="payId != null and payId != ''">
+				#{payId},
+			</if>
+			<if test="productId != null and productId != ''">
+				#{productId},
+			</if>
+			<if test="orderAmount != null">
+				#{orderAmount},
+			</if>
+			<if test="payChannelId != null and payChannelId != ''">
+				#{payChannelId},
+			</if>
+			<if test="orderDesc != null and orderDesc != ''">
+				#{orderDesc},
+			</if>
+			<if test="orderState != null">
+				#{orderState},
+			</if>
+			<if test="deliverState != null">
+				#{deliverState},
+			</if>
+			<if test="operator != null and operator != ''">
+				#{operator},
+			</if>
+			<if test="payStatusCode != null">
+				#{payStatusCode},
+			</if>
+			<if test="payStatusMsg != null and payStatusMsg != ''">
+				#{payStatusMsg},
+			</if>
+			<if test="transactionId != null and transactionId != ''">
+				#{transactionId},
+			</if>
+			<if test="price != null">
+				#{price},
+			</if>
+			<if test="currency != null and currency != ''">
+				#{currency},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="endTime != null">
+				#{endTime},
+			</if>
+			<if test="systemType != null and systemType != ''">
+				#{systemType},
+			</if>
+		</trim>
+	</insert>
+</mapper>

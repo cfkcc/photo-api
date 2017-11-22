@@ -1,6 +1,8 @@
 package com.photo.api.service.account.impl;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -46,5 +48,17 @@ public class UserServiceImpl implements UserService {
         userDao.add(user);
         return user;
     }
+
+	@Override
+	public Map<String, Object> findUserInfoById(String userId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		User user = this.findUserById(userId);
+		if (user != null) {
+			result.put("userId", user.getUserId());
+			result.put("headImg", user.getHeadImg());
+			result.put("nickName", user.getNickname());
+		}
+		return result;
+	}
 	 
 }

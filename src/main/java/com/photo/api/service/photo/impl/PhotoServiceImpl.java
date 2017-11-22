@@ -1,5 +1,7 @@
 package com.photo.api.service.photo.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -34,6 +36,16 @@ public class PhotoServiceImpl implements PhotoService {
 	@Override
 	public Integer findCoinsByGroupId(String groupId) {
 		return photoDao.findCoins(new String[]{groupId}, PhotoBuyRecord.Choice.Group.getChoices());
+	}
+
+	@Override
+	public List<String> findPhotoIdsByGroupId(String photoGroupId) {
+		return photoDao.findPhotoIdsByGroupId(photoGroupId);
+	}
+
+	@Override
+	public List<Photo> findPhotoByGroupId(String photoGroupId) {
+		return photoDao.findPhotosByGroupId(photoGroupId);
 	}
 
 }

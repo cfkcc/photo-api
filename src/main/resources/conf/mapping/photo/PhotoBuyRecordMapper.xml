@@ -20,9 +20,6 @@
 			<if test="createTime != null">
 				create_time,
 			</if>
-			<if test="updateTime != null">
-				update_time,
-			</if>
 		</trim>
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
 			<if test="photoId != null and photoId != ''">
@@ -37,11 +34,38 @@
 			<if test="createTime != null">
 				#{createTime},
 			</if>
-			<if test="updateTime != null">
-				#{updateTime},
-			</if>
 		</trim>
 	</insert>
+	
+	<select id="addBatch" parameterType="java.util.List">  
+	    insert into photo_buy_record
+	    <trim prefix="(" suffix=") values" suffixOverrides=",">
+				photo_id,
+				user_id,
+				status,
+				create_time,
+				choice,
+		</trim>
+		<foreach collection="list" item="item" index="index" separator=",">
+		  	<trim prefix="(" suffix=")" suffixOverrides="," >
+			    <if test="item.photoId != null and item.photoId != ''">
+					#{item.photoId},
+				</if>
+				<if test="item.userId != null and item.userId != ''">
+					#{item.userId},
+				</if>
+				<if test="item.status != null">
+					#{item.status},
+				</if>
+				<if test="item.createTime != null">
+					#{item.createTime},
+				</if>
+				<if test="item.choice != null">
+					#{item.choice},
+				</if>
+			</trim>
+	    </foreach>
+    </select>
 	
 	<update id="update" parameterType="com.photo.api.model.photo.PhotoBuyRecord">
 		update photo_buy_record 
@@ -63,4 +87,72 @@
 			</trim>
 		</where>
 	</update>
+	
+	<update id="updateBatch" parameterType="java.util.List">
+		<foreach item="item" collection="list" index="index" open="" close="" separator=";">
+				update photo_buy_record
+				<set>
+					<trim suffixOverrides=",">
+						<if test="status != null">
+							status = #{item.status},
+						</if>
+					</trim>
+				</set>
+				<where>
+					<trim prefixOverrides="and ">
+						<if test="userId != null and userId != ''">
+							and user_id = #{item.userId}
+						</if>
+						<if test="photoId != null and photoId != ''">
+							and photo_id = #{item.photoId}
+						</if>
+					</trim>
+				</where>
+    	</foreach>
+	</update>
+	
+	<select id="findByPage" resultType="com.photo.api.model.photo.PhotoBuyRecord">
+		select * from photo_buy_record
+		<where>
+			<trim prefixOverrides="and ">
+				<if test="userId != null and userId != ''">
+					and user_id = #{userId}
+				</if>
+				<if test="photoId != null and photoId != ''">
+					and photo_id = #{photoId}
+				</if>
+				<if test="choice != null">
+					and choice = #{choice}
+				</if>
+				<if test="status != null">
+					and status = #{status}
+				</if>
+			</trim>
+			<if test="ordering != null">
+				order by #{ordering}
+			</if>
+		</where>
+		
+		limit #{offset},#{limit}
+	</select>
+	
+	<select id="findCountByPage" resultType="Integer">
+		select count(*) from photo_buy_record
+		<where>
+			<trim prefixOverrides="and ">
+				<if test="userId != null and userId != ''">
+					and user_id = #{userId}
+				</if>
+				<if test="photoId != null and photoId != ''">
+					and photo_id = #{photoId}
+				</if>
+				<if test="choice != null">
+					and choice = #{choice}
+				</if>
+				<if test="status != null">
+					and status = #{status}
+				</if>
+			</trim>
+		</where>
+	</select>
 </mapper>

@@ -1,7 +1,9 @@
 package com.photo.api.service.photo.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -30,11 +32,6 @@ public class PhotoBuyRecordServiceImpl implements PhotoBuyRecordService {
 	}
 
 	@Override
-	public void saveOrUpdateRecord(String userId, String photoId, Boolean isBuy) {
-		this.saveOrUpdateRecord(userId, photoId, isBuy, Boolean.TRUE);
-	}
-
-	@Override
 	public Page findByPage(Page page) {
 		return photoBuyRecordDao.findByPage(page);
 	}
@@ -46,6 +43,13 @@ public class PhotoBuyRecordServiceImpl implements PhotoBuyRecordService {
 	private void updateRecord(PhotoBuyRecord record){
 		photoBuyRecordDao.update(record);
 	}
+	private void addBatchRecord(List<PhotoBuyRecord> recordList){
+		photoBuyRecordDao.addBatch(recordList);
+	}
+	
+	private void updateBatchRecord(List<PhotoBuyRecord> recordList){
+		photoBuyRecordDao.updateBatch(recordList);
+	}
 	
 	private PhotoBuyRecord findByUserIdAndPhotoId(String userId, String photoId){
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -55,22 +59,58 @@ public class PhotoBuyRecordServiceImpl implements PhotoBuyRecordService {
 	}
 
 	@Override
-	public void saveOrUpdateRecord(String userId, String photoId, Boolean isBuy, Boolean isSingle) {
+	public void saveOrUpdateRecord(String userId, String photoId, Boolean isSingle) {
 		PhotoBuyRecord pbr = this.findByUserIdAndPhotoId(userId, photoId);
-		Integer status = isBuy?PhotoBuyRecord.Status.Yes.getStatus():PhotoBuyRecord.Status.No.getStatus();
+		Integer status = this.isBuy(userId, photoId)?PhotoBuyRecord.Status.Yes.getStatus():PhotoBuyRecord.Status.No.getStatus();
 		if (pbr != null) {
 			pbr.setStatus(status);
-			this.addRecord(pbr);
+			this.updateRecord(pbr);
 		}else{
 			Integer choice = isSingle?PhotoBuyRecord.Choice.Single.getChoices():PhotoBuyRecord.Choice.Group.getChoices();
 			pbr = new PhotoBuyRecord();
+			pbr.setStatus(status);
 			pbr.setPhotoId(photoId);
 			pbr.setUserId(userId);
 			pbr.setCreateTime(new Date());
 			pbr.setChoice(choice);
-			this.updateRecord(pbr);
+			this.addRecord(pbr);
 		}
 		
+	}
+
+	@Override
+	public void saveOrUpdateRecord(String userId, String[] photoIds, Boolean isSingle) {
+		int length = photoIds.length;
+		if (length==1) {
+			saveOrUpdateRecord(userId, photoIds[0], isSingle);
+		}else{
+			List<PhotoBuyRecord> updateList = new ArrayList<PhotoBuyRecord>();
+			List<PhotoBuyRecord> addList = new ArrayList<PhotoBuyRecord>();
+			for (int i = 0; i < photoIds.length; i++) {
+				String photoId  = photoIds[i];
+				PhotoBuyRecord pbr = this.findByUserIdAndPhotoId(userId, photoId);
+				Integer status = this.isBuy(userId, photoId)?PhotoBuyRecord.Status.Yes.getStatus():PhotoBuyRecord.Status.No.getStatus();
+				if (pbr != null) {
+					pbr.setStatus(status);
+					updateList.add(pbr);
+				}else{
+					Integer choice = isSingle?PhotoBuyRecord.Choice.Single.getChoices():PhotoBuyRecord.Choice.Group.getChoices();
+					pbr = new PhotoBuyRecord();
+					pbr.setPhotoId(photoId);
+					pbr.setStatus(status);
+					pbr.setUserId(userId);
+					pbr.setCreateTime(new Date());
+					pbr.setChoice(choice);
+					addList.add(pbr);
+				}
+			}
+			if (!addList.isEmpty()) {
+				this.addBatchRecord(addList);
+			}
+			if (!updateList.isEmpty()) {
+				this.updateBatchRecord(updateList);
+			}
+		}
 	}
 
 }

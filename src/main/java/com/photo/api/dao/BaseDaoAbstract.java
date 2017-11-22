@@ -3,6 +3,7 @@ package com.photo.api.dao;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -55,8 +56,18 @@ public abstract class BaseDaoAbstract<T> implements BaseDao<T> {
 	}
 
 	@Override
+	public Collection<T> findList() {
+		return findList(CommonConsts.FINDLIST, null);
+	}
+	
+	@Override
 	public Collection<T> findList(Object parameter) {
 		return findList(CommonConsts.FINDLIST, parameter);
+	}
+	
+	@Override
+	public Collection<T> findList(String statement) {
+		return findList(statement, null);
 	}
 
 	@Override
@@ -95,12 +106,12 @@ public abstract class BaseDaoAbstract<T> implements BaseDao<T> {
 	}
 
 	@Override
-	public int updateBatch(Collection<T> t) {
+	public int updateBatch(List<T> t) {
 		return updateBatch(CommonConsts.UPDATEBATCH, t);
 	}
 
 	@Override
-	public int updateBatch(String statement, Collection<T> t) {
+	public int updateBatch(String statement, List<T> t) {
 		return sqlSession.update(getDefaultSqlNamespace()+statement, t);
 	}
 

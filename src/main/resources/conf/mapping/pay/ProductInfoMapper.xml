@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductInfoMapper">
+
+	<select id="findById" resultType="com.photo.api.model.pay.ProductInfo">
+		select * from product_info where product_id = #{productId}
+	</select>
+	<select id="findListByChannel" resultType="com.photo.api.model.pay.ProductInfo">
+		select * from product_info where pay_channel_id = #{payChannelId}
+	</select>
+	<select id="findByPage" resultType="com.photo.api.model.pay.ProductInfo">
+		select * from product_info
+		<where>
+			<trim prefixOverrides="and ">
+				<if test="payChannelId != null and payChannelId != ''">
+					and pay_channel_id = #{payChannelId}
+				</if>
+				<if test="productState != null">
+					and product_state = #{productState}
+				</if>
+			</trim>
+			<if test="ordering != null">
+				order by #{ordering}
+			</if>
+		</where>
+		limit #{offset},#{limit}
+	</select>
+	
+	<select id="findCountByPage" resultType="Integer">
+		select count(*) from product_info
+		<where>
+			<trim prefixOverrides="and ">
+				<if test="payChannelId != null and payChannelId != ''">
+					and pay_channel_id = #{payChannelId}
+				</if>
+				<if test="productState != null">
+					and product_state = #{productState}
+				</if>
+			</trim>
+		</where>
+	</select>
+</mapper>

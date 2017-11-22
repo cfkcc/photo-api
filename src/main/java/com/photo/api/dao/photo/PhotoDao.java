@@ -10,6 +10,7 @@ public interface PhotoDao extends PageDao<Photo> {
 	public Photo findById(String photoId);
 	
 	public List<Photo> findPhotosByGroupId(String groupId);
+	public List<String> findPhotoIdsByGroupId(String groupId);
 	/**
 	 * 根据购买类型获取相应的金币值
 	 * @param ids

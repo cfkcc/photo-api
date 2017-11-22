@@ -18,7 +18,7 @@ public class PhotoGroup implements Serializable{
 	private String headPhotoId;
 	private Integer flag;
 	private Integer abroad;
-	private Double sale;
+	private Double discount;
 	public String getGroupId() {
 		return groupId;
 	}
@@ -91,17 +91,17 @@ public class PhotoGroup implements Serializable{
 	public void setCoins(BigDecimal coins) {
 		this.coins = coins;
 	}
-	public Double getSale() {
-		return sale;
+	public Double getDiscount() {
+		return discount;
 	}
-	public void setSale(Double sale) {
-		this.sale = sale;
+	public void setDiscount(Double discount) {
+		this.discount = discount;
 	}
 	@Override
 	public String toString() {
 		return "PhotoGroup [groupId=" + groupId + ", userId=" + userId + ", createUser=" + createUser + ", createTime="
 				+ createTime + ", updateUser=" + updateUser + ", updateTime=" + updateTime + ", coins=" + coins
 				+ ", isHot=" + isHot + ", status=" + status + ", headPhotoId=" + headPhotoId + ", flag=" + flag
-				+ ", abroad=" + abroad + ", sale=" + sale + "]";
+				+ ", abroad=" + abroad + ", discount=" + discount + "]";
 	}
 }

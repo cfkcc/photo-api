@@ -18,6 +18,9 @@
 					and status = #{status}
 				</if>
 			</trim>
+			<if test="ordering != null">
+				order by #{ordering}
+			</if>
 		</where>
 		 limit #{offset},#{limit}
 	</select>

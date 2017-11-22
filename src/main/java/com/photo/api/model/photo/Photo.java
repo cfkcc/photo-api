@@ -31,7 +31,7 @@ public class Photo implements Serializable{
 	private Integer flag;
 	private Integer sort;
 	private Integer isFree;
-	private Double sale;
+	private Double discount;
 	public String getPhotoId() {
 		return photoId;
 	}
@@ -86,12 +86,6 @@ public class Photo implements Serializable{
 	public void setCoins(BigDecimal coins) {
 		this.coins = coins;
 	}
-	public Double getSale() {
-		return sale;
-	}
-	public void setSale(Double sale) {
-		this.sale = sale;
-	}
 	public Integer getIsHot() {
 		return isHot;
 	}
@@ -122,11 +116,17 @@ public class Photo implements Serializable{
 	public void setIsFree(Integer isFree) {
 		this.isFree = isFree;
 	}
+	public Double getDiscount() {
+		return discount;
+	}
+	public void setDiscount(Double discount) {
+		this.discount = discount;
+	}
 	@Override
 	public String toString() {
 		return "Photo [photoId=" + photoId + ", imgUrl=" + imgUrl + ", groupId=" + groupId + ", userId=" + userId
 				+ ", createUser=" + createUser + ", createTime=" + createTime + ", updateUser=" + updateUser
 				+ ", updateTime=" + updateTime + ", coins=" + coins + ", isHot=" + isHot + ", status=" + status
-				+ ", flag=" + flag + ", sort=" + sort + ", isFree=" + isFree + ", sale=" + sale + "]";
+				+ ", flag=" + flag + ", sort=" + sort + ", isFree=" + isFree + ", discount=" + discount + "]";
 	}
 }

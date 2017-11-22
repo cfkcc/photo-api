@@ -1,5 +1,7 @@
 package com.photo.api.service.photo;
 
+import java.util.List;
+
 import com.photo.api.common.util.Page;
 import com.photo.api.model.photo.Photo;
 
@@ -10,6 +12,18 @@ public interface PhotoService {
 	 * @return
 	 */
 	public Photo findById(String photoId);
+	/**
+	 * 根据套图的ID获取所有图片信息
+	 * @param photoGroupId
+	 * @return
+	 */
+	public List<String> findPhotoIdsByGroupId(String photoGroupId);
+	/**
+	 * 根据套图的ID获取所有图片信息
+	 * @param photoGroupId
+	 * @return
+	 */
+	public List<Photo> findPhotoByGroupId(String photoGroupId);
 	/**
 	 * 分页查询图片信息
 	 * @param page
