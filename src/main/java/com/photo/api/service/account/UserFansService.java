@@ -28,7 +28,7 @@ public interface UserFansService {
 	 * @param fansId
 	 * @return
 	 */
-	public long findFansCountByFansId(String userId);
+	public long findFansCountByUserId(String userId);
 	/**
 	 * 粉丝分页查询
 	 * @param page
@@ -41,5 +41,17 @@ public interface UserFansService {
 	 * @return
 	 */
 	public Page findUsersByPage(String fansId, Integer pageIndex, Integer pageSize, String sorting);
+	/**
+	 * 粉丝分页查询
+	 * @param page
+	 * @return
+	 */
+	public Page findFansByPage(Page page);
+	/**
+	 * 我关注的用户分页查询
+	 * @param page
+	 * @return
+	 */
+	public Page findUsersByPage(Page page);
 
 }

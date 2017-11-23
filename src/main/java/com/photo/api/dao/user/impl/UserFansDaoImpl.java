@@ -27,8 +27,8 @@ public class UserFansDaoImpl extends PageDaoAbstract<UserFans> implements UserFa
 	}
 
 	@Override
-	public long findFansCountByFansId(String fansId) {
-		long rowCount = ((Integer)find("findFansCountByFansId", fansId)).longValue();
+	public long findFansCountByUserId(String fansId) {
+		long rowCount = ((Integer)find("findFansCountByUserId", fansId)).longValue();
 		return rowCount;
 	}
 

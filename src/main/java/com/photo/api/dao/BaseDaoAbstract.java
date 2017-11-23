@@ -36,6 +36,11 @@ public abstract class BaseDaoAbstract<T> implements BaseDao<T> {
 
 
 	@Override
+	public T findOne(String statement) {
+		return sqlSession.selectOne(getDefaultSqlNamespace()+statement);
+	}
+	
+	@Override
 	public T findOne(Object parameter) {
 		return findOne(CommonConsts.FIND_BY_ID, parameter);
 	}
@@ -57,7 +62,7 @@ public abstract class BaseDaoAbstract<T> implements BaseDao<T> {
 
 	@Override
 	public Collection<T> findList() {
-		return findList(CommonConsts.FINDLIST, null);
+		return findList(CommonConsts.FINDLIST);
 	}
 	
 	@Override
@@ -67,7 +72,7 @@ public abstract class BaseDaoAbstract<T> implements BaseDao<T> {
 	
 	@Override
 	public Collection<T> findList(String statement) {
-		return findList(statement, null);
+		return sqlSession.selectList(getDefaultSqlNamespace()+statement);
 	}
 
 	@Override

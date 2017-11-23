@@ -18,10 +18,10 @@ public interface UserFansDao extends PageDao<UserFans>{
 	 */
 	public long findCountByUserId(String userId);
 	/**
-	 * 获取被关注的用户的被关注数量
-	 * @param fansId
+	 * 获取粉丝数量
+	 * @param userId
 	 * @return
 	 */
-	public long findFansCountByFansId(String fansId);
+	public long findFansCountByUserId(String userId);
 
 }

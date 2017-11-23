@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.photo.api.common.util.Arith;
 import com.photo.api.common.util.CommonUtil;
 import com.photo.api.dao.user.UserDao;
 import com.photo.api.model.user.User;
@@ -57,6 +58,8 @@ public class UserServiceImpl implements UserService {
 			result.put("userId", user.getUserId());
 			result.put("headImg", user.getHeadImg());
 			result.put("nickName", user.getNickname());
+			result.put("sign", user.getSign());
+			result.put("conins", Arith.round(user.getCoins().doubleValue(), 2));
 		}
 		return result;
 	}

@@ -244,7 +244,6 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 
 	@Override
 	public Map<String, Object> findPhotoBuyRecordsByPage(Page page) {
-		String uid = page.getParams().get("uid")!=null?page.getParams().get("uid").toString():"";
 		page = photoBuyRecordService.findByPage(page);
 		long totalCount = page.getRowCount();
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -259,6 +258,8 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 				String photoId = pbr.getPhotoId();
 				Photo photo = photoService.findById(photoId);
 				Map<String, Object> userMap = userService.findUserInfoById(photo.getUserId());
+				userMap.remove("conins");
+				userMap.remove("sign");
 				Map<String, Object> recordMap = new HashMap<String, Object>();
 				recordMap.putAll(userMap);
 				recordMap.put("buyDay", publishTimeFormat(pbr.getCreateTime()));

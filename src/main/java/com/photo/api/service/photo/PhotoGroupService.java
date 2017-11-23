@@ -8,5 +8,7 @@ public interface PhotoGroupService {
 	public PhotoGroup findById(String groupId);
 	
 	public Page findByPage(Page page);
+	
+	public long findCountByUserId(String userId);
 
 }

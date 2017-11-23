@@ -25,4 +25,13 @@ public class PhotoGroupServiceImpl implements PhotoGroupService {
 		return photoGroupDao.findByPage(page);
 	}
 
+	@Override
+	public long findCountByUserId(String userId) {
+		Page page = new Page();
+		page.getParams().put("userId", userId);
+		page.setFindCountOnly(Boolean.TRUE);
+		page = photoGroupDao.findByPage(page);
+		return page.getRowCount();
+	}
+
 }

@@ -1,6 +1,7 @@
 package service.test;
 
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -9,13 +10,16 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.alibaba.fastjson.JSONObject;
 import com.photo.api.common.util.Page;
 import com.photo.api.model.user.UserFans;
+import com.photo.api.service.account.AccountApiService;
 import com.photo.api.service.account.UserFansService;
+import com.photo.api.service.account.UserLikeService;
 
 @RunWith(SpringJUnit4ClassRunner.class)//表示整合JUnit4进行测试
 @ContextConfiguration(locations={"classpath:conf/spring.xml"})//加载spring配置文件
-public class UserFansServiceTest {
+public class AccountServiceTest {
 
 	private final static String [] user_arrays = {
 			"0005bc3c224544fe9ea7ec6e71afc64f",
@@ -45,8 +49,43 @@ public class UserFansServiceTest {
 	@Resource(name="userFansService")
 	private UserFansService userFansService;
 	
+	@Resource(name="userLikeService")
+	private UserLikeService userLikeService;
+	@Resource(name="accountApiService")
+	private AccountApiService accountApiService;
+	
 //	@Test
 	public void addUserLike(){
+		String likerId ="00004c879b3d4697add98d47cde5f1d0";
+		for (int i = 0; i < user_arrays.length; i++) {
+			String userId =user_arrays[i];
+			userLikeService.saveOrUpdateUserLike(userId, likerId, Boolean.TRUE);
+		}
+		System.out.println("########################################");
+		System.out.println("点赞成功！");
+		System.out.println("########################################");
+	}
+	
+//	@Test
+	public void updateUserLike(){
+		String userId ="00004c879b3d4697add98d47cde5f1d0";
+		String likerId ="00022758da034680b19453d01b12eeef";
+		userLikeService.saveOrUpdateUserLike(userId, likerId, Boolean.TRUE);
+		System.out.println("########################################");
+		System.out.println("点赞取消成功！");
+		System.out.println("########################################");
+	}
+//	@Test
+	public void findLikeCountByLikerId(){
+		String likerId ="00004c879b3d4697add98d47cde5f1d0";
+		long count = userLikeService.findLikeCountByLikerId(likerId);
+		System.out.println("########################################");
+		System.out.println("00004c879b3d4697add98d47cde5f1d0 用户被点赞："+count+"次");
+		System.out.println("########################################");
+	}
+	
+//	@Test
+	public void addUserFollowed(){
 		String userId ="00004c879b3d4697add98d47cde5f1d0";
 		for (int i = 0; i < user_arrays.length; i++) {
 			String fansId =user_arrays[i];
@@ -58,7 +97,7 @@ public class UserFansServiceTest {
 	}
 	
 //	@Test
-	public void updateUserLike(){
+	public void updateUserFollowed(){
 		String userId ="00004c879b3d4697add98d47cde5f1d0";
 		String fansId ="0018f5dac5a647bbaf1a387aea40f1f4";
 		userFansService.saveOrUpdateUserFans(userId, fansId, Boolean.FALSE);
@@ -77,14 +116,14 @@ public class UserFansServiceTest {
 	
 //	@Test
 	public void findFansCountByFansId(){
-		String fansId ="00004c879b3d4697add98d47cde5f1d0";
-		long count = userFansService.findFansCountByFansId(fansId);
+		String userId ="00004c879b3d4697add98d47cde5f1d0";
+		long count = userFansService.findFansCountByUserId(userId);
 		System.out.println("########################################");
 		System.out.println("00004c879b3d4697add98d47cde5f1d0 用户被关注了："+count+"次");
 		System.out.println("########################################");
 	}
-	@Test
-	public void findFansByPage(){
+//	@Test
+	/*public void findFansByPage(){
 		String fansId ="00004c879b3d3434697add98d47cde5f1d0";
 //		Page page = userFansService.findFansByPage(fansId,1,10," create_time desc");
 		Page page = userFansService.findUsersByPage(fansId,1,10," create_time desc");
@@ -94,5 +133,44 @@ public class UserFansServiceTest {
 			System.out.println(it.next());
 			System.out.println("########################################");
 		}
+	}*/
+//	@Test
+	public void findFansByPage(){
+//		String fansId ="00004c879b3d3434697add98d47cde5f1d0";
+		String userId ="00004c879b3d4697add98d47cde5f1d0";
+		Page page = new Page();
+		page.setOrderBy(" create_time desc");
+		page.getParams().put("userId", userId);
+		Map<String, Object> result = accountApiService.findFans(page);
+		JSONObject json = new JSONObject();
+		json.putAll(result);
+		System.out.println("########################################");
+		System.out.println(json);
+		System.out.println("########################################");
+	}
+//	@Test
+	public void findFollowedByPage(){
+		String fansId ="00004c879b3d4697add98d47cde5f1d0";
+		Page page = new Page();
+		page.setOrderBy(" create_time desc");
+		page.getParams().put("fansId", fansId);
+		page = userFansService.findUsersByPage(page);
+		Map<String, Object> result = accountApiService.findFowllowed(page);
+		JSONObject json = new JSONObject();
+		json.putAll(result);
+		System.out.println("########################################");
+		System.out.println(json);
+		System.out.println("########################################");
+	}
+	
+	@Test
+	public void findUserInfo(){
+		String userId ="00004c879b3d4697add98d47cde5f1d0";
+		Map<String, Object> result = accountApiService.getUserInfo(userId);
+		JSONObject json = new JSONObject();
+		json.putAll(result);
+		System.out.println("########################################");
+		System.out.println(json);
+		System.out.println("########################################");
 	}
 }

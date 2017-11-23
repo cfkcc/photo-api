@@ -41,7 +41,7 @@
 		</where>
 	</select>
 	
-	<select id="findFansCountByFansId" resultType="Integer">
+	<select id="findFansCountByUserId" resultType="Integer">
 		select count(*) from user_fans where user_id = #{userId} and status = 1
 	</select>
 	<select id="findCountByUserId" resultType="Integer">

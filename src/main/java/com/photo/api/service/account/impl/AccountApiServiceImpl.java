@@ -1,7 +1,10 @@
 package com.photo.api.service.account.impl;
 
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -21,12 +24,17 @@ import com.photo.api.common.exception.ServiceException;
 import com.photo.api.common.util.Arith;
 import com.photo.api.common.util.CryptalUtil;
 import com.photo.api.common.util.HttpClientUtil;
+import com.photo.api.common.util.Page;
 import com.photo.api.model.user.ThirdPartyUser;
 import com.photo.api.model.user.User;
+import com.photo.api.model.user.UserFans;
 import com.photo.api.model.user.UserOauth;
 import com.photo.api.service.account.AccountApiService;
+import com.photo.api.service.account.UserFansService;
+import com.photo.api.service.account.UserLikeService;
 import com.photo.api.service.account.UserOauthService;
 import com.photo.api.service.account.UserService;
+import com.photo.api.service.photo.PhotoGroupService;
 
 @Service("accountApiService")
 public class AccountApiServiceImpl implements AccountApiService {
@@ -36,6 +44,12 @@ public class AccountApiServiceImpl implements AccountApiService {
 	private UserOauthService userOauthService;
 	@Resource(name="userService")
 	private UserService userService;
+	@Resource(name="userFansService")
+	private UserFansService userFansService;
+	@Resource(name="userLikeService")
+	private UserLikeService userLikeService;
+	@Resource(name="photoGroupService")
+	private PhotoGroupService photoGroupService;
 
     @Override
     public boolean checkThirdToken(ThirdPartyUser thirdPartyUser, boolean isOpen) throws ServiceException {
@@ -122,6 +136,64 @@ public class AccountApiServiceImpl implements AccountApiService {
 			coins = Arith.round(user.getCoins().doubleValue(), 2);
 		}
 		result.put("coins", coins);
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> findFans(Page page) {
+		page = userFansService.findFansByPage(page);
+		Map<String, Object> result = new HashMap<String, Object>();
+		long totalCount = page.getRowCount();
+		result.put("totalCount", totalCount);
+		result.put("totalPage", page.getPageCount());
+		List<Map<String, Object>> photoList = new ArrayList<Map<String, Object>>();
+		Iterator<UserFans> it = (Iterator<UserFans>)page.getRecords().iterator();
+		if(it != null){
+			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+			while(it.hasNext()){
+				UserFans uf = it.next();
+				Map<String, Object> map = userService.findUserInfoById(uf.getFansId());
+				map.remove("conins");
+				map.remove("sign");
+				list.add(map);
+			}
+			result.put("list", list);
+		}
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> findFowllowed(Page page) {
+		page = userFansService.findFansByPage(page);
+		Map<String, Object> result = new HashMap<String, Object>();
+		long totalCount = page.getRowCount();
+		result.put("totalCount", totalCount);
+		result.put("totalPage", page.getPageCount());
+		List<Map<String, Object>> photoList = new ArrayList<Map<String, Object>>();
+		Iterator<UserFans> it = (Iterator<UserFans>)page.getRecords().iterator();
+		if(it != null){
+			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+			while(it.hasNext()){
+				UserFans uf = it.next();
+				Map<String, Object> map = userService.findUserInfoById(uf.getUserId());
+				map.remove("conins");
+				map.remove("sign");
+				list.add(map);
+			}
+			result.put("list", list);
+		}
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> getUserInfo(String userId) {
+		Map<String, Object> result = userService.findUserInfoById(userId);
+		long followingCount = userFansService.findCountByUserId(userId);
+		result.put("followingCount", followingCount);
+		long fansCount = userFansService.findFansCountByUserId(userId);
+		result.put("fansCount", fansCount);
+		long postCount = photoGroupService.findCountByUserId(userId);
+		result.put("postCount", postCount);
 		return result;
 	}
 

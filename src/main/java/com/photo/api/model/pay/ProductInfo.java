@@ -25,6 +25,10 @@ public class ProductInfo implements Serializable {
      * 商品默认价格
      */
 	private BigDecimal productPrice;
+	/**
+	 * 商品默认可购买的金币数量
+	 */
+	private BigDecimal coins;
     /**
      * 优惠比例。大于或等于100%的比率值；
      */
@@ -157,7 +161,25 @@ public class ProductInfo implements Serializable {
 		this.firstDiscountRatio = firstDiscountRatio;
 	}
 
+	public BigDecimal getCoins() {
+		return coins;
+	}
+
+	public void setCoins(BigDecimal coins) {
+		this.coins = coins;
+	}
+
 	@Override
+	public String toString() {
+		return "ProductInfo [productId=" + productId + ", productName=" + productName + ", productDesc=" + productDesc
+				+ ", productPrice=" + productPrice + ", coins=" + coins + ", discountRatio=" + discountRatio
+				+ ", payChannelId=" + payChannelId + ", currency=" + currency + ", productState=" + productState
+				+ ", createTime=" + createTime + ", discountDesc=" + discountDesc + ", discountStartTime="
+				+ discountStartTime + ", discountEndTime=" + discountEndTime + ", firstDiscountRatio="
+				+ firstDiscountRatio + "]";
+	}
+
+	/*@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("{\"productId\":\"");
@@ -188,5 +210,7 @@ public class ProductInfo implements Serializable {
         builder.append(firstDiscountRatio);
         builder.append("\"}");
         return builder.toString();
-    }
+    }*/
+	
+	
 }

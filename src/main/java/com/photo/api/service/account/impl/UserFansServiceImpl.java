@@ -53,8 +53,8 @@ public class UserFansServiceImpl implements UserFansService {
 	}
 
 	@Override
-	public long findFansCountByFansId(String userId) {
-		return userFansDao.findFansCountByFansId(userId);
+	public long findFansCountByUserId(String userId) {
+		return userFansDao.findFansCountByUserId(userId);
 	}
 
 	@Override
@@ -92,6 +92,16 @@ public class UserFansServiceImpl implements UserFansService {
 	}
 	private void updateFans(UserFans uf){
 		userFansDao.update(uf);
+	}
+
+	@Override
+	public Page findFansByPage(Page page) {
+		return userFansDao.findByPage(page);
+	}
+
+	@Override
+	public Page findUsersByPage(Page page) {
+		return userFansDao.findByPage(page);
 	}
 
 }

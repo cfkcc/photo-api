@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="VersionMapper">
+	<select id="findNewVersion" resultType="com.photo.api.model.version.Version">
+		select * from version 
+		where 
+		app_type = #{appType} 
+		and system_type = #{systemType} 
+		and channel = #{channel} 
+		and ban=0 
+		and flag=1 
+		and status=1
+		order by version_code desc 
+		limit 0,1
+	</select>
+</mapper>

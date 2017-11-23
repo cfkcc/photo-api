@@ -4,11 +4,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import com.photo.api.common.util.Page;
 import com.photo.api.dao.pay.ProductInfoDao;
 import com.photo.api.model.pay.ProductInfo;
 import com.photo.api.service.pay.ProductInfoService;
 
+@Service("productInfoService")
 public class ProductInfoServiceImpl implements ProductInfoService {
 	
 	@Resource(name="productInfoDao")
