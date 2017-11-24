@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-11-22 18:19:12
+Date: 2017-11-24 11:37:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1043,204 +1043,268 @@ CREATE TABLE `product_info` (
   `product_price` decimal(11,2) DEFAULT NULL COMMENT '商品默认价格',
   `discount_ratio` decimal(10,0) unsigned DEFAULT NULL COMMENT '优惠比例。大于或等于100%的比率值；',
   `pay_channel_id` varchar(32) DEFAULT NULL COMMENT '发行渠道ID，即支付渠道；不同平台的终端获取的数据有差异；如iOS只获取applePay渠道的商品列表；',
-  `currency` varchar(20) DEFAULT NULL COMMENT '币种',
+  `currency` varchar(20) DEFAULT NULL COMMENT '币种或符号 ￥：人民币 $：美元',
   `product_state` tinyint(2) DEFAULT NULL COMMENT '0:下架,1:正常,2:促销中',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `discount_desc` varchar(30) DEFAULT NULL COMMENT '优惠描述',
   `discount_start_time` datetime DEFAULT NULL COMMENT '优惠活动开始时间',
   `discount_end_time` datetime DEFAULT NULL COMMENT '优惠活动截止时间',
-  `first_discount_ratio` decimal(10,0) DEFAULT NULL COMMENT '首充比例',
+  `coins` decimal(11,2) DEFAULT NULL COMMENT '可购买的金币数量',
   PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品信息表';
 
 -- ----------------------------
 -- Records of product_info
 -- ----------------------------
-INSERT INTO `product_info` VALUES ('0034d3a01c634b62ae607a1e3adae037', '2990', '6634', '4192.00', '200', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '2', '2017-03-15 18:17:10', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('004c0e8b99c244ad8086e7a5ef0aa1b6', '2674', '208', '3012.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:59:27', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('01cb059db7964e2dbd0e396084d1447f', '3115', '2275', '2024.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '0', '2017-06-07 18:18:00', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('0223814ae5c549d69330ade60f4b2192', '351', '1891', '8396.00', '133', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:09:20', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('0262a1e38c0846769fb40c8e4636287e', '6309', '2636', '4249.00', '123', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:18:04', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('0286feab266642c481a4a83b9d4171d8', '3886', '9439', '5532.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:21:40', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('02cf89af294c40ee8a81c4d9345470fa', '70', '2342', '1493.00', '99', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-04 15:08:14', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('03d0bbeb6c044274b45c565cc1849fee', '7679', '7090', '2404.00', '120', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-08 13:55:13', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('0510be1f189543869c1935dec2bf1189', '6513', '320', '2052.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'IDR', '2', '2017-03-13 18:27:02', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('055ceec5086e424b8543f72451f8b807', '307', '3648', '7311.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '0', '2017-06-06 15:23:03', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('09ca807aa71d4b108343879158bfde43', '6094', '3645', '9933.00', '200', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 17:57:36', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('0a94154c352e40e3bbb8bf7e57968db7', '3826', '2942', '3227.00', '123', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:42:45', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('0b3a5053b85c4fe785bd1270153a1c6e', '6822', '2197', '512.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:15:00', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('0b51b0ea53e84b818c17d231357b550b', '8277', '3486', '2591.00', '112', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:13:58', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('0d115388808a48e59a3ba727ae73fc61', '4676', '5899', '5461.00', '111', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:35:23', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('0d221f7d63f14517a002b7679ab745fa', '1615', '9268', '1485.00', '222', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-16 14:32:10', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('0e69e15a71b84ec39e891f0e5a2eb2dd', '3623', '9259', '5419.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:10:59', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('112d365594194898aa2e63a8c951038d', '295', '3532', '6769.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-12 18:02:42', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('1135e33e542342d186eda9061d14b5be', '5895', '9744', '1029.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-09 15:53:20', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('1153e51a871f4062a4159b011e96d523', '6440', '4472', '3034.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:21:52', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('1360a984bea34d6e9048af5182fb5df5', '9633', '2914', '5662.00', '200', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '0', '2017-03-15 18:20:13', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('1364a7c41f2f4134a8225b270a7816ca', '830', '5449', '4748.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:23:03', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('14df9e5e38814ac59186d75b206c05a4', '2682', '1245', '8170.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:07:49', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('17ca98c562c84e3eb5a7ee5f662cd96f', '1038', '3852', '6137.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '0', '2017-07-04 14:02:11', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('1ac18049a7c74b83950a50a5b60a8cd9', '7206', '8649', '1620.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '0', '2017-03-16 14:10:23', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('1cc7e8da73974b2f8adf515bc0a000df', '5868', '2895', '6861.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:10:50', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('214f196dea1e44ec81289dd32ed599ff', '7483', '565', '370.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:41:08', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('244208fcaf4a42bd9315d68a8b8f7dfa', '9632', '7706', '9624.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-19 18:52:52', '', '2017-11-20 18:43:02', '2017-11-30 18:42:43', '200');
-INSERT INTO `product_info` VALUES ('245aa873a4a54686b6f0ecb5946023f0', '6111', '5553', '9425.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '0', '2017-06-07 18:01:05', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('2544784b94d7457a89c17c8b56c7a545', '4027', '8741', '1619.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '2', '2017-06-07 18:21:22', '20% <br /> present', '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('286294ddf10048b6a5bc45d216e405de', '4454', '6675', '10004.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-19 18:58:23', '', '2017-11-20 18:43:02', '2017-11-30 18:42:43', '200');
-INSERT INTO `product_info` VALUES ('2880a6de93e94a81b3314732c3f273a7', '9934', '9693', '8654.00', '101', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '2', '2017-03-07 16:48:19', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('298ca3b155064aa994f47f4076261135', '4954', '2211', '6184.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:25:27', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('2aaba7de4763484692cfdfc787056de4', '2856', '1423', '8541.00', '123', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:32:41', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('2ce07ee55ccb464495b1f8ac1c6a5786', '6522', '7314', '6996.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:25:00', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('2d6cf1434507426c9686d4dc7c9bf4cd', '4158', '1691', '5977.00', '200', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '0', '2017-03-16 14:09:54', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('2d969d9ba1a74c23b79c3908c646995c', '6092', '6033', '1884.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:11:26', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('2e8a5c5b8d634e28840a966884bafead', '915', '624', '369.00', '754', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:31:16', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('2f61cdb353394c7595fa1b3563769fca', '8713', '3664', '2173.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:05:25', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('2f7589c444f6449c84a991a3479ae9e4', '2806', '4423', '3693.00', '102', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:37:04', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('303a649ae1f640ff81ddefb386c21e39', '4854', '8701', '8936.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:24:12', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('30d1717390464d149b33fea69258ee4c', '6030', '4439', '4095.00', '120', '0cf4a5eccdd811e7bb381866da0f00a4', 'IDR', '1', '2017-03-22 10:34:15', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('3151d534b651414e9ea75c3650d5bdb7', '3484', '5947', '9277.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '0', '2017-06-07 17:12:35', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('32cd48da520146fdbffaa9ef5caad2ad', '4848', '8624', '8570.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:43:08', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('3347afb00ee64edf8de06eb2143a14cb', '9132', '4747', '6329.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '0', '2017-06-07 18:20:08', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('34dbd3e12707466a8f0e10069a417723', '8008', '7834', '5138.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:39:09', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('36d1ea81c1ad4bdd949ad9bd555fb159', '5488', '888', '7972.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-06 16:22:02', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('396b6906e33740ef9dbc35913d0ef085', '2014', '8502', '6462.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-09-11 11:08:04', '', '2017-11-20 18:43:02', '2017-11-30 18:42:43', '200');
-INSERT INTO `product_info` VALUES ('3afb47945cf74fbb92431f28cf5f16bc', '4587', '2543', '8947.00', '102', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:36:25', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('3c669edf34084e459ebe2725ddd519c4', '8645', '1925', '3681.00', '120', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 17:22:39', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('3c9f115a98754c588d94861c51299d15', '2070', '2474', '6153.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 17:26:27', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('3e89e0337df640fdb67e30fe4a957428', '8206', '1021', '479.00', '221', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:34:11', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('3ee7fe5a05cd44e38b136a5ba9abc7a5', '5192', '7970', '4270.00', '134', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:16:03', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('40519942d8ba4d909a7da5e929849503', '4339', '9396', '3955.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'IDR', '1', '2017-03-09 15:48:43', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('454c6921ecd14e90a31e39bbe56d496d', '6030', '5405', '8928.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-07-13 10:42:52', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('49f9131ca9d7492e89195ae38e0ac465', '5297', '1224', '225.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-07-13 10:42:00', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('4a19110a9e9745c094ea9e1daab6662c', '6545', '385', '2280.00', '140', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:04:55', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('4a8cd2a3560e43d5bf7188c9fdebfb46', '4357', '1058', '2211.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:13:05', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('4adc90b065e64cc7b199b30c6fbde220', '2727', '9', '1858.00', '132', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:40:56', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('4c4f8f1a0101467fbd427687d44b67de', '697', '5712', '6462.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-07-13 10:37:59', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('4c919a0febe44f4389f408b276af61c3', '6446', '6721', '4262.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '0', '2017-06-07 18:20:48', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('4ca4473922414730b2e6fc0ac399d6b9', '2907', '1110', '6821.00', '101', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-06 18:09:36', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('4cbd827733d24093bbb22458f7674a94', '3383', '4597', '2828.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 17:47:40', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('4d48dd0f63734023bdde4e535a5fdb37', '3221', '5073', '5695.00', '125', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 17:43:20', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('4e378db53796423fb44b892f19e3c38f', '9151', '6003', '2554.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:08:51', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('52c9d66329bb4eda938bb8f096b58ef8', '6116', '6303', '3161.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:23:39', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('53829f40f91e42df89d86433765ae6d7', '4946', '4063', '5470.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:02:33', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('53cd30994e784f478f4eafa6d8de034e', '9349', '1281', '8350.00', null, '0cf4a5eccdd811e7bb381866da0f00a4', 'IDR', '1', '2017-06-19 18:42:03', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('54f034b2a0834618b7d394bf833ab83f', '4440', '8497', '9160.00', '103', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:25:25', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('560dcc45c165449e92b4b2763168ef86', '4017', '9175', '3818.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 17:53:03', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('57afe5c2fafb4f5fab416384f8e9f1dd', '6337', '7000', '5982.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '0', '2017-06-07 17:49:40', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('596cdca639014d828f0ff4ccfe6ccfef', '6572', '6136', '960.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-13 14:42:34', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('59fbaed17e2f40df905ee494b6d46c02', '9036', '6019', '2979.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '0', '2017-06-07 18:19:12', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('5b2abc34ce8847c8930960eb05c783f6', '5226', '5621', '2421.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-19 18:47:37', '', '2017-11-20 18:43:02', '2017-11-30 18:42:43', '100');
-INSERT INTO `product_info` VALUES ('5b2eeae3482f4074a7e03c27274e843a', '8916', '8862', '7555.00', '111', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:38:06', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('5c41fc0ef2f442c280801dda5d58bb11', '3235', '2626', '3418.00', '140', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:08:47', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('5ddfcbecdc974e48a801c40473a41498', '5761', '1187', '8646.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 17:13:14', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('5f701e91baf44970af415f82291791b5', '2358', '2803', '6932.00', '118', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '2', '2017-03-15 17:43:50', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('60bb9371d0fa4ab79c2933ee4d025267', '430', '3403', '5721.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 17:50:35', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('60f948ff479a4faa92f3e2a020a35cfe', '4763', '8651', '8958.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:36:45', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('610e8d3a8fee424d8b7a720ebb7e85a1', '7276', '9879', '7563.00', '120', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 17:41:14', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('63f2f35142a342e9ac648d2dd2814d90', '8146', '6220', '6654.00', '126', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:37:41', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('647a76570e464ddd8c6e986c0544828f', '3058', '1466', '8151.00', '109', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:40:31', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('67a96189c83543528b3c218cd58b9701', '7296', '7419', '5203.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '0', '2017-06-07 17:53:53', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('68e06bbc29a14150845e1a08dc771164', '3127', '4384', '2534.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-07-13 10:37:12', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('68fdb575de714eb1a253ebd3d3fb88bf', '9937', '1152', '5942.00', '103', '0cf4a5eccdd811e7bb381866da0f00a4', 'VND', '1', '2017-03-13 18:24:45', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('69f76124e61c4837a8a043fe5fde6b9b', '3397', '8242', '1014.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-06 16:03:47', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('6a5907fd8d7e466183ecd99714a2d5ed', '8640', '2180', '4974.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:04:13', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('6c1bbfcca1da475aa8e657117043adc0', '6693', '8483', '2330.00', '103', '0cf4a5eccdd811e7bb381866da0f00a4', 'VND', '0', '2017-03-07 12:14:46', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('6dfb2f5d9f314853811f74d5fe38ccde', '3983', '1322', '4653.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:24:56', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('6f024a17c9c44ba69ccd3062e6d15a95', '2507', '4644', '5692.00', '101', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '2', '2017-03-15 18:13:34', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('6f5732cb6c22401180d52cfc5e4ffc01', '5531', '4080', '3800.00', '110', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:12:55', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('71410072d3874c3796047e97b465b64b', '2371', '1580', '782.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-19 18:55:30', '', '2017-11-20 18:43:02', '2017-11-30 18:42:43', '200');
-INSERT INTO `product_info` VALUES ('7455b0daab5548f1bf5d06674433e078', '3458', '9796', '8600.00', '110', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:16:51', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('750e5882d9364de2b4db0e29e7b32fd1', '2227', '309', '4858.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:43:59', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('7641a5c131f3406c841fed84ee7694c9', '2201', '931', '8043.00', '120', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-07 14:14:54', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('76e932c6cd014d51917896d7d5fae669', '2942', '2458', '3459.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:19:57', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('76ede68dfe10406a9ec9de9ec3d9401f', '9181', '6159', '3245.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:43:40', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('78d3aeb260694bcbb4303ee604073b21', '8974', '1634', '1240.00', '110', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '2', '2017-03-15 17:25:56', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('7cfe99cfd99041d091987f675f1f04fe', '2733', '9784', '715.00', '111', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:13:17', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('80d48ab26940487b95392816fbb10609', '8926', '1977', '3098.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:22:26', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('811a40a8fc9f41d4a1087288f254b8a7', '8479', '3720', '3157.00', '109', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:33:00', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('86e334ef2bcf4b3e8cc622807bfaff02', '3622', '4244', '345.00', '110', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:14:26', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('87f2e7b26c2b41d3ab08c0922c828805', '3901', '2534', '960.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-19 18:49:38', '', '2017-11-20 18:43:02', '2017-11-30 18:42:43', '200');
-INSERT INTO `product_info` VALUES ('88277c8ff70f4348b4e6350b02269352', '3063', '3742', '9511.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:06:55', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('898d869eec9d41d193dec37dc9a5207b', '3075', '6402', '2777.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 17:16:43', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('8fab226533064539be5e194d1236cd42', '5020', '1080', '335.00', '101', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:29:08', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('900fd41d577a40c69950e516ad2c0b80', '1123', '328', '8265.00', '120', '0cf4a2d6cdd811e7bb381866da0f00a4', 'IDR', '1', '2017-03-22 10:27:12', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('9197722423d645ca98a192e02c595abb', '6874', '3356', '6151.00', '102', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:33:25', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('9375440198d44682ba20e4a140ec8d53', '4953', '2709', '8680.00', '212', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:38:18', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('9423d9fd7f144ae59ab690b9f3cd4fa6', '288', '5633', '7295.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '0', '2017-06-07 17:54:56', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('94570ed5983c49b8ab3c4f2627e7ed6b', '5956', '1066', '7453.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:40:10', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('968c4cf58e5f49499823a9c2f5966b2e', '7940', '7512', '3734.00', '102', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-09 15:56:00', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('96c54cd595e848228d0a1a82b6a6c548', '9429', '8754', '5476.00', '112', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:10:35', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('9a27f63a45b74d11b1bb8723a5465812', '9123', '2273', '3990.00', '120', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-07 17:41:42', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('9a9aed53ec854b9090c322e0af430c8c', '3646', '8850', '3305.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '0', '2017-06-07 17:52:04', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('9ae3d5a9536843ad9c61b152ff517dbe', '9931', '9735', '8875.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-19 18:50:17', '', '2017-11-20 18:43:02', '2017-11-30 18:42:43', '200');
-INSERT INTO `product_info` VALUES ('9b821eb1fea6447289674cae3b1ea21a', '9186', '432', '4597.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:13:44', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('9c651413100e4c0fb99f85ec5e4d9f82', '4613', '8012', '6214.00', '101', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:33:45', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('9c746afe10aa40ed873fee4c83d5b22a', '6496', '1386', '7436.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '0', '2017-06-07 17:45:58', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('9d94f6cfb96348f99283fd704ebbc93a', '2761', '4753', '5476.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-06 16:17:16', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('9dbf47450f7446d38243b44ebe64873d', '9137', '6338', '4270.00', '300', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:37:24', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('9fdfe1e8f64144699e5bb245389d675e', '8826', '7139', '9209.00', '199', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:42:25', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('a2388b336c7249c4a5cd29ca99968be8', '5471', '3486', '1010.00', '102', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:11:50', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('a2d1c3f9f35147ec8de45c6a2520ab58', '9891', '5693', '8784.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-19 18:52:01', '', '2017-11-20 18:43:02', '2017-11-30 18:42:43', '200');
-INSERT INTO `product_info` VALUES ('a89e6e9c1c4b4d4fb545b14a15e68297', '7818', '8578', '9429.00', '102', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:39:25', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('a8c30a8e399e47a0ac66629a9a338f61', '8729', '9427', '938.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:10:08', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('ad3e0049e4304380abdb119fcf346918', '9200', '6781', '6300.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:27:07', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('af293b23908f41d8a5d68dfbd618d513', '6850', '789', '3390.00', '200', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:39:40', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('af3f44cd0ac4411587a0a7a928e268cf', '2696', '9749', '650.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:17:07', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('b0e80dadd733410b829510d7181b8998', '8031', '8155', '6677.00', '111', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:29:34', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('b157572f07d14259817d17f175857185', '4521', '5864', '5750.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-19 18:54:42', '', '2017-11-20 18:43:02', '2017-11-30 18:42:43', '200');
-INSERT INTO `product_info` VALUES ('b25996313fba439da674d147f701a921', '8497', '9028', '9642.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:14:22', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('b46562ae1a634c09a5cf9fb2c3d60cd1', '6656', '9922', '9635.00', '120', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '2', '2017-08-16 14:33:03', '30% extra', '2017-11-20 18:43:02', '2017-11-30 18:42:43', '200');
-INSERT INTO `product_info` VALUES ('b5512dd221fc4db9a5e5e3e628bbfcf0', '3104', '306', '2208.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'VND', '1', '2017-03-07 17:35:51', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('b7ad5921d7e74266807e9dfee3dfb4fd', '3956', '9421', '5232.00', '109', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:21:14', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('b884467e0a5b4f879397a7213700450c', '3746', '5053', '4022.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '0', '2017-07-04 14:03:17', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('b8d39bf236b04421b0efeca7742d79d8', '2641', '8371', '3926.00', '120', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 17:12:34', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('b9717026e5b4438aa799afb281730277', '764', '285', '9126.00', '123', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:35:52', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('ba17d31ef8a2440d97ab878fe6550f55', '6462', '7996', '586.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:08:22', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('ba1edb4ad1d94df7b5826f0b8526caa9', '2918', '7775', '112.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '0', '2017-06-07 18:18:28', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('ba6a6a152d544904b0dc466e20654969', '5813', '7366', '9384.00', '102', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:19:29', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('bc1036c36fec4cc6b788a796a03f7e82', '5910', '5104', '7784.00', '20', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-08-16 16:14:52', '35% <br />extra', '2017-11-20 18:43:02', '2017-11-30 18:42:43', '200');
-INSERT INTO `product_info` VALUES ('bcf95903d0ab412d9e12802c7b2e118c', '4647', '2427', '8187.00', '103', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:36:08', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('c12ad7c1de2644b5938f830f2fd6cd93', '3662', '7366', '5839.00', '102', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-14 11:06:12', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('c28ffce34fa949a1a2e714ad96d7a4e5', '7918', '8319', '7835.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-07-04 13:57:17', '20%<br /> extra', '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('c5128d81f06346938be96190453e50fd', '7543', '5077', '2750.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:12:21', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('c57a412cd83c45ee96fe34cf9c8f3492', '4305', '5981', '6984.00', '200', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '2', '2017-03-15 17:41:41', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('c8b8624389ab4607b96c72ae3c42581c', '3886', '8518', '923.00', '200', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:43:27', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('ca3af306badd48088b4210af4df7cd6c', '2507', '5358', '9264.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 17:42:34', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('ccb0c6a9d4c84ed69a95949f2dc35128', '3388', '6222', '939.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-07-13 10:39:21', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('ccfec3c5957d4d8fbf5ab70875c4bf32', '7283', '8344', '9867.00', '112', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:02:07', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('d0c192187d17454e8f2047a8d3638856', '1873', '6471', '6730.00', '333', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '2', '2017-03-15 18:44:15', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('d2ade554d6f04c6bb6205d35e593b6d2', '951', '2060', '7441.00', '200', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:26:44', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('d6427ac376c445f5bb84460b4acc2a77', '2766', '766', '5524.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:09:25', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('d6904c5c039e41bc808edaf0b7774c2b', '9997', '4032', '165.00', '130', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:11:24', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('d99283561d7e4f3ba6d0e167b64d9e98', '3110', '9378', '7553.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:32:07', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('d9e3b8059ab8466791d16632b3a37f32', '5446', '8359', '5451.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 17:15:01', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('df1458a20dd045c28735a0660aeb43d5', '4492', '5941', '6223.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 17:56:33', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('e074e162f6894986a516d6003b4bd8be', '7760', '8933', '1377.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-19 18:48:40', '', '2017-11-20 18:43:02', '2017-11-30 18:42:43', '100');
-INSERT INTO `product_info` VALUES ('e243652e5ae64058a66e26b25178b086', '6265', '1077', '6582.00', '122', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:31:42', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('e289d27ba2074830833adcb36e8fa935', '8606', '4008', '4215.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:04:53', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('e2eb8fcb05c54e09acab418d0f7829ad', '2581', '5759', '1046.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-20 10:29:53', '', '2017-11-20 18:43:02', '2017-11-30 18:42:43', '200');
-INSERT INTO `product_info` VALUES ('e7cec060dfbe4555896ee5a461f7af91', '6582', '9069', '5592.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-07 18:16:06', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('e7f709c121224b48af819fe68f622e84', '6948', '2493', '1617.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:18:59', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('e84294503b264d93a937e2062de21f7a', '8146', '8921', '160.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:42:57', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('e8ce8eb0d19746f5823b2dc726d9d441', '9674', '6267', '2307.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-06 15:39:38', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('ea839a0a29be48b5812eaffed1cee306', '6714', '5377', '6736.00', '101', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '0', '2017-03-13 14:49:28', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('eb65ba56350a430caab383088fd61f85', '7494', '4840', '1710.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-07-13 10:40:30', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('eb7346b37e3b4385bedede5eab66cb4c', '4977', '2810', '9112.00', '102', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-23 17:05:14', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('eb84b1770e484908b7a1e28030444533', '8283', '33', '5311.00', '200', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:20:46', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('ed30541e0b6141578a6605e2a59c039c', '6296', '2133', '1771.00', '109', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:41:23', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('ee088931ccf242a3bef1f9f67e88f5aa', '6929', '7287', '5644.00', '200', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:39:54', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('efe4ddedcdf54cfa9ee6fdee6f0918cc', '4822', '5045', '756.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-07-13 10:33:51', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('f07adc5c04234b5789ad4db0c4a46b79', '908', '8622', '383.00', '125', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '2', '2017-03-15 17:16:07', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('f0da6ae4b6f04b3f956a6e05e0672834', '9047', '7108', '8393.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 17:23:02', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('f31920f4c2024196826e5032f6eb2cc8', '7974', '7970', '5922.00', '105', '0cf4a5eccdd811e7bb381866da0f00a4', 'VND', '1', '2017-03-13 13:49:04', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('f433f62a6e4b4fd39f83ee94c2a9178c', '695', '6387', '9844.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', 'THB', '1', '2017-06-06 16:16:06', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('f53570391927429897d8133c8452260a', '733', '3493', '5260.00', '111', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 17:45:24', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('f5620e89a5a34611aaf942ee3ba5b3d5', '3295', '9017', '5196.00', '133', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 17:14:09', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('f9e4111660c844c091b43724e42daaab', '9017', '8313', '4507.00', '190', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-07 14:11:59', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('fa84d8ec10ca435eb052a2d76d3ce7c9', '4419', '9320', '3338.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '0', '2017-03-16 13:56:17', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('fa8f88c53403467997ad20de9c5371bf', '3593', '1790', '8167.00', '139', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:17:44', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('fae16c54a630480eb5c00e1f616d35f5', '2768', '7470', '9038.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-15 18:09:43', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
-INSERT INTO `product_info` VALUES ('fc9277dc6086485cb5b64fd7c8097946', '6746', '5405', '6780.00', '123', '0cf4a5eccdd811e7bb381866da0f00a4', 'THB', '1', '2017-03-13 18:16:22', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', null);
+INSERT INTO `product_info` VALUES ('004c0e8b99c244ad8086e7a5ef0aa1b6', '兑换', '208', '3012.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', '$', '1', '2017-03-15 18:59:27', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('01cb059db7964e2dbd0e396084d1447f', '兑换', '2275', '2024.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', '$', '0', '2017-06-07 18:18:00', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('0223814ae5c549d69330ade60f4b2192', '兑换', '1891', '8396.00', '133', '0cf4a5eccdd811e7bb381866da0f00a4', '￥', '1', '2017-03-15 18:09:20', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('0262a1e38c0846769fb40c8e4636287e', '兑换', '2636', '4249.00', '123', '0cf4a4e9cdd811e7bb381866da0f00a4', '$', '1', '2017-03-15 18:18:04', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('0286feab266642c481a4a83b9d4171d8', '兑换', '9439', '5532.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', '￥', '1', '2017-03-15 18:21:40', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('03d0bbeb6c044274b45c565cc1849fee', '兑换', '7090', '2404.00', '120', '0cf4a2d6cdd811e7bb381866da0f00a4', '￥', '1', '2017-03-08 13:55:13', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('0510be1f189543869c1935dec2bf1189', '兑换', '320', '2052.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', '￥', '2', '2017-03-13 18:27:02', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('055ceec5086e424b8543f72451f8b807', '兑换', '3648', '7311.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', '￥', '0', '2017-06-06 15:23:03', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('09ca807aa71d4b108343879158bfde43', '兑换', '3645', '9933.00', '200', '0cf4a5eccdd811e7bb381866da0f00a4', '￥', '1', '2017-03-15 17:57:36', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('0a94154c352e40e3bbb8bf7e57968db7', '兑换', '2942', '3227.00', '123', '0cf4a5eccdd811e7bb381866da0f00a4', '￥', '1', '2017-03-15 18:42:45', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('0b3a5053b85c4fe785bd1270153a1c6e', '兑换', '2197', '512.00', '100', '0cf4a5eccdd811e7bb381866da0f00a4', '￥', '1', '2017-06-07 18:15:00', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('0b51b0ea53e84b818c17d231357b550b', '兑换', '3486', '2591.00', '112', '0cf4a2d6cdd811e7bb381866da0f00a4', '￥', '1', '2017-03-15 18:13:58', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('0d115388808a48e59a3ba727ae73fc61', '兑换', '5899', '5461.00', '111', '0cf4a5eccdd811e7bb381866da0f00a4', '￥', '1', '2017-03-15 18:35:23', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('0d221f7d63f14517a002b7679ab745fa', '兑换', '9268', '1485.00', '222', '0cf4a5eccdd811e7bb381866da0f00a4', '￥', '1', '2017-03-16 14:32:10', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('112d365594194898aa2e63a8c951038d', '兑换', '3532', '6769.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', '$', '1', '2017-06-12 18:02:42', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('1153e51a871f4062a4159b011e96d523', '兑换', '4472', '3034.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', '￥', '1', '2017-06-07 18:21:52', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('1ac18049a7c74b83950a50a5b60a8cd9', '兑换', '8649', '1620.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', '￥', '0', '2017-03-16 14:10:23', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('214f196dea1e44ec81289dd32ed599ff', '兑换', '565', '370.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', '￥', '1', '2017-03-15 18:41:08', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('244208fcaf4a42bd9315d68a8b8f7dfa', '兑换', '7706', '9624.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', '$', '1', '2017-06-19 18:52:52', '', '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('245aa873a4a54686b6f0ecb5946023f0', '兑换', '5553', '9425.00', '100', '0cf4a2d6cdd811e7bb381866da0f00a4', '￥', '0', '2017-06-07 18:01:05', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('2880a6de93e94a81b3314732c3f273a7', '兑换', '9693', '8654.00', '101', '0cf4a4e9cdd811e7bb381866da0f00a4', '$', '2', '2017-03-07 16:48:19', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('298ca3b155064aa994f47f4076261135', '兑换', '2211', '6184.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', '$', '1', '2017-06-07 18:25:27', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+INSERT INTO `product_info` VALUES ('2ce07ee55ccb464495b1f8ac1c6a5786', '兑换', '7314', '6996.00', '100', '0cf4a4e9cdd811e7bb381866da0f00a4', '$', '1', '2017-03-15 18:25:00', null, '2017-11-20 18:43:02', '2017-11-30 18:42:43', '10086.00');
+
+-- ----------------------------
+-- Table structure for sys_buttom
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_buttom`;
+CREATE TABLE `sys_buttom` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) DEFAULT NULL,
+  `buttom` varchar(200) DEFAULT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_buttom
+-- ----------------------------
+INSERT INTO `sys_buttom` VALUES ('1', '新增', '<button type=\"button\" id=\"addFun\" class=\"btn btn-primary marR10\">新增</button>', '');
+INSERT INTO `sys_buttom` VALUES ('2', '编辑', '<button type=\"button\" id=\"editFun\" class=\"btn btn-info marR10\">编辑</button>', null);
+INSERT INTO `sys_buttom` VALUES ('3', '删除', '<button type=\"button\" id=\"delFun\" class=\"btn btn-danger marR10\">删除</button>', null);
+INSERT INTO `sys_buttom` VALUES ('4', '上传', '<button type=\"button\" id=\"upLoad\" class=\"btn btn-primary marR10\">上传</button>', null);
+INSERT INTO `sys_buttom` VALUES ('5', '下载', '<button type=\"button\" id=\"downLoad\" class=\"btn btn-primary marR10\">下载</button>', null);
+INSERT INTO `sys_buttom` VALUES ('6', '上移', '<button type=\"button\" id=\"sysGridUp\" class=\"btn btn-success marR10\">上移</button>', null);
+INSERT INTO `sys_buttom` VALUES ('7', '下移', '<button type=\"button\" id=\"sysGridDown\" class=\"btn btn btn-grey marR10\">下移</button>', null);
+INSERT INTO `sys_buttom` VALUES ('8', '分配权限', '<button type=\"button\" id=\"permissions\" class=\"btn btn btn-grey marR10\">分配权限</button>', null);
+
+-- ----------------------------
+-- Table structure for sys_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_log`;
+CREATE TABLE `sys_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `accountName` varchar(30) DEFAULT NULL,
+  `module` varchar(30) DEFAULT NULL,
+  `methods` varchar(30) DEFAULT NULL,
+  `actionTime` varchar(30) DEFAULT NULL,
+  `userIP` varchar(30) DEFAULT NULL,
+  `operTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `description` varchar(5000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_log
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_resources
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_resources`;
+CREATE TABLE `sys_resources` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `parentId` int(11) DEFAULT NULL,
+  `resKey` varchar(50) DEFAULT NULL,
+  `type` varchar(40) DEFAULT NULL,
+  `resUrl` varchar(200) DEFAULT NULL,
+  `level` int(4) DEFAULT NULL,
+  `icon` varchar(100) DEFAULT NULL,
+  `ishide` int(3) DEFAULT '0',
+  `description` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_resources
+-- ----------------------------
+INSERT INTO `sys_resources` VALUES ('1', '系统基础管理', '0', 'system', '0', 'system', '1', 'fa-desktop', '0', '系统基础管理');
+INSERT INTO `sys_resources` VALUES ('2', '用户管理', '1', 'account', '1', '/user/list.shtml', '2', null, '0', null);
+INSERT INTO `sys_resources` VALUES ('3', '角色管理', '1', 'role', '1', '/role/list.shtml', '7', 'fa-list', '0', '组管理');
+INSERT INTO `sys_resources` VALUES ('4', '菜单管理', '1', 'sys_resources', '1', '/resources/list.shtml', '12', 'fa-list-alt', '0', '菜单管理');
+INSERT INTO `sys_resources` VALUES ('5', '新增用户', '2', 'account_add', '2', '/user/addUI.shtml', '3', null, '0', '&lt;button&nbsp;type=&quot;button&quot;&nbsp;id=&quot;addAccount&quot;&nbsp;class=&quot;btn&nbsp;btn-primary&nbsp;marR10&quot;&gt;新增&lt;/button&gt;');
+INSERT INTO `sys_resources` VALUES ('6', '修改用户', '2', 'account_edit', '2', '/user/editUI.shtml', '4', null, '0', '&lt;button&nbsp;type=&quot;button&quot;&nbsp;id=&quot;editAccount&quot;&nbsp;class=&quot;btn&nbsp;btn-info&nbsp;marR10&quot;&gt;编辑&lt;/button&gt;');
+INSERT INTO `sys_resources` VALUES ('7', '删除用户', '2', 'account_delete', '2', '/user/deleteById.shtml', '5', null, '0', '&lt;button&nbsp;type=&quot;button&quot;&nbsp;id=&quot;delAccount&quot;&nbsp;class=&quot;btn&nbsp;btn-danger&nbsp;marR10&quot;&gt;删除&lt;/button&gt;');
+INSERT INTO `sys_resources` VALUES ('8', '新增角色', '3', 'role_add', '2', '/role/addUI.shtml', '8', null, '0', '&lt;button&nbsp;type=&quot;button&quot;&nbsp;id=&quot;addRole&quot;&nbsp;class=&quot;btn&nbsp;btn-primary&nbsp;marR10&quot;&gt;新增&lt;/button&gt;');
+INSERT INTO `sys_resources` VALUES ('9', '修改角色', '3', 'role_edit', '2', '/role/editUI.shtml', '9', null, '0', '&lt;button&nbsp;type=&quot;button&quot;&nbsp;id=&quot;editRole&quot;&nbsp;class=&quot;btn&nbsp;btn-info&nbsp;marR10&quot;&gt;编辑&lt;/button&gt;');
+INSERT INTO `sys_resources` VALUES ('10', '删除角色', '3', 'role_delete', '2', '/role/delete.shtml', '10', null, '0', '&lt;button&nbsp;type=&quot;button&quot;&nbsp;id=&quot;delRole&quot;&nbsp;class=&quot;btn&nbsp;btn-danger&nbsp;marR10&quot;&gt;删除&lt;/button&gt;');
+INSERT INTO `sys_resources` VALUES ('11', '分配权限', '3', 'role_perss', '2', '/resources/permissions.shtml', '11', '无', '0', '&lt;button&nbsp;type=&quot;button&quot;&nbsp;id=&quot;permissions&quot;&nbsp;class=&quot;btn&nbsp;btn&nbsp;btn-grey&nbsp;marR10&quot;&gt;分配权限&lt;/button&gt;');
+INSERT INTO `sys_resources` VALUES ('25', '登陆信息管理', '0', 'sys_login', '0', 'sys_login', '18', 'fa-calendar', '0', '登陆信息管理');
+INSERT INTO `sys_resources` VALUES ('26', '用户登录记录', '25', 'sys_log_list', '1', '/userlogin/listUI.shtml', '19', null, '0', '用户登录记录');
+INSERT INTO `sys_resources` VALUES ('27', '操作日志管理', '0', 'sys_log', '0', 'sys_log', '20', 'fa-picture-o', '1', '操作日志管理');
+INSERT INTO `sys_resources` VALUES ('28', '日志查询', '27', 'sys_log', '1', '/log/list.shtml', '21', null, '0', null);
+INSERT INTO `sys_resources` VALUES ('29', '新增菜单资源', '4', 'sys_resources_add', '2', '/resources/addUI.shtml', '13', null, '0', '&lt;button&nbsp;type=&quot;button&quot;&nbsp;id=&quot;addFun&quot;&nbsp;class=&quot;btn&nbsp;btn-primary&nbsp;marR10&quot;&gt;新增&lt;/button&gt;');
+INSERT INTO `sys_resources` VALUES ('30', '修改菜单资源', '4', 'sys_resources_edit', '2', '/resources/editUI.shtml', '14', null, '0', '&lt;button&nbsp;type=&quot;button&quot;&nbsp;id=&quot;editFun&quot;&nbsp;class=&quot;btn&nbsp;btn-info&nbsp;marR10&quot;&gt;编辑&lt;/button&gt;');
+INSERT INTO `sys_resources` VALUES ('31', '删除菜单资源', '4', 'sys_resources_delete', '2', '/resources/delete.shtml', '15', null, '0', '&lt;button&nbsp;type=&quot;button&quot;&nbsp;id=&quot;delFun&quot;&nbsp;class=&quot;btn&nbsp;btn-danger&nbsp;marR10&quot;&gt;删除&lt;/button&gt;');
+INSERT INTO `sys_resources` VALUES ('32', '系统监控管理', '0', 'monitor', '0', 'monitor', '16', 'fa-tag', '0', '系统监控管理');
+INSERT INTO `sys_resources` VALUES ('33', '实时监控', '32', 'sysmonitor', '1', '/monitor/monitor.shtml', '17', null, '0', '实时监控');
+INSERT INTO `sys_resources` VALUES ('34', '分配权限', '2', 'permissions', '2', '/resources/permissions.shtml', '6', null, '0', '&lt;button&nbsp;type=&quot;button&quot;&nbsp;id=&quot;permissions&quot;&nbsp;class=&quot;btn&nbsp;btn&nbsp;btn-grey&nbsp;marR10&quot;&gt;分配权限&lt;/button&gt;');
+INSERT INTO `sys_resources` VALUES ('35', '告警列表', '32', 'monitor_warn', '1', '/monitor/list.shtml', null, null, '0', '告警列表');
+
+-- ----------------------------
+-- Table structure for sys_res_user
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_res_user`;
+CREATE TABLE `sys_res_user` (
+  `resId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  PRIMARY KEY (`userId`,`resId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_res_user
+-- ----------------------------
+INSERT INTO `sys_res_user` VALUES ('1', '3');
+INSERT INTO `sys_res_user` VALUES ('2', '3');
+INSERT INTO `sys_res_user` VALUES ('3', '3');
+INSERT INTO `sys_res_user` VALUES ('4', '3');
+INSERT INTO `sys_res_user` VALUES ('5', '3');
+INSERT INTO `sys_res_user` VALUES ('6', '3');
+INSERT INTO `sys_res_user` VALUES ('7', '3');
+INSERT INTO `sys_res_user` VALUES ('8', '3');
+INSERT INTO `sys_res_user` VALUES ('9', '3');
+INSERT INTO `sys_res_user` VALUES ('10', '3');
+INSERT INTO `sys_res_user` VALUES ('11', '3');
+INSERT INTO `sys_res_user` VALUES ('25', '3');
+INSERT INTO `sys_res_user` VALUES ('26', '3');
+INSERT INTO `sys_res_user` VALUES ('27', '3');
+INSERT INTO `sys_res_user` VALUES ('28', '3');
+INSERT INTO `sys_res_user` VALUES ('29', '3');
+INSERT INTO `sys_res_user` VALUES ('30', '3');
+INSERT INTO `sys_res_user` VALUES ('31', '3');
+INSERT INTO `sys_res_user` VALUES ('32', '3');
+INSERT INTO `sys_res_user` VALUES ('33', '3');
+INSERT INTO `sys_res_user` VALUES ('34', '3');
+INSERT INTO `sys_res_user` VALUES ('35', '3');
+
+-- ----------------------------
+-- Table structure for sys_role
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_role`;
+CREATE TABLE `sys_role` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `state` varchar(3) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `roleKey` varchar(50) DEFAULT NULL,
+  `description` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_role
+-- ----------------------------
+INSERT INTO `sys_role` VALUES ('1', '0', '管理员', 'admin', '管理员');
+INSERT INTO `sys_role` VALUES ('2', '0', '普通角色', 'simple', '普通角色');
+INSERT INTO `sys_role` VALUES ('3', '0', '超级管理员', 'SUPER', '超级管理员');
+
+-- ----------------------------
+-- Table structure for sys_server_info
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_server_info`;
+CREATE TABLE `sys_server_info` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `cpuUsage` varchar(255) DEFAULT NULL,
+  `setCpuUsage` varchar(255) DEFAULT NULL,
+  `jvmUsage` varchar(255) DEFAULT NULL,
+  `setJvmUsage` varchar(255) DEFAULT NULL,
+  `ramUsage` varchar(255) DEFAULT NULL,
+  `setRamUsage` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `operTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `mark` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_server_info
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_user
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_user`;
+CREATE TABLE `sys_user` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(20) DEFAULT NULL,
+  `accountName` varchar(20) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `credentialsSalt` varchar(100) DEFAULT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  `locked` varchar(3) DEFAULT '0',
+  `createTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deletestatus` int(1) DEFAULT '0' COMMENT '逻辑删除状态0:存在1:删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_user
+-- ----------------------------
+INSERT INTO `sys_user` VALUES ('1', '蓝缘', 'simple', '78e21a6eb88529eab722793a448ed394', '4157c3feef4a6ed91b2c28cf4392f2d1', '0', '1', '2015-05-17 22:23:15', '0');
+INSERT INTO `sys_user` VALUES ('2', '超级管理员', 'ROOT', '78e21a6eb88529eab722793a448ed394', '4157c3feef4a6ed91b2c28cf4392f2d1', '0000', '1', '2015-05-23 17:39:37', '0');
+INSERT INTO `sys_user` VALUES ('3', '管理员', 'admin', '78e21a6eb88529eab722793a448ed394', '4157c3feef4a6ed91b2c28cf4392f2d1', '3434', '1', '2015-05-23 17:39:39', '0');
+
+-- ----------------------------
+-- Table structure for sys_userlogin
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_userlogin`;
+CREATE TABLE `sys_userlogin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) DEFAULT NULL,
+  `accountName` varchar(20) DEFAULT NULL,
+  `loginTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `loginIP` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ly_user_loginlist` (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=171 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_userlogin
+-- ----------------------------
+INSERT INTO `sys_userlogin` VALUES ('170', '3', 'admin', '2017-11-24 11:04:30', '127.0.0.1');
+
+-- ----------------------------
+-- Table structure for sys_user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_user_role`;
+CREATE TABLE `sys_user_role` (
+  `userId` int(11) NOT NULL,
+  `roleId` int(11) NOT NULL,
+  PRIMARY KEY (`userId`,`roleId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_user_role
+-- ----------------------------
+INSERT INTO `sys_user_role` VALUES ('1', '2');
+INSERT INTO `sys_user_role` VALUES ('2', '3');
+INSERT INTO `sys_user_role` VALUES ('3', '1');
 
 -- ----------------------------
 -- Table structure for user
@@ -2026,24 +2090,23 @@ CREATE TABLE `user_oauth` (
 DROP TABLE IF EXISTS `version`;
 CREATE TABLE `version` (
   `version_id` varchar(32) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL COMMENT '状态1在用，0老版本',
+  `status` tinyint(4) DEFAULT NULL COMMENT '状态1在用，0老版本',
   `version_code` varchar(100) DEFAULT NULL COMMENT '版本号',
   `system_type` varchar(100) DEFAULT NULL COMMENT '系统类型： IOS ， ANDROID',
   `download_url` text COMMENT '下载地址',
   `description` text COMMENT '描述',
-  `origin` tinyint(4) DEFAULT NULL,
   `is_must` tinyint(4) DEFAULT NULL COMMENT '0:强制升级；1:非强制升级',
   `MD5` varchar(255) DEFAULT NULL,
-  `appType` varchar(20) DEFAULT NULL COMMENT '//1：正常版本，2：player精简版.....其他',
+  `app_type` varchar(20) DEFAULT NULL COMMENT '//1：正常版本，2：player精简版.....其他',
   `packagename` varchar(255) DEFAULT NULL,
   `channel` varchar(100) DEFAULT NULL COMMENT '渠道',
-  `update_tips` varchar(500) DEFAULT NULL COMMENT '升级提示语',
+  `tips` varchar(500) DEFAULT NULL COMMENT '升级提示语',
   `create_user` varchar(20) DEFAULT NULL COMMENT '创建者',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_user` varchar(20) DEFAULT NULL COMMENT '修改者',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   `flag` tinyint(4) DEFAULT '1' COMMENT '标志性删除位,-1:无效,1:有效',
-  `ban` char(1) DEFAULT '0' COMMENT '标志性删除  0:启用(默认) 1:禁用 2:不可更改',
+  `ban` tinyint(4) DEFAULT '0' COMMENT '标志性删除  0:启用(默认) 1:禁用 2:不可更改',
   UNIQUE KEY `3d_version_id_unique` (`version_id`,`packagename`,`channel`,`flag`) USING BTREE,
   KEY `3d_version_verid` (`version_id`) USING BTREE,
   KEY `3d_version_packagename` (`packagename`) USING BTREE,
@@ -2053,4 +2116,11 @@ CREATE TABLE `version` (
 -- ----------------------------
 -- Records of version
 -- ----------------------------
-INSERT INTO `version` VALUES ('test', '1', '1.0.1', 'ANDROID', 'http://www.baidu.com', '测试版本', '1', '0', null, '1', 'com.community.player', 'testChannel', '是否升级？', 't', '2017-10-18 10:41:59', 't', '2017-10-18 10:41:59', '1', '0');
+INSERT INTO `version` VALUES ('vf151v55165svdf', '1', '1.0.1', 'ANDROID', 'http://www.baidu.com', '测试版本', '0', 'vf1s6f1v56s1df15vsd1fv6s', '1', 'com.community.player', 'testChannel', '是否升级？', 't', '2017-10-18 10:41:59', 't', '2017-10-18 10:41:59', '1', '0');
+INSERT INTO `version` VALUES ('d1141sd1vsdf15', '1', '1.0.2', 'ANDROID', 'http://www.baidu.com', '测试版本', '0', 'vf1s6f1v56s1df15vsd1fv6s', '1', 'com.community.player', 'testChannel', '是否升级？', 't', '2017-10-18 10:41:59', 't', '2017-10-18 10:41:59', '1', '0');
+INSERT INTO `version` VALUES ('1csd16415v1f61vs6d', '1', '1.0.3', 'ANDROID', 'http://www.baidu.com', '测试版本', '0', 'vf1s6f1v56s1df15vsd1fv6s', '1', 'com.community.player', 'testChannel', '是否升级？', 't', '2017-10-18 10:41:59', 't', '2017-10-18 10:41:59', '1', '0');
+INSERT INTO `version` VALUES ('d1fv5s1465451', '1', '1.0.4', 'ANDROID', 'http://www.baidu.com', '测试版本', '0', 'vf1s6f1v56s1df15vsd1fv6s', '1', 'com.community.player', 'testChannel', '是否升级？', 't', '2017-10-18 10:41:59', 't', '2017-10-18 10:41:59', '1', '0');
+INSERT INTO `version` VALUES ('vf1565d1te51gb1', '1', '1.0.1', 'IOS', 'http://www.baidu.com', '测试版本', '0', 'vf1s6f1v56s1df15vsd1fv6s', '1', 'com.community.player', 'testChannel', '是否升级？', 't', '2017-10-18 10:41:59', 't', '2017-10-18 10:41:59', '1', '0');
+INSERT INTO `version` VALUES ('b15r1y1wev5', '1', '1.0.2', 'IOS', 'http://www.baidu.com', '测试版本', '0', 'vf1s6f1v56s1df15vsd1fv6s', '1', 'com.community.player', 'testChannel', '是否升级？', 't', '2017-10-18 10:41:59', 't', '2017-10-18 10:41:59', '1', '0');
+INSERT INTO `version` VALUES ('b1t5hn161h5h61hhb', '1', '1.0.3', 'IOS', 'http://www.baidu.com', '测试版本', '0', 'vf1s6f1v56s1df15vsd1fv6s', '1', 'com.community.player', 'testChannel', '是否升级？', 't', '2017-10-18 10:41:59', 't', '2017-10-18 10:41:59', '1', '0');
+INSERT INTO `version` VALUES ('b1fdg5n161uj5161j', '1', '1.0.4', 'IOS', 'http://www.baidu.com', '测试版本', '0', 'vf1s6f1v56s1df15vsd1fv6s', '1', 'com.community.player', 'testChannel', '是否升级？', 't', '2017-10-18 10:41:59', 't', '2017-10-18 10:41:59', '1', '0');
