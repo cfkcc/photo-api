@@ -30,6 +30,9 @@
 				<if test="sign != null and sign!=''">
 					sign = #{sign},
 				</if>
+				<if test="email != null and email !=''">
+					email = #{email},
+				</if>
 				<if test="status != null">
 					status = #{status},
 				</if>

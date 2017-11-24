@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
 			result.put("headImg", user.getHeadImg());
 			result.put("nickName", user.getNickname());
 			result.put("sign", user.getSign());
+			result.put("email", user.getEmail());
 			result.put("conins", Arith.round(user.getCoins().doubleValue(), 2));
 		}
 		return result;

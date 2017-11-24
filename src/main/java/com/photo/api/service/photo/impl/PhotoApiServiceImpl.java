@@ -260,6 +260,7 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 				Map<String, Object> userMap = userService.findUserInfoById(photo.getUserId());
 				userMap.remove("conins");
 				userMap.remove("sign");
+				userMap.remove("email");
 				Map<String, Object> recordMap = new HashMap<String, Object>();
 				recordMap.putAll(userMap);
 				recordMap.put("buyDay", publishTimeFormat(pbr.getCreateTime()));

@@ -1,0 +1,10 @@
+*.prefs
+.settings/.jsdtscope
+*.component
+.settings/org.eclipse.wst.jsdt.ui.superType.container
+*.name
+target/maven-archiver/pom.properties
+*.lst
+target/photos-api-0.0.1-SNAPSHOT.jar
+*.class
+/target

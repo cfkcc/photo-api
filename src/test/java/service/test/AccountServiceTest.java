@@ -163,10 +163,33 @@ public class AccountServiceTest {
 		System.out.println("########################################");
 	}
 	
-	@Test
+//	@Test
 	public void findUserInfo(){
 		String userId ="00004c879b3d4697add98d47cde5f1d0";
 		Map<String, Object> result = accountApiService.getUserInfo(userId);
+		JSONObject json = new JSONObject();
+		json.putAll(result);
+		System.out.println("########################################");
+		System.out.println(json);
+		System.out.println("########################################");
+	}
+//	@Test
+	public void getCode(){
+		String userId ="00004c879b3d4697add98d47cde5f1d0";
+		String email = "anthonyandrew78.cc@gmail.com";
+		Map<String, Object> result = accountApiService.getNewCode(userId, email);
+		JSONObject json = new JSONObject();
+		json.putAll(result);
+		System.out.println("########################################");
+		System.out.println(json);
+		System.out.println("########################################");
+	}
+	@Test
+	public void updateUserEmail(){
+		String userId ="00004c879b3d4697add98d47cde5f1d0";
+		String email = "anthonyandrew78.cc@gmail.com";
+		String code = "usvy8u";
+		Map<String, Object> result = accountApiService.updateUserEmail(userId, email, code);
 		JSONObject json = new JSONObject();
 		json.putAll(result);
 		System.out.println("########################################");

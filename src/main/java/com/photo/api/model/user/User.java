@@ -23,6 +23,8 @@ public class User implements Serializable {
     private BigDecimal coins;
 
     private String sign;
+    
+    private String email;
     public String getUserId() {
         return userId;
     }
@@ -85,6 +87,14 @@ public class User implements Serializable {
 
 	public void setSign(String sign) {
 		this.sign = sign;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override

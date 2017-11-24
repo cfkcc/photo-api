@@ -2,6 +2,8 @@ package com.photo.api.service.account.impl;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -22,14 +24,18 @@ import com.photo.api.common.enums.LoginTypeEnum;
 import com.photo.api.common.error.ErrorCode;
 import com.photo.api.common.exception.ServiceException;
 import com.photo.api.common.util.Arith;
+import com.photo.api.common.util.CommonUtil;
 import com.photo.api.common.util.CryptalUtil;
+import com.photo.api.common.util.EmailUtils;
 import com.photo.api.common.util.HttpClientUtil;
 import com.photo.api.common.util.Page;
 import com.photo.api.model.user.ThirdPartyUser;
 import com.photo.api.model.user.User;
+import com.photo.api.model.user.UserEmailCode;
 import com.photo.api.model.user.UserFans;
 import com.photo.api.model.user.UserOauth;
 import com.photo.api.service.account.AccountApiService;
+import com.photo.api.service.account.UserEmailCodeService;
 import com.photo.api.service.account.UserFansService;
 import com.photo.api.service.account.UserLikeService;
 import com.photo.api.service.account.UserOauthService;
@@ -50,6 +56,8 @@ public class AccountApiServiceImpl implements AccountApiService {
 	private UserLikeService userLikeService;
 	@Resource(name="photoGroupService")
 	private PhotoGroupService photoGroupService;
+	@Resource(name="userEmailCodeService")
+	private UserEmailCodeService userEmailCodeService;
 
     @Override
     public boolean checkThirdToken(ThirdPartyUser thirdPartyUser, boolean isOpen) throws ServiceException {
@@ -155,6 +163,7 @@ public class AccountApiServiceImpl implements AccountApiService {
 				Map<String, Object> map = userService.findUserInfoById(uf.getFansId());
 				map.remove("conins");
 				map.remove("sign");
+				map.remove("email");
 				list.add(map);
 			}
 			result.put("list", list);
@@ -178,6 +187,7 @@ public class AccountApiServiceImpl implements AccountApiService {
 				Map<String, Object> map = userService.findUserInfoById(uf.getUserId());
 				map.remove("conins");
 				map.remove("sign");
+				map.remove("email");
 				list.add(map);
 			}
 			result.put("list", list);
@@ -194,6 +204,72 @@ public class AccountApiServiceImpl implements AccountApiService {
 		result.put("fansCount", fansCount);
 		long postCount = photoGroupService.findCountByUserId(userId);
 		result.put("postCount", postCount);
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> updateUserEmail(String userId, String email, String code) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		//1、首先通过email 地址获取code的相关信息，验证code是否过去后者已经被使用
+		UserEmailCode uec = userEmailCodeService.findByCode(code);
+		if (uec != null) {
+			if(!uec.getEmail().equals(email)){
+				result.put("tips", "The email ["+email+"] is wrong!");
+				return result;
+			}
+			if(uec.getStatus()==UserEmailCode.Status.Used.getStatus()){
+				result.put("tips", "The code ["+code+"] has been used!");
+				return result;
+			}
+			int flag = uec.getExpireTime().compareTo(new Date());
+			if(flag==-1){
+				uec.setStatus(UserEmailCode.Status.Unvalid.getStatus());
+				userEmailCodeService.updatUserEmailCode(uec);
+				result.put("tips", "The code ["+code+"] is expired!");
+				return result;
+			}
+			uec.setStatus(UserEmailCode.Status.Used.getStatus());
+			userEmailCodeService.updatUserEmailCode(uec);
+			//2、再次判断该email所绑定的用户的ID 所属的用户是否存在，存在即可更新用户信息
+			User user = userService.findUserById(userId);
+			if (user != null) {
+				user.setEmail(email);
+				userService.updateUser(user);
+				result.put("tips", "Bind your email success!");
+			}
+		}else{
+			result.put("tips", "The code ["+code+"] is wrong!");
+		}
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> getNewCode(String userId, String email) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		String code  = CommonUtil.getRandomString(6, 2);
+		//1、首先通过email 地址获取code的相关信息，验证code是否过去后者已经被使用
+		UserEmailCode uec = new UserEmailCode();
+		uec.setCodeId(CommonUtil.getUUID());
+		uec.setUserId(userId);
+		uec.setCode(code);
+		uec.setType(0);
+		Date expireTime = new Date();
+		uec.setCreateTime(expireTime);
+		expireTime.setMinutes(expireTime.getMinutes()+1);
+		uec.setExpireTime(expireTime);
+		uec.setEmail(email);
+		uec.setStatus(UserEmailCode.Status.Unused.getStatus());
+		String userName = "用户";
+		User user = userService.findUserById(userId);
+		if (user!=null) {
+			userName = user.getNickname();
+		}
+		try {
+			userEmailCodeService.addUserEmailCode(uec);
+			EmailUtils.sendMail(email, userName);
+		} catch (Exception e) {
+			result.put("tips", "Send email failed!");
+		}
 		return result;
 	}
 
