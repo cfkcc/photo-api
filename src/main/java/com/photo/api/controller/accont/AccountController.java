@@ -37,7 +37,7 @@ public class AccountController extends BaseController{
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("uid", uid);
 		map.put("ip", ip);
-		return new ResponseMessage<>(map);
+		return new ResponseMessage<Map<String, Object>>(map);
 	}
 	
     /**
@@ -51,7 +51,7 @@ public class AccountController extends BaseController{
         if(StringUtils.isBlank(thirdPartyUser.getOpenId()) || StringUtils.isBlank(thirdPartyUser.getAccessToken())
                 || thirdPartyUser.getClientType() == null || StringUtils.isBlank(thirdPartyUser.getNickname())
                 || StringUtils.isBlank(thirdPartyUser.getHeadImg())){
-            return new ResponseMessage<>(ErrorCode.CODE_PARAM_ERROR.getCode(),ErrorCode.CODE_PARAM_ERROR.getMessage());
+            return new ResponseMessage<Object>(ErrorCode.CODE_PARAM_ERROR.getCode(),ErrorCode.CODE_PARAM_ERROR.getMessage());
         }
         if(thirdPartyUser.getClientType().intValue() == LoginTypeEnum.QQ.getLoginType()){
             thirdPartyUser.setUserIp(this.getClientIp());
@@ -64,12 +64,12 @@ public class AccountController extends BaseController{
             String userId = user.getUserId();
             TokenID tokenID = new TokenID(userId);
             String token = JSON.toJSONString(tokenID);
-            Map<String,Object> result = new HashMap<>();
+            Map<String,Object> result = new HashMap<String, Object>();
             result.put("user",user);
             result.put(CommonConsts.USER_TOKEN, AESUtil.encryptData(token));
-            return new ResponseMessage<>(result);
+            return new ResponseMessage<Map<String, Object>>(result);
         }else{
-            return new ResponseMessage<>(ErrorCode.CODE_AUTH_ERROR.getCode(),ErrorCode.CODE_AUTH_ERROR.getMessage());
+            return new ResponseMessage<Object>(ErrorCode.CODE_AUTH_ERROR.getCode(),ErrorCode.CODE_AUTH_ERROR.getMessage());
         }
     }
 
@@ -80,19 +80,19 @@ public class AccountController extends BaseController{
      */
     @RequestMapping("getLoginConfig")
     public Object getConfig(){
-        Map<String,Object> configMap= new HashMap<>();
-        Map<String,Object> wechatMap = new HashMap<>();
+        Map<String,Object> configMap= new HashMap<String, Object>();
+        Map<String,Object> wechatMap = new HashMap<String, Object>();
         wechatMap.put("appId",CommonConsts.WEIXIN_APP_ID);
         wechatMap.put("appKey",CommonConsts.WEIXIN_APP_SECRET);
 
-        Map<String,Object> qqMap = new HashMap<>();
+        Map<String,Object> qqMap = new HashMap<String, Object>();
         qqMap.put("appId",CommonConsts.QQ_APP_ID);
         qqMap.put("appKey",CommonConsts.QQ_APP_KEY);
 
         configMap.put("wechat",wechatMap);
         configMap.put("qq",qqMap);
 
-        return new ResponseMessage<>(configMap);
+        return new ResponseMessage<Map<String, Object>>(configMap);
     }
 	
 

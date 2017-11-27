@@ -26,7 +26,7 @@ public class ResponseAdvice extends AbstractMappingJacksonResponseBodyAdvice {
 		}
 		
 		if (!(bodyContainer.getValue() instanceof ResponseMessage)) {// 响应消息处理
-			bodyContainer.setValue(new ResponseMessage<>(ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getMessage(), bodyContainer.getValue()));
+			bodyContainer.setValue(new ResponseMessage<Object>(ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getMessage(), bodyContainer.getValue()));
 		}
 		
 		response.getHeaders().add(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");

@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Collection;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -43,11 +43,11 @@ public class PhotoBuyRecordServiceImpl implements PhotoBuyRecordService {
 	private void updateRecord(PhotoBuyRecord record){
 		photoBuyRecordDao.update(record);
 	}
-	private void addBatchRecord(List<PhotoBuyRecord> recordList){
+	private void addBatchRecord(Collection<PhotoBuyRecord> recordList){
 		photoBuyRecordDao.addBatch(recordList);
 	}
 	
-	private void updateBatchRecord(List<PhotoBuyRecord> recordList){
+	private void updateBatchRecord(Collection<PhotoBuyRecord> recordList){
 		photoBuyRecordDao.updateBatch(recordList);
 	}
 	

@@ -111,12 +111,12 @@ public abstract class BaseDaoAbstract<T> implements BaseDao<T> {
 	}
 
 	@Override
-	public int updateBatch(List<T> t) {
+	public int updateBatch(Collection<T> t) {
 		return updateBatch(CommonConsts.UPDATEBATCH, t);
 	}
 
 	@Override
-	public int updateBatch(String statement, List<T> t) {
+	public int updateBatch(String statement, Collection<T> t) {
 		return sqlSession.update(getDefaultSqlNamespace()+statement, t);
 	}
 

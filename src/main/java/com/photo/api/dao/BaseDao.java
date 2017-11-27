@@ -36,9 +36,9 @@ public interface BaseDao<T> {
 	
 	int update(String statement, T t);
 	
-	int updateBatch(List<T> t);
+	int updateBatch(Collection<T> t);
 	
-	int updateBatch(String statement, List<T> t);
+	int updateBatch(String statement, Collection<T> t);
 	
 	int delete(Object[] parameter);
 	

@@ -93,17 +93,17 @@
 				update photo_buy_record
 				<set>
 					<trim suffixOverrides=",">
-						<if test="status != null">
+						<if test="item.status != null">
 							status = #{item.status},
 						</if>
 					</trim>
 				</set>
 				<where>
 					<trim prefixOverrides="and ">
-						<if test="userId != null and userId != ''">
+						<if test="item.userId != null and item.userId != ''">
 							and user_id = #{item.userId}
 						</if>
-						<if test="photoId != null and photoId != ''">
+						<if test="item.photoId != null and item.photoId != ''">
 							and photo_id = #{item.photoId}
 						</if>
 					</trim>
