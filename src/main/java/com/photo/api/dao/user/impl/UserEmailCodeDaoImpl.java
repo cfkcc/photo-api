@@ -13,7 +13,7 @@ import com.photo.api.model.user.UserEmailCode;
 @Repository("userEmailCodeDao")
 public class UserEmailCodeDaoImpl  extends PageDaoAbstract<UserEmailCode> implements UserEmailCodeDao{
 
-	@Override
+	
 	public UserEmailCode findByParam(String userId, String email) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		if (StringUtils.isNotBlank(userId)) {
@@ -25,7 +25,7 @@ public class UserEmailCodeDaoImpl  extends PageDaoAbstract<UserEmailCode> implem
 		return findOne("findByParam", param);
 	}
 
-	@Override
+	
 	public UserEmailCode findByCode(String code) {
 		return findOne("findByCode", code);
 	}

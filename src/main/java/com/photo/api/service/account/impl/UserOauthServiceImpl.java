@@ -21,12 +21,12 @@ public class UserOauthServiceImpl implements UserOauthService {
     @Resource(name="userOauthDao")
     private UserOauthDao userOauthDao;
 
-    @Override
+    
     public UserOauth findUserOauthByOpenId(String openId, int clientType) {
         return userOauthDao.findUserOauthByOpenId(openId,clientType);
     }
 
-    @Override
+    
     public void addUserOauth(String openId, String userId, String accessToken, int clientType) {
         UserOauth userOauth = new UserOauth();
         userOauth.setBingId(CommonUtil.getUUID());

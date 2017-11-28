@@ -15,17 +15,17 @@ import com.photo.api.model.photo.PhotoBuyRecord;
 @Repository("photoDao")
 public class PhotoDaoImpl extends PageDaoAbstract<Photo> implements PhotoDao {
 
-	@Override
+	
 	public Photo findById(String photoId) {
 		return findOne("findById", photoId);
 	}
 
-	@Override
+	
 	public List<Photo> findPhotosByGroupId(String groupId) {
 		return (List<Photo>) findList("findPhotosByGroupId", groupId);
 	}
 	
-	@Override
+	
 	public List<String> findPhotoIdsByGroupId(String groupId) {
 		List<Photo> objectList = this.findPhotosByGroupId(groupId);
 		List<String> result = new ArrayList<String>();
@@ -35,7 +35,7 @@ public class PhotoDaoImpl extends PageDaoAbstract<Photo> implements PhotoDao {
 		return result;
 	}
 
-	@Override
+	
 	public Integer findCoins(String[] ids, Integer choice) {
 		Integer coins = 0;
 		if (ArrayUtils.isNotEmpty(ids)) {

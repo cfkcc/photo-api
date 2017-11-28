@@ -1,7 +1,6 @@
 package com.photo.api.dao;
 
 import java.util.Collection;
-import java.util.List;
 
 public interface BaseDao<T> {
 	

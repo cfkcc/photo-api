@@ -43,12 +43,12 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 	@Resource(name="userService")
 	private UserService userService;
 
-//	@Override
+//	
 //	public Boolean isBuy(String userId, String photoId) {
 //		return photoBuyRecordService.isBuy(userId, photoId);
 //	}
 
-	@Override
+	
 	public Boolean getPurchasingPower(String userId, String[] photoIds) {
 		//默认金币不够提示用户去充值
 		boolean isCan = Boolean.FALSE;
@@ -71,7 +71,7 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 		return isCan;
 	}
 
-	@Override
+	
 	public Boolean getPurchasingPower(String userId, String photoGroupId) {
 		//默认金币不够提示用户去充值	
 		boolean isCan = Boolean.FALSE;
@@ -93,7 +93,6 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 		return isCan;
 	}
 
-	@Override
 	public Map<String, Object> findPhotosByPage(Page page) {
 		String uid = page.getParams().get("uid")!=null?page.getParams().get("uid").toString():"";
 		page = photoService.findByPage(page);
@@ -149,7 +148,7 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 		return result;
 	}
 
-	@Override
+	
 	public Map<String, Object> findPhotoGroupsByPage(Page page) {
 		String uid = page.getParams().get("uid")!=null?page.getParams().get("uid").toString():"";
 		page = photoGroupService.findByPage(page);
@@ -213,12 +212,12 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 		return result;
 	}
 
-	@Override
+	
 	public boolean saveOrUpdateRecord(String userId, String photoId) {
 		return saveOrUpdateRecord(userId, photoId, Boolean.TRUE);
 	}
 
-	@Override
+	
 	public boolean saveOrUpdateRecord(String userId, String photoId, Boolean isSingle) {
 		boolean flag = Boolean.FALSE;
 		if (isSingle) {
@@ -242,7 +241,7 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 	}
 	
 
-	@Override
+	
 	public Map<String, Object> findPhotoBuyRecordsByPage(Page page) {
 		page = photoBuyRecordService.findByPage(page);
 		long totalCount = page.getRowCount();
@@ -301,7 +300,7 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 		return sb.toString();
 	}
 
-	@Override
+	
 	public Map<String, Object> findChoices(String photoId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		Photo p = photoService.findById(photoId);

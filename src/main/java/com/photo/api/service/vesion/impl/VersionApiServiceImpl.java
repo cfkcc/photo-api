@@ -17,7 +17,7 @@ public class VersionApiServiceImpl implements VersionApiService{
 	@Resource(name="versionService")
 	private VersionService versionService;
 
-	@Override
+	
 	public Map<String, Object> findNewVersion(String appType, String systemType, String channel) {
 		Version v = versionService.findNewVersion(appType, systemType, channel);
 		Map<String, Object> result = new HashMap<String, Object>();

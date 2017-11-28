@@ -23,22 +23,22 @@ public class UserServiceImpl implements UserService {
 	@Resource(name="userDao")
 	private UserDao userDao;
 
-    @Override
+    
     public User findUserById(String userId) {
         return userDao.findById(userId);
     }
 
-    @Override
+    
     public void updateUser(User user) {
     	userDao.update(user);
     }
 
-	@Override
+	
 	public void addUser(User user) {
 		userDao.add(user);
 	}
 	
-	 @Override
+	 
     public User addUser(String nickname, String headImg, int userType) {
         User user = new User();
         user.setUserId(CommonUtil.getUUID());
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-	@Override
+	
 	public Map<String, Object> findUserInfoById(String userId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		User user = this.findUserById(userId);

@@ -21,19 +21,19 @@ public class PayApiServiceImpl implements PayApiService {
 	@Resource(name="productInfoService")
 	private ProductInfoService productInfoService;
 
-	@Override
+	
 	public Map<String, Object> findOrdersByPage(Page page) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public void addPayOrder() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public Map<String, Object> findProductsByChannelId(String channelId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<ProductInfo> productList = productInfoService.findListByChannel(channelId);

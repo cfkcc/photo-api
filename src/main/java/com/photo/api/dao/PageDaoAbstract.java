@@ -7,7 +7,7 @@ import com.photo.api.common.util.Page;
 
 public abstract class PageDaoAbstract<T> extends BaseDaoAbstract<T> implements PageDao<T> {
 
-	@Override
+	
 	public Page findByPage(Page page) {
 		if (!page.isFindCountOnly()) {
 			page.getParams().put("offset", page.getStartPage());

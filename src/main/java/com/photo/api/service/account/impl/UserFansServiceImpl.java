@@ -18,7 +18,7 @@ public class UserFansServiceImpl implements UserFansService {
 	@Resource(name="userFansDao")
 	private UserFansDao userFansDao;
 
-	@Override
+	
 	public Boolean isFans(String userId, String fansId) {
 		Boolean isFans = Boolean.FALSE;
 		UserFans uf = this.findByUserIdAndFansId(userId, fansId);
@@ -28,7 +28,7 @@ public class UserFansServiceImpl implements UserFansService {
 		return isFans;
 	}
 
-	@Override
+	
 	public void saveOrUpdateUserFans(String userId, String fansId, Boolean isFans) {
 		UserFans uf = this.findByUserIdAndFansId(userId, fansId);
 		Integer status = isFans?UserFans.Status.Yes.getStatus():UserFans.Status.No.getStatus();
@@ -47,17 +47,17 @@ public class UserFansServiceImpl implements UserFansService {
 		}
 	}
 
-	@Override
+	
 	public long findCountByUserId(String fansId) {
 		return userFansDao.findCountByUserId(fansId);
 	}
 
-	@Override
+	
 	public long findFansCountByUserId(String userId) {
 		return userFansDao.findFansCountByUserId(userId);
 	}
 
-	@Override
+	
 	public Page findFansByPage(String userId, Integer pageIndex, Integer pageSize, String sorting) {
 		Page page = new Page(pageIndex);
 		if (pageSize != null) {
@@ -70,7 +70,7 @@ public class UserFansServiceImpl implements UserFansService {
 		return userFansDao.findByPage(page);
 	}
 
-	@Override
+	
 	public Page findUsersByPage(String fansId, Integer pageIndex, Integer pageSize, String sorting) {
 		Page page = new Page(pageIndex);
 		if (pageSize != null) {
@@ -94,12 +94,12 @@ public class UserFansServiceImpl implements UserFansService {
 		userFansDao.update(uf);
 	}
 
-	@Override
+	
 	public Page findFansByPage(Page page) {
 		return userFansDao.findByPage(page);
 	}
 
-	@Override
+	
 	public Page findUsersByPage(Page page) {
 		return userFansDao.findByPage(page);
 	}

@@ -11,12 +11,12 @@ import com.photo.api.model.pay.ProductInfo;
 @Repository("productInfoDao")
 public class ProductInfoDaoImpl extends PageDaoAbstract<ProductInfo> implements ProductInfoDao {
 
-	@Override
+	
 	public ProductInfo findById(String productId) {
 		return findOne("findById", productId);
 	}
 
-	@Override
+	
 	public List<ProductInfo> findListByChannel(String payChannelId) {
 		return (List<ProductInfo>) findList("findListByChannel", payChannelId);
 	}

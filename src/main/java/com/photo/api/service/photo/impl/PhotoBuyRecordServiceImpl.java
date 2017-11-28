@@ -21,7 +21,7 @@ public class PhotoBuyRecordServiceImpl implements PhotoBuyRecordService {
 	@Resource(name="photoBuyRecordDao")
 	private PhotoBuyRecordDao photoBuyRecordDao;
 
-	@Override
+	
 	public Boolean isBuy(String userId, String photoId) {
 		Boolean isBuy = Boolean.FALSE;
 		PhotoBuyRecord pbr = this.findByUserIdAndPhotoId(userId, photoId);
@@ -31,7 +31,7 @@ public class PhotoBuyRecordServiceImpl implements PhotoBuyRecordService {
 		return isBuy;
 	}
 
-	@Override
+	
 	public Page findByPage(Page page) {
 		return photoBuyRecordDao.findByPage(page);
 	}
@@ -58,7 +58,7 @@ public class PhotoBuyRecordServiceImpl implements PhotoBuyRecordService {
 		return photoBuyRecordDao.findOne("findByUserIdAndPhotoId", param);
 	}
 
-	@Override
+	
 	public void saveOrUpdateRecord(String userId, String photoId, Boolean isSingle) {
 		PhotoBuyRecord pbr = this.findByUserIdAndPhotoId(userId, photoId);
 		Integer status = this.isBuy(userId, photoId)?PhotoBuyRecord.Status.Yes.getStatus():PhotoBuyRecord.Status.No.getStatus();
@@ -78,7 +78,7 @@ public class PhotoBuyRecordServiceImpl implements PhotoBuyRecordService {
 		
 	}
 
-	@Override
+	
 	public void saveOrUpdateRecord(String userId, String[] photoIds, Boolean isSingle) {
 		int length = photoIds.length;
 		if (length==1) {

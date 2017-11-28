@@ -3,7 +3,6 @@ package com.photo.api.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class BaseController {
     protected HttpServletRequest request;

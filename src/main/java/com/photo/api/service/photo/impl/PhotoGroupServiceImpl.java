@@ -15,17 +15,17 @@ public class PhotoGroupServiceImpl implements PhotoGroupService {
 	@Resource(name="photoGroupDao")
 	private PhotoGroupDao photoGroupDao;
 
-	@Override
+	
 	public PhotoGroup findById(String groupId) {
 		return photoGroupDao.findById(groupId);
 	}
 
-	@Override
+	
 	public Page findByPage(Page page) {
 		return photoGroupDao.findByPage(page);
 	}
 
-	@Override
+	
 	public long findCountByUserId(String userId) {
 		Page page = new Page();
 		page.getParams().put("userId", userId);

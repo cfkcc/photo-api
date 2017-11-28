@@ -17,12 +17,12 @@ public class UserDaoImpl  extends PageDaoAbstract<User> implements UserDao{
 		
 	}
 
-	@Override
+	
 	public Integer findCount() {
 		return (Integer) find("findCount",null);
 	}
 
-	@Override
+	
 	public Map<String, Object> findWithMap(Map<String, Object> map) {
 		return (Map<String, Object>) find("findWithMap",map);
 	}

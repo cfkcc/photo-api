@@ -14,7 +14,7 @@ public class VersionServiceImpl implements VersionService{
 	@Resource(name="versionDao")
 	private VersionDao versionDao;
 
-	@Override
+	
 	public Version findNewVersion(String appType, String systemType, String channel) {
 		return versionDao.findNewVersion(appType, systemType, channel);
 	}

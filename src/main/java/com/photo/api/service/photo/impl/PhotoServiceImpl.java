@@ -18,32 +18,32 @@ public class PhotoServiceImpl implements PhotoService {
 	@Resource(name="photoDao")
 	private PhotoDao photoDao;
 
-	@Override
+	
 	public Photo findById(String photoId) {
 		return photoDao.findById(photoId);
 	}
 
-	@Override
+	
 	public Page findByPage(Page page) {
 		return photoDao.findByPage(page);
 	}
 
-	@Override
+	
 	public Integer findCoinsByPhotoIds(String[] photoId) {
 		return photoDao.findCoins(photoId, PhotoBuyRecord.Choice.Single.getChoices());
 	}
 
-	@Override
+	
 	public Integer findCoinsByGroupId(String groupId) {
 		return photoDao.findCoins(new String[]{groupId}, PhotoBuyRecord.Choice.Group.getChoices());
 	}
 
-	@Override
+	
 	public List<String> findPhotoIdsByGroupId(String photoGroupId) {
 		return photoDao.findPhotoIdsByGroupId(photoGroupId);
 	}
 
-	@Override
+	
 	public List<Photo> findPhotoByGroupId(String photoGroupId) {
 		return photoDao.findPhotosByGroupId(photoGroupId);
 	}

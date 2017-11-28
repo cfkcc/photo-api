@@ -12,7 +12,7 @@ import com.photo.api.model.user.UserFans;
 @Repository("userFansDao")
 public class UserFansDaoImpl extends PageDaoAbstract<UserFans> implements UserFansDao {
 
-	@Override
+	
 	public UserFans findByUserIdAndFansId(String userId, String fansId) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("userId", userId);
@@ -20,13 +20,13 @@ public class UserFansDaoImpl extends PageDaoAbstract<UserFans> implements UserFa
 		return findOne("findByUserIdAndFansId", param);
 	}
 
-	@Override
+	
 	public long findCountByUserId(String userId) {
 		long rowCount = ((Integer)find("findCountByUserId", userId)).longValue();
 		return rowCount;
 	}
 
-	@Override
+	
 	public long findFansCountByUserId(String fansId) {
 		long rowCount = ((Integer)find("findFansCountByUserId", fansId)).longValue();
 		return rowCount;

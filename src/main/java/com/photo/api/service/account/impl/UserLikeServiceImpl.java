@@ -18,7 +18,7 @@ public class UserLikeServiceImpl implements UserLikeService {
 	@Resource(name="userLikeDao")
 	private UserLikeDao userLikeDao;
 
-	@Override
+	
 	public Boolean isLike(String userId, String likerId) {
 		Boolean isLike = Boolean.FALSE;
 		UserLike uk = this.findByUserIdAndLikerId(userId, likerId);
@@ -43,7 +43,7 @@ public class UserLikeServiceImpl implements UserLikeService {
 		return userLikeDao.findOne("findByUserIdAndLikerId", param);
 	}
 
-	@Override
+	
 	public void saveOrUpdateUserLike(String userId, String likerId, Boolean isLike) {
 		UserLike uk = this.findByUserIdAndLikerId(userId, likerId);
 		Integer status = isLike?UserLike.Status.Like.getStatus():UserLike.Status.Unlike.getStatus();
@@ -62,7 +62,7 @@ public class UserLikeServiceImpl implements UserLikeService {
 		}
 	}
 
-	@Override
+	
 	public long findLikeCountByLikerId(String likerId) {
 		return userLikeDao.findLikeCountByLikerId(likerId);
 	}

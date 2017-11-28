@@ -17,17 +17,17 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 	@Resource(name="productInfoDao")
 	private ProductInfoDao productInfoDao;
 
-	@Override
+	
 	public ProductInfo findById(String proId) {
 		return productInfoDao.findById(proId);
 	}
 
-	@Override
+	
 	public List<ProductInfo> findListByChannel(String channelId) {
 		return productInfoDao.findListByChannel(channelId);
 	}
 
-	@Override
+	
 	public Page findByPage(Page page) {
 		return productInfoDao.findByPage(page);
 	}

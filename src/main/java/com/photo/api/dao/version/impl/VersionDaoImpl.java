@@ -12,7 +12,7 @@ import com.photo.api.model.version.Version;
 @Repository("versionDao")
 public class VersionDaoImpl extends PageDaoAbstract<Version> implements VersionDao{
 
-	@Override
+	
 	public Version findNewVersion(String appType, String systemType, String channel) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("appType", appType);

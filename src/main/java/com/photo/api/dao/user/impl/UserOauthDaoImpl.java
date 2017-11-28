@@ -12,7 +12,7 @@ import com.photo.api.model.user.UserOauth;
 @Repository("userOauthDao")
 public class UserOauthDaoImpl extends PageDaoAbstract<UserOauth> implements UserOauthDao {
 
-	@Override
+	
 	public UserOauth findUserOauthByOpenId(String openId, int clientType) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("openId", openId);

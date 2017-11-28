@@ -59,7 +59,7 @@ public class AccountApiServiceImpl implements AccountApiService {
 	@Resource(name="userEmailCodeService")
 	private UserEmailCodeService userEmailCodeService;
 
-    @Override
+    
     public boolean checkThirdToken(ThirdPartyUser thirdPartyUser, boolean isOpen) throws ServiceException {
     	if (!isOpen) {
 			return Boolean.TRUE;
@@ -118,7 +118,7 @@ public class AccountApiServiceImpl implements AccountApiService {
         return false;
     }
     
-    @Override
+    
     public User addThirdUserLogin(ThirdPartyUser thirdPartyUser) {
         String openId = thirdPartyUser.getOpenId();
         Integer clientType = thirdPartyUser.getClientType();
@@ -135,7 +135,7 @@ public class AccountApiServiceImpl implements AccountApiService {
         return user;
     }
 
-	@Override
+	
 	public Map<String, Object> getBalance(String userId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		User user = userService.findUserById(userId);
@@ -147,7 +147,7 @@ public class AccountApiServiceImpl implements AccountApiService {
 		return result;
 	}
 
-	@Override
+	
 	public Map<String, Object> findFans(Page page) {
 		page = userFansService.findFansByPage(page);
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -171,7 +171,7 @@ public class AccountApiServiceImpl implements AccountApiService {
 		return result;
 	}
 
-	@Override
+	
 	public Map<String, Object> findFowllowed(Page page) {
 		page = userFansService.findFansByPage(page);
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -195,7 +195,7 @@ public class AccountApiServiceImpl implements AccountApiService {
 		return result;
 	}
 
-	@Override
+	
 	public Map<String, Object> getUserInfo(String userId) {
 		Map<String, Object> result = userService.findUserInfoById(userId);
 		long followingCount = userFansService.findCountByUserId(userId);
@@ -207,7 +207,7 @@ public class AccountApiServiceImpl implements AccountApiService {
 		return result;
 	}
 
-	@Override
+	
 	public Map<String, Object> updateUserEmail(String userId, String email, String code) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		//1、首先通过email 地址获取code的相关信息，验证code是否过去后者已经被使用
@@ -243,7 +243,7 @@ public class AccountApiServiceImpl implements AccountApiService {
 		return result;
 	}
 
-	@Override
+	
 	public Map<String, Object> getNewCode(String userId, String email) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		String code  = CommonUtil.getRandomString(6, 2);
