@@ -11,8 +11,9 @@ public interface UserService {
     void updateUser(User user);
     
     void addUser(User user);
+    User addUser(String nickName, String headImage, String sign);
     
-    User addUser(String nickname,String headImg,int userType);
+    void saveOrUpdateUserInfo(String userId, String nickName, String headImage, String sign);
     
     Map<String, Object> findUserInfoById(String userId);
 }

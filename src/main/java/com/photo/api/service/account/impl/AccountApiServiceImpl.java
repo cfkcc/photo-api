@@ -1,8 +1,8 @@
 package com.photo.api.service.account.impl;
 
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -12,7 +12,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -125,7 +125,7 @@ public class AccountApiServiceImpl implements AccountApiService {
         UserOauth userOauth = userOauthService.findUserOauthByOpenId(openId, clientType);
         String userId = null;
         if(userOauth == null){
-            User user = userService.addUser(thirdPartyUser.getNickname(), thirdPartyUser.getHeadImg(), 1);
+            User user = userService.addUser(thirdPartyUser.getNickname(), thirdPartyUser.getHeadImg(), "");
             userId = user.getUserId();
             userOauthService.addUserOauth(openId,userId,thirdPartyUser.getAccessToken(),clientType);
         }else{
@@ -259,18 +259,48 @@ public class AccountApiServiceImpl implements AccountApiService {
 		uec.setExpireTime(expireTime);
 		uec.setEmail(email);
 		uec.setStatus(UserEmailCode.Status.Unused.getStatus());
-		String userName = "用户";
-		User user = userService.findUserById(userId);
-		if (user!=null) {
-			userName = user.getNickname();
-		}
+		String userName = "ID"+CommonUtil.getRandomString(6, 0);
+		
 		try {
+			if (StringUtils.isEmpty(userId)) {
+				User user = new User();
+				userId = CommonUtil.getUUID();
+				user.setUserId(userId);
+				user.setCoins(BigDecimal.ZERO);
+//				user.setEmail(email);
+				user.setStatus(1);
+				user.setNickname(userName);
+				user.setCreateTime(new Date());
+				user.setUserType(1);
+				userService.addUser(user);
+			}else{
+				User user = userService.findUserById(userId);
+				if (user!=null) {
+					userName = user.getNickname();
+				}
+			}
 			userEmailCodeService.addUserEmailCode(uec);
-			EmailUtils.sendMail(email, userName);
+			EmailUtils.sendMail(email, userName, code);
+			result.put("userId", userId);
 		} catch (Exception e) {
 			result.put("tips", "Send email failed!");
 		}
 		return result;
+	}
+
+	@Override
+	public void saveOrUpdateUserFans(String userId, String fansId, Boolean isFans) {
+		userFansService.saveOrUpdateUserFans(userId, fansId, isFans);		
+	}
+
+	@Override
+	public void saveOrUpdateUserLike(String userId, String likerId, Boolean isLike) {
+		userLikeService.saveOrUpdateUserLike(userId, likerId, isLike);		
+	}
+
+	@Override
+	public void saveOrUpdateUserInfo(String userId, String nickName, String headImage, String sign) {
+		userService.saveOrUpdateUserInfo(userId, nickName, headImage, sign);
 	}
 
 }

@@ -33,4 +33,26 @@ public interface AccountApiService {
      * @return
      */
     public Map<String, Object> getNewCode(String userId, String email);
+	/**
+	 * 保存关注记录状态
+	 * @param userId 被关注者ID
+	 * @param fansId 关注者
+	 * @param isFans
+	 */
+	public void saveOrUpdateUserFans(String userId, String fansId, Boolean isFans);
+	/**
+	 * 保存点赞记录状态
+	 * @param userId
+	 * @param likerId
+	 * @param isLike
+	 */
+	public void saveOrUpdateUserLike(String userId, String likerId, Boolean isLike);
+	/**
+	 * 修改用户信息
+	 * @param userId
+	 * @param nickName
+	 * @param headImage
+	 * @param sign
+	 */
+	public void saveOrUpdateUserInfo(String userId, String nickName, String headImage, String sign);
 }

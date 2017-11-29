@@ -32,10 +32,10 @@ public class AccountController extends BaseController{
 	@RequestMapping("login")
 	public Object login(){
 
-		String uid = getRequestUserId();
+//		String uid = getRequestUserId();
 		String ip = getClientIp();
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("uid", uid);
+//		map.put("uid", uid);
 		map.put("ip", ip);
 		return new ResponseMessage<Map<String, Object>>(map);
 	}

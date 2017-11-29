@@ -32,16 +32,19 @@ public class EmailUtils {
 	private final static String FROM_EMAIL = "chris_78@163.com";
 	private final static String EMAIL_NAME = "chris_78@163.com";
 	private final static String EMAIL_PASSWORD = "qazwsxedc";
-	private final static String EMAIL_TITLE = "请激活您的PayPal账户";
-	private static String EMAIL_CENTENT = "Dear %s:\n \tPlease click this link (https://www.baidu.com/) to bind your email! \t Thank you! ";
-	public static void sendMail(String toEmail, String title, String centent) throws Exception {
+	private final static String EMAIL_TITLE = "Your Active Code";
+	private static String EMAIL_CENTENT = "Dear %s:\n \tYour bind code is %s, please use this code in one minute! \t Thank you! ";
+	/*public static void sendMail(String toEmail, String title, String centent) throws Exception {
 		send(FROM_EMAIL, toEmail, EMAIL_NAME, EMAIL_PASSWORD, title, centent);
-	}
+	}*/
 	public static void sendMail(String toEmail, String title, String centent, String userName) throws Exception {
 		send(FROM_EMAIL, toEmail, EMAIL_NAME, EMAIL_PASSWORD, title, String.format(centent, userName));
 	}
 	public static void sendMail(String toEmail, String userName) throws Exception {
 		send(FROM_EMAIL, toEmail, EMAIL_NAME, EMAIL_PASSWORD, EMAIL_TITLE, String.format(EMAIL_CENTENT, userName));
+	}
+	public static void sendMail(String toEmail, String userName, String code) throws Exception {
+		send(FROM_EMAIL, toEmail, EMAIL_NAME, EMAIL_PASSWORD, EMAIL_TITLE, String.format(EMAIL_CENTENT, userName, code));
 	}
 	/**
 	 * 发送邮件　(暂时只支持163邮箱发送)

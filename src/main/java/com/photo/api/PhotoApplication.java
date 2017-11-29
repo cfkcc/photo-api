@@ -1,14 +1,15 @@
 package com.photo.api;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+@Configuration
+@ComponentScan(basePackages={"com.photo.api"})
+@ImportResource({"classpath*:conf/spring.xml"})
 @SpringBootApplication
 public class PhotoApplication {
 	

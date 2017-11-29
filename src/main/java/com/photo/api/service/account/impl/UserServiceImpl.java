@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -38,16 +39,36 @@ public class UserServiceImpl implements UserService {
 		userDao.add(user);
 	}
 	
-	 
-    public User addUser(String nickname, String headImg, int userType) {
-        User user = new User();
-        user.setUserId(CommonUtil.getUUID());
-        user.setNickname(nickname);
-        user.setHeadImg(headImg);
-        user.setUserType(userType);
-        user.setCreateTime(new Date());
-        userDao.add(user);
-        return user;
+    public void saveOrUpdateUserInfo(String userId, String nickName, String headImage, String sign) {
+    	User user = null;
+    	if (StringUtils.isNotEmpty(userId)) {
+			user = this.findUserById(userId);
+			if (StringUtils.isNotEmpty(nickName)) {
+				user.setNickname(nickName);
+			}
+			if (StringUtils.isNotEmpty(headImage)) {
+				user.setHeadImg(headImage);;
+			}
+			if (StringUtils.isNotEmpty(sign)) {
+				user.setSign(sign);;
+			}
+			this.updateUser(user);
+		}else{
+	        user = new User();
+	        user.setUserId(CommonUtil.getUUID());
+	        if (StringUtils.isNotEmpty(nickName)) {
+				user.setNickname(nickName);
+			}
+			if (StringUtils.isNotEmpty(headImage)) {
+				user.setHeadImg(headImage);;
+			}
+			if (StringUtils.isNotEmpty(sign)) {
+				user.setSign(sign);;
+			}
+	        user.setUserType(0);
+	        user.setCreateTime(new Date());
+	        this.addUser(user);
+		}
     }
 
 	
@@ -63,6 +84,26 @@ public class UserServiceImpl implements UserService {
 			result.put("conins", Arith.round(user.getCoins().doubleValue(), 2));
 		}
 		return result;
+	}
+
+
+	@Override
+	public User addUser(String nickName, String headImage, String sign) {
+		User user = new User();
+        user.setUserId(CommonUtil.getUUID());
+        if (StringUtils.isNotEmpty(nickName)) {
+			user.setNickname(nickName);
+		}
+		if (StringUtils.isNotEmpty(headImage)) {
+			user.setHeadImg(headImage);;
+		}
+		if (StringUtils.isNotEmpty(sign)) {
+			user.setSign(sign);;
+		}
+        user.setUserType(0);
+        user.setCreateTime(new Date());
+        this.addUser(user);	
+        return user;
 	}
 	 
 }

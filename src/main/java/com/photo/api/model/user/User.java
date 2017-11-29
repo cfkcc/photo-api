@@ -19,12 +19,14 @@ public class User implements Serializable {
     private Integer status;
 
     private Date createTime;
+    private Date updateTime;
     
     private BigDecimal coins;
 
     private String sign;
     
     private String email;
+    private String updateUser;
     public String getUserId() {
         return userId;
     }
@@ -96,11 +98,28 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public String getUpdateUser() {
+		return updateUser;
+	}
+
+	public void setUpdateUser(String updateUser) {
+		this.updateUser = updateUser;
+	}
 
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", nickname=" + nickname + ", headImg=" + headImg + ", userType=" + userType
-				+ ", status=" + status + ", createTime=" + createTime + ", coins=" + coins + ", sign=" + sign + "]";
+				+ ", status=" + status + ", createTime=" + createTime + ", updateTime=" + updateTime + ", coins="
+				+ coins + ", sign=" + sign + ", email=" + email + ", updateUser=" + updateUser + "]";
 	}
 
 }

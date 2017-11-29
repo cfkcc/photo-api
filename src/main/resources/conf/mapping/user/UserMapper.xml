@@ -14,6 +14,80 @@
 		select count(*) from user
 	</select>
 	
+	<insert id="add" parameterType="com.photo.api.model.user.User">
+		insert into user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null and userId != ''">
+				user_id,
+			</if>
+			<if test="nickname != null and nickname != ''">
+				nickname,
+			</if>
+			<if test="headImg != null and headImg != ''">
+				head_img,
+			</if>
+			<if test="sign != null and sign != ''">
+				sign,
+			</if>
+			<if test="email != null and email != ''">
+				email,
+			</if>
+			<if test="updateUser != null and updateUser != ''">
+				update_user,
+			</if>
+			<if test="userType != null">
+				user_type,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="coins != null">
+				coins,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null and userId != ''">
+				#{userId},
+			</if>
+			<if test="nickname != null and nickname != ''">
+				#{nickname},
+			</if>
+			<if test="headImg != null and headImg != ''">
+				#{headImg},
+			</if>
+			<if test="sign != null and sign != ''">
+				#{sign},
+			</if>
+			<if test="email != null and email != ''">
+				#{email},
+			</if>
+			<if test="updateUser != null and updateUser != ''">
+				#{updateUser},
+			</if>
+			<if test="userType != null">
+				#{userType},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="coins != null">
+				#{coins},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+		</trim>
+	</insert>
+	
 	<update id="update" parameterType="com.photo.api.model.user.User">
 		update user 
 		<set>

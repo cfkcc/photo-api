@@ -7,13 +7,13 @@ import org.apache.commons.lang3.StringUtils;
 public class BaseController {
     protected HttpServletRequest request;
 
-    protected String getRequestUserId(){
+  /*  protected String getRequestUserId(){
         Object attribute = request.getAttribute("uid");
         if(attribute != null){
             return String.valueOf(attribute);
         }
         return null;
-    }
+    }*/
 
 
     protected String getClientIp(){
