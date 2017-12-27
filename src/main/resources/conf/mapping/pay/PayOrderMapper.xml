@@ -1,41 +1,103 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="PayOrderMapper">
 
-	<select id="findByOrderNo" resultType="com.photo.api.model.pay.PayOrder">
-		select * from pay_order where order_no = #{orderNo}
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.photo.api.model.pay.PayOrder">
+		<id column="order_no" property="orderNo" />
+		<result column="user_id" property="userId" />
+		<result column="product_id" property="productId" />
+		<result column="order_amount" property="orderAmount" />
+		<result column="channel_id" property="channelId" />
+		<result column="order_desc" property="orderDesc" />
+		<result column="order_state" property="orderState" />
+		<result column="deliver_state" property="deliverState" />
+		<result column="pay_status_code" property="payStatusCode" />
+		<result column="pay_status_msg" property="payStatusMsg" />
+		<result column="transaction_id" property="transactionId" />
+		<result column="create_time" property="createTime" />
+		<result column="end_time" property="endTime" />
+		<result column="replenish_states" property="replenishStates" />
+		<result column="replenish_desc" property="replenishDesc" />
+		<result column="system_type" property="systemType" />
+		<result column="passback_params" property="passbackParams" />
+		<result column="app_id" property="appId" />
+		<result column="package_name" property="packageName" />
+		<result column="pay_type" property="payType" />
+	</resultMap>
+	
+	<sql id="sqlId">
+		order_no,
+		user_id,
+		product_id,
+		order_amount,
+		channel_id,
+		order_desc,
+		order_state,
+		deliver_state,
+		pay_status_code,
+		pay_status_msg,
+		transaction_id,
+		create_time,
+		end_time,
+		replenish_states,
+		replenish_desc,
+		system_type,
+		passback_params,
+		app_id,
+		package_name,
+		pay_type
+	</sql>
+	
+	<select id="findById" resultMap="BaseResultMap">
+		select
+			<include refid="sqlId"/>
+		from pay_order where order_no = #{payOrder}
 	</select>
-	<select id="findByPayId" resultType="com.photo.api.model.pay.PayOrder">
-		select * from pay_order where pay_id = #{payId}
+	
+	<select id="findListByUserId" resultMap="BaseResultMap">
+		select
+			<include refid="sqlId"/>
+		from pay_order where user_id = #{userId}
 	</select>
-	<select id="findByTransactionId" resultType="com.photo.api.model.pay.PayOrder">
-		select * from pay_order where transaction_id = #{transactionId}
+	<select id="findByTransactionId" resultMap="BaseResultMap">
+		select
+			<include refid="sqlId"/>
+		from pay_order where transaction_id = #{transactionId}
 	</select>
-	<select id="findListByUserId" resultType="com.photo.api.model.pay.PayOrder">
-		select * from pay_order where user_id = #{userId}
+	<select id="findPayOrderList" resultMap="BaseResultMap">
+		select
+			<include refid="sqlId"/>
+		from pay_order where app_id = #{appId} and package_name = #{packageName} and channel_id = #{channelId}
 	</select>
-	<select id="findByPage" resultType="com.photo.api.model.pay.PayOrder">
-		select * from pay_order
+	<select id="findByPage" resultMap="BaseResultMap">
+		select
+			<include refid="sqlId"/>
+		from pay_order
 		<where>
 			<trim prefixOverrides="and ">
 				<if test="userId != null and userId != ''">
 					and user_id = #{userId}
 				</if>
-				<if test="payChannelId != null and payChannelId != ''">
-					and pay_channel_id = #{payChannelId}
+				<if test="appId != null and appId != ''">
+					and app_id = #{appId}
 				</if>
-				<if test="orderState != null">
-					and order_state = #{orderState}
+				<if test="packageName != null and packageName != ''">
+					and package_name = #{packageName}
+				</if>
+				<if test="channelId != null and channelId != ''">
+					and channel_id = #{channelId}
+				</if>
+				<if test="systemType != null and systemType != ''">
+					and system_type = #{systemType}
 				</if>
 			</trim>
 			<if test="ordering != null">
 				order by #{ordering}
 			</if>
 		</where>
-		
 		limit #{offset},#{limit}
 	</select>
-	
 	<select id="findCountByPage" resultType="Integer">
 		select count(*) from pay_order
 		<where>
@@ -43,11 +105,17 @@
 				<if test="userId != null and userId != ''">
 					and user_id = #{userId}
 				</if>
-				<if test="payChannelId != null and payChannelId != ''">
-					and pay_channel_id = #{payChannelId}
+				<if test="appId != null and appId != ''">
+					and app_id = #{appId}
 				</if>
-				<if test="orderState != null">
-					and order_state = #{orderState}
+				<if test="packageName != null and packageName != ''">
+					and package_name = #{packageName}
+				</if>
+				<if test="channelId != null and channelId != ''">
+					and channel_id = #{channelId}
+				</if>
+				<if test="systemType != null and systemType != ''">
+					and system_type = #{systemType}
 				</if>
 			</trim>
 		</where>
@@ -63,29 +131,23 @@
 			<if test="userId != null and userId != ''">
 				user_id,
 			</if>
-			<if test="payId != null and payId != ''">
-				pay_id,
-			</if>
 			<if test="productId != null and productId != ''">
 				product_id,
 			</if>
-			<if test="orderAmount != null">
+			<if test="orderAmount != null and orderAmount != ''">
 				order_amount,
 			</if>
-			<if test="payChannelId != null and payChannelId != ''">
-				pay_channel_id,
+			<if test="channelId != null and channelId != ''">
+				channel_id,
 			</if>
 			<if test="orderDesc != null and orderDesc != ''">
 				order_desc,
 			</if>
-			<if test="orderState != null">
+			<if test="orderState != null and orderState != ''">
 				order_state,
 			</if>
-			<if test="deliverState != null">
+			<if test="deliverState != null and deliverState != ''">
 				deliver_state,
-			</if>
-			<if test="operator != null and operator != ''">
-				operator,
 			</if>
 			<if test="payStatusCode != null">
 				pay_status_code,
@@ -96,77 +158,171 @@
 			<if test="transactionId != null and transactionId != ''">
 				transaction_id,
 			</if>
-			<if test="price != null">
-				price,
-			</if>
-			<if test="currency != null and currency != ''">
-				currency,
-			</if>
 			<if test="createTime != null">
 				create_time,
 			</if>
 			<if test="endTime != null">
 				end_time,
 			</if>
-			<if test="systemType != null and systemType != ''">
+			<if test="replenishStates != null">
+				replenish_states,
+			</if>
+			<if test="replenishDesc != null and replenishDesc != ''">
+				replenish_desc,
+			</if>
+			<if test="systemType != null">
 				system_type,
+			</if>
+			<if test="passbackParams != null and passbackParams != ''">
+				passback_params,
+			</if>
+			<if test="appId != null and appId != ''">
+				app_id,
+			</if>
+			<if test="packageName != null and packageName != ''">
+				package_name,
+			</if>
+			<if test="payType != null and payType != ''">
+				pay_type,
 			</if>
 		</trim>
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
-			<if test="orderNo != null and orderNo != ''">
-				#{orderNo},
-			</if>
-			<if test="userId != null and userId != ''">
-				#{userId},
-			</if>
-			<if test="payId != null and payId != ''">
-				#{payId},
-			</if>
-			<if test="productId != null and productId != ''">
-				#{productId},
-			</if>
-			<if test="orderAmount != null">
-				#{orderAmount},
-			</if>
-			<if test="payChannelId != null and payChannelId != ''">
-				#{payChannelId},
-			</if>
-			<if test="orderDesc != null and orderDesc != ''">
-				#{orderDesc},
-			</if>
-			<if test="orderState != null">
-				#{orderState},
-			</if>
-			<if test="deliverState != null">
-				#{deliverState},
-			</if>
-			<if test="operator != null and operator != ''">
-				#{operator},
-			</if>
-			<if test="payStatusCode != null">
-				#{payStatusCode},
-			</if>
-			<if test="payStatusMsg != null and payStatusMsg != ''">
-				#{payStatusMsg},
-			</if>
-			<if test="transactionId != null and transactionId != ''">
-				#{transactionId},
-			</if>
-			<if test="price != null">
-				#{price},
-			</if>
-			<if test="currency != null and currency != ''">
-				#{currency},
-			</if>
-			<if test="createTime != null">
-				#{createTime},
-			</if>
-			<if test="endTime != null">
-				#{endTime},
-			</if>
-			<if test="systemType != null and systemType != ''">
-				#{systemType},
+			<if test="orderId != null and orderId != ''">
+					#{orderId},
+				</if>
+				<if test="userId != null and userId != ''">
+					#{userId},
+				</if>
+				<if test="productId != null and productId != ''">
+					#{productId},
+				</if>
+				<if test="orderAmount != null and orderAmount != ''">
+					#{orderAmount},
+				</if>
+				<if test="channelId != null and channelId != ''">
+					#{channelId},
+				</if>
+				<if test="orderDesc != null and orderDesc != ''">
+					#{orderDesc},
+				</if>
+				<if test="orderState != null and orderState != ''">
+					#{orderState},
+				</if>
+				<if test="deliverState != null and deliverState != ''">
+					#{deliverState},
+				</if>
+				<if test="payStatusCode != null">
+					#{payStatusCode},
+				</if>
+				<if test="payStatusMsg != null and payStatusMsg != ''">
+					#{payStatusMsg},
+				</if>
+				<if test="transactionId != null and transactionId != ''">
+					#{transactionId},
+				</if>
+				<if test="createTime != null">
+					#{createTime},
+				</if>
+				<if test="endTime != null">
+					#{endTime},
+				</if>
+				<if test="replenishStates != null">
+					#{replenishStates},
+				</if>
+				<if test="replenishDesc != null and replenishDesc != ''">
+					#{replenishDesc},
+				</if>
+				<if test="systemType != null">
+					#{systemType},
+				</if>
+				<if test="passbackParams != null and passbackParams != ''">
+					#{passbackParams},
+				</if>
+				<if test="appId != null and appId != ''">
+					#{appId},
+				</if>
+				<if test="packageName != null and packageName != ''">
+					#{packageName},
+				</if>
+				<if test="payType != null and payType != ''">
+					#{payType},
 			</if>
 		</trim>
 	</insert>
+	
+	<update id="update" parameterType="com.photo.api.model.pay.PayOrder">
+		update pay_order 
+		<set>
+			<trim suffixOverrides=",">
+				<if test="orderNo != null and orderNo != ''">
+					order_no = #{orderNo},
+				</if>
+				<if test="userId != null and userId != ''">
+					user_id = #{userId},
+				</if>
+				<if test="productId != null and productId != ''">
+					product_id = #{productId},
+				</if>
+				<if test="orderAmount != null and orderAmount != ''">
+					order_amount = #{orderAmount},
+				</if>
+				<if test="channelId != null and channelId != ''">
+					channel_id = #{channelId},
+				</if>
+				<if test="orderDesc != null and orderDesc != ''">
+					order_desc = #{orderDesc},
+				</if>
+				<if test="orderState != null and orderState != ''">
+					order_state = #{orderState},
+				</if>
+				<if test="deliverState != null and deliverState != ''">
+					deliver_state = #{deliverState},
+				</if>
+				<if test="payStatusCode != null">
+					pay_status_code = #{payStatusCode},
+				</if>
+				<if test="payStatusMsg != null and payStatusMsg != ''">
+					pay_status_msg = #{payStatusMsg},
+				</if>
+				<if test="transactionId != null and transactionId != ''">
+					transaction_id = #{transactionId},
+				</if>
+				<if test="createTime != null">
+					create_time = #{createTime},
+				</if>
+				<if test="endTime != null">
+					end_time = #{endTime},
+				</if>
+				<if test="replenishStates != null">
+					replenish_states = #{replenishStates},
+				</if>
+				<if test="replenishDesc != null and replenishDesc != ''">
+					replenish_desc = #{replenishDesc},
+				</if>
+				<if test="systemType != null">
+					system_type = #{systemType},
+				</if>
+				<if test="passbackParams != null and passbackParams != ''">
+					passback_params = #{passbackParams},
+				</if>
+				<if test="appId != null and appId != ''">
+					app_id = #{appId},
+				</if>
+				<if test="packageName != null and packageName != ''">
+					package_name = #{packageName},
+				</if>
+				<if test="payType != null and payType != ''">
+					pay_type = #{payType},
+				</if>
+			</trim>
+		</set>
+		<where>
+			<trim prefixOverrides="and ">
+				<if test="orderNo != null and orderNo != ''">
+					and order_no = #{orderNo}
+				</if>
+			</trim>
+		</where>
+	</update>
+
 </mapper>

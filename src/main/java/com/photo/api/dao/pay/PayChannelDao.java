@@ -13,14 +13,12 @@ public interface PayChannelDao extends PageDao<PayChannel> {
 	 */
 	public PayChannel findById(String channelId);
 	/**
-	 * 根据渠道名称获取渠道信息
-	 * @param channelName
+	 * 根据系统类型和海外标识获取渠道列表
+	 * @param systemType 
+	 * @param isAbroad
+	 * @param appId
+	 * @param packageName
 	 * @return
 	 */
-	public PayChannel findByName(String channelName);
-	/**
-	 * 获取所有的渠道
-	 * @return
-	 */
-	public List<PayChannel> findAll();
+	public List<PayChannel> findListByParams(String systemType, Integer isAbroad, String appId, String packageName);
 }

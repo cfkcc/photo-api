@@ -1,14 +1,53 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="PayChannelMapper">
+	
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.photo.api.model.pay.PayChannel">
+		<id column="channel_id" property="channelId" />
+		<result column="is_abroad" property="isAbroad" />
+		<result column="channel_name" property="channelName" />
+		<result column="create_time" property="createTime" />
+		<result column="create_user" property="createUser" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_user" property="updateUser" />
+		<result column="system_type" property="systemType" />
+		<result column="app_id" property="appId" />
+		<result column="package_name" property="packageName" />
+	</resultMap>
+	
+	<!-- 通用查询结果列-->
+	<sql id="sqlId">
+		channel_id,
+		is_abroad,
+		channel_name,
+		create_time,
+		create_user,
+		update_time,
+		update_user,
+		system_type,
+		app_id,
+		package_name
 
-	<select id="findById" resultType="com.photo.api.model.pay.PayChannel">
-		select * from pay_channel where channel_id = #{channelId}
+	</sql>
+	
+	<select id="findById" resultMap="BaseResultMap">
+		select
+			<include refid="sqlId"/>
+		from pay_channel
+		where channel_id = #{channelId}
 	</select>
-	<select id="findByName" resultType="com.photo.api.model.pay.PayChannel">
-		select * from pay_channel where channel_name = #{channelName}
+	
+	<select id="findListByParams" resultMap="BaseResultMap">
+		SELECT
+			<include refid="sqlId"/>
+		FROM
+		pay_channel
+		WHERE
+		system_type = #{systemType}
+		and is_abroad = #{isAbroad}
+		and app_id = #{appId}
+		and package_name = #{packageName}
 	</select>
-	<select id="findAll" resultType="com.photo.api.model.pay.PayChannel">
-		select * from pay_channel
-	</select>
+	
 </mapper>

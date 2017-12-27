@@ -29,7 +29,6 @@ public class UserServiceImpl implements UserService {
         return userDao.findById(userId);
     }
 
-    
     public void updateUser(User user) {
     	userDao.update(user);
     }
@@ -44,7 +43,7 @@ public class UserServiceImpl implements UserService {
     	if (StringUtils.isNotEmpty(userId)) {
 			user = this.findUserById(userId);
 			if (StringUtils.isNotEmpty(nickName)) {
-				user.setNickname(nickName);
+				user.setNickName(nickName);
 			}
 			if (StringUtils.isNotEmpty(headImage)) {
 				user.setHeadImg(headImage);;
@@ -57,7 +56,7 @@ public class UserServiceImpl implements UserService {
 	        user = new User();
 	        user.setUserId(CommonUtil.getUUID());
 	        if (StringUtils.isNotEmpty(nickName)) {
-				user.setNickname(nickName);
+				user.setNickName(nickName);
 			}
 			if (StringUtils.isNotEmpty(headImage)) {
 				user.setHeadImg(headImage);;
@@ -70,7 +69,6 @@ public class UserServiceImpl implements UserService {
 	        this.addUser(user);
 		}
     }
-
 	
 	public Map<String, Object> findUserInfoById(String userId) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -78,7 +76,7 @@ public class UserServiceImpl implements UserService {
 		if (user != null) {
 			result.put("userId", user.getUserId());
 			result.put("headImg", user.getHeadImg());
-			result.put("nickName", user.getNickname());
+			result.put("nickName", user.getNickName());
 			result.put("sign", user.getSign());
 			result.put("email", user.getEmail());
 			result.put("conins", Arith.round(user.getCoins().doubleValue(), 2));
@@ -86,24 +84,19 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
+	@Override
+	public User findByNickName(String nickName) {
+		return userDao.findByNickName(nickName);
+	}
 
 	@Override
-	public User addUser(String nickName, String headImage, String sign) {
-		User user = new User();
-        user.setUserId(CommonUtil.getUUID());
-        if (StringUtils.isNotEmpty(nickName)) {
-			user.setNickname(nickName);
-		}
-		if (StringUtils.isNotEmpty(headImage)) {
-			user.setHeadImg(headImage);;
-		}
-		if (StringUtils.isNotEmpty(sign)) {
-			user.setSign(sign);;
-		}
-        user.setUserType(0);
-        user.setCreateTime(new Date());
-        this.addUser(user);	
-        return user;
+	public boolean haveNickName(String userId, String nickName) {
+		return userDao.haveNickName(userId, nickName);
 	}
-	 
+
+	@Override
+	public User findUserByEmail(String email) {
+		return userDao.findUserByEmail(email);
+	}
+
 }

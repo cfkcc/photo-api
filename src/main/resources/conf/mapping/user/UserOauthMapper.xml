@@ -2,9 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="UserOauthMapper">
 	<select id="findById" resultType="com.photo.api.model.user.UserOauth">
-		select * from photo where photo_id = #{photoId}
+		select * from user_oauth where oauth_id = #{oauthId}
 	</select>
-	<select id="findWithMap" resultType="map">
+	<select id="findUserOauthByOpenId" resultType="com.photo.api.model.user.UserOauth">
+		select * from user_oauth where oid = #{oid} and type = #{type} and status = #{status}
+	</select>
+	<!-- <select id="findWithMap" resultType="map">
 		select * from user where user_id = #{userId}
 	</select>
 	<select id="findByPage" resultType="com.photo.api.model.user.UserOauth">
@@ -12,5 +15,103 @@
 	</select>
 	<select id="findCountByPage" resultType="Integer">
 		select count(*) from user
-	</select>
+	</select> -->
+	
+	<insert id="add" parameterType="com.photo.api.model.user.UserOauth">
+		insert into user_oauth
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="oauthId != null and oauthId != ''">
+				oauth_id,
+			</if>
+			<if test="userId != null and userId != ''">
+				user_id,
+			</if>
+			<if test="oid != null and oid != ''">
+				oid,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="accessToken != null and accessToken != ''">
+				access_token,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="openIcon != null and openIcon != ''">
+				open_icon,
+			</if>
+			<if test="openName != null and openName != ''">
+				open_name,
+			</if>
+		</trim>
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			<if test="oauthId != null and oauthId != ''">
+				#{oauthId},
+			</if>
+			<if test="userId != null and userId != ''">
+				#{userId},
+			</if>
+			<if test="oid != null and oid != ''">
+				#{oid},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="accessToken != null and accessToken != ''">
+				#{accessToken},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="openIcon != null and openIcon != ''">
+				#{openIcon},
+			</if>
+			<if test="openName != null and openName != ''">
+				#{openName},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="com.photo.api.model.user.UserOauth">
+		update user_oauth 
+		<set>
+			<trim suffixOverrides=",">
+				<if test="accessToken != null and accessToken !=''">
+					access_token = #{accessToken},
+				</if>
+				<if test="openIcon != null and openIcon != ''">
+					open_icon = #{openIcon},
+				</if>
+				<if test="openName != null and openName != ''">
+					open_name = #{openName},
+				</if>
+				<if test="status != null">
+					status = #{status},
+				</if>
+			</trim>
+		</set>
+		<where>
+			<trim prefixOverrides="and ">
+				<if test="oauthId != null and oauthId != ''">
+					and oauth_id = #{oauthId}
+				</if>
+				<if test="userId != null and userId != ''">
+					and user_id = #{userId}
+				</if>
+				<if test="oid != null and oid != ''">
+					and oid = #{oid}
+				</if>
+				<if test="type != null and type != ''">
+					and type = #{type}
+				</if>
+			</trim>
+		</where>
+	</update>
 </mapper>

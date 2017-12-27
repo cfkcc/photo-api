@@ -2,6 +2,7 @@ package com.photo.api.aspect;/**
  * Created by Dell on 2017/8/4.
  */
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -15,14 +16,16 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
 import com.photo.api.annotation.LoginSign;
+import com.photo.api.common.constant.CommonConsts;
 import com.photo.api.common.error.ErrorCode;
 import com.photo.api.common.exception.ServiceException;
-import com.photo.api.common.param.BaseParams;
+import com.photo.api.common.param.BaseParam;
 import com.photo.api.common.token.AESUtil;
 import com.photo.api.common.token.TokenID;
 
@@ -33,7 +36,7 @@ import com.photo.api.common.token.TokenID;
 @Component
 public class ParamsAspect {
     private Logger logger = LoggerFactory.getLogger(getClass());
-//    @Autowired
+    @Autowired
     private HttpServletRequest request;
 
     /**
@@ -42,7 +45,7 @@ public class ParamsAspect {
      * @return
      * @throws Throwable
      */
-    @Around("execution(* com.photo.controller..*.*(..))")
+    @Around("execution(* com.photo.api.controller..*.*(..))")
     @Order(1)
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         UUID uuid = UUID.randomUUID();
@@ -51,8 +54,8 @@ public class ParamsAspect {
         Object[] objs = pjp.getArgs();
         if (null != objs) {
             for (Object obj : objs) {
-                if (obj instanceof BaseParams) {
-                    BaseParams bp = (BaseParams) obj;
+                if (obj instanceof BaseParam) {
+                	BaseParam bp = (BaseParam) obj;
                     //处理http头信息
                     setHeaderParams(bp, uuidStr);
                     //从userToken中解密出userId
@@ -61,6 +64,8 @@ public class ParamsAspect {
             }
         }
         String token = request.getHeader("token");
+//        String paramsStr = getRequestJsonString(request);
+//        logger.info("url={},uuid={},token={},收到请求参数：{}", request.getRequestURI(),uuidStr,token, paramsStr);
         logger.info("url={},uuid={},token={},收到请求参数：{}", request.getRequestURI(),uuidStr,token, Arrays.toString(objs));
         Object re = null;
         try {
@@ -78,7 +83,7 @@ public class ParamsAspect {
 
         return re;
     }
-
+    
     @Around(value = "@annotation(loginSign)")
     @Order(2)
     public Object loginCheckAround(ProceedingJoinPoint pjp,LoginSign loginSign) throws ServiceException,Throwable {
@@ -88,15 +93,15 @@ public class ParamsAspect {
             if (null != objs) {
                 for (Object obj : objs) {
                     try {
-                        if (obj instanceof BaseParams) {
-                            BaseParams bp = (BaseParams) obj;
-                            if (StringUtils.isNotEmpty(bp.getUserId())) {
+                        if (obj instanceof BaseParam) {
+                        	BaseParam bp = (BaseParam) obj;
+                            if (StringUtils.isNotEmpty(bp.getUid())) {
                                 isLogin = true;
                                 break;
                             }
                         } else {
                             Class clazz = obj.getClass();
-                            Method method = clazz.getMethod("getUserId");
+                            Method method = clazz.getMethod("getUid");
                             if (null != method) {
                                 Object value = method.invoke(obj);
                                 if (null != value && StringUtils.isNotEmpty(value.toString())) {
@@ -125,7 +130,7 @@ public class ParamsAspect {
      * 从Token中解密出userId
      * @param obj
      */
-    public  void setUserIdFromToken(BaseParams obj){
+    public  void setUserIdFromToken(BaseParam obj){
         try {
             if(null!=obj&&null!=obj.getToken()){
                 logger.info("待解密的字符串为：{}",obj.getToken());
@@ -138,7 +143,7 @@ public class ParamsAspect {
                 if(null==tokenID||null==tokenID.getUid()){
                     return;
                 }
-                obj.setUserId(tokenID.getUid());
+                obj.setUid(tokenID.getUid());
             }
         }catch (Exception e){
             logger.error("从userToken中解密出userId异常:",e);
@@ -150,33 +155,90 @@ public class ParamsAspect {
      * @param obj
      * @param uuidStr
      */
-    private void setHeaderParams(BaseParams obj, String uuidStr) {
+    private void setHeaderParams(BaseParam obj, String uuidStr) {
         String sysType = request.getHeader("sysType");
-        String channel = request.getHeader("channel");
-        String sysVersion = request.getHeader("sysVersion");
+        String sysVersion = request.getHeader("systemVersion");
         String appVersion = request.getHeader("appVersion");
-        String ip = request.getHeader("clientIp");
-        String sysLanguage = request.getHeader("sysLanguage");
         String packagename= request.getHeader("packageName");
         String tt= request.getHeader("tt");
-        String clientId = request.getHeader("clientId");
-        String clientAreaCode = request.getHeader("clientAreaCode");
-        String token = request.getHeader("token");
+        String appId= request.getHeader("appId");
+        String areaCode = request.getHeader("areaCode");
+        String token = request.getHeader(CommonConsts.USER_TOKEN);
         logger.info("用户token: "+token);
-        obj.setChannel(channel);
         obj.setSysType(sysType);
-        obj.setSysVersion(sysVersion);
+        obj.setSystemVersion(sysVersion);
         obj.setAppVersion(appVersion);
-        obj.setClientIp(ip);
         obj.setPackageName(packagename);
         obj.setTt(tt);
-        obj.setSysLanguage(sysLanguage);
-        obj.setClientId(clientId);
-        obj.setClientAreaCode(clientAreaCode);
+        obj.setAppId(appId);
+        obj.setAreaCode(areaCode);
         obj.setToken(null==obj.getToken()&&StringUtils.isNotEmpty(token)?token:obj.getToken());
-
     }
-
-
-
+    
+    /*** 
+     * 获取 request 中 json 字符串的内容 
+     *  
+     * @param request 
+     * @return : <code>byte[]</code> 
+     * @throws IOException 
+     */  
+    public String getRequestJsonString(HttpServletRequest request)  
+            throws IOException {  
+        String submitMehtod = request.getMethod();  
+        // GET  
+        if (submitMehtod.equals("GET")) {  
+            return new String(request.getQueryString().getBytes("iso-8859-1"),"utf-8").replaceAll("%22", "\"");  
+        // POST  
+        } else {  
+            return getRequestPostStr(request);  
+        }  
+    }  
+  
+    /**       
+     * 描述:获取 post 请求的 byte[] 数组 
+     * <pre> 
+     * 举例： 
+     * </pre> 
+     * @param request 
+     * @return 
+     * @throws IOException       
+     */  
+    public byte[] getRequestPostBytes(HttpServletRequest request)  
+            throws IOException {  
+        int contentLength = request.getContentLength();  
+        if(contentLength<0){  
+            return null;  
+        }  
+        byte buffer[] = new byte[contentLength];  
+        for (int i = 0; i < contentLength;) {  
+  
+            int readlen = request.getInputStream().read(buffer, i,  
+                    contentLength - i);  
+            if (readlen == -1) {  
+                break;  
+            }  
+            i += readlen;  
+        }  
+        return buffer;  
+    }  
+  
+    /**       
+     * 描述:获取 post 请求内容 
+     * <pre> 
+     * 举例： 
+     * </pre> 
+     * @param request 
+     * @return 
+     * @throws IOException       
+     */  
+    public String getRequestPostStr(HttpServletRequest request)  
+            throws IOException {  
+        byte buffer[] = getRequestPostBytes(request);  
+        String charEncoding = request.getCharacterEncoding();  
+        if (charEncoding == null) {  
+            charEncoding = "UTF-8";  
+        }  
+        return new String(buffer, charEncoding);  
+    }  
+  
 }

@@ -1,14 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="PhotoMapper">
-	<select id="findById" resultType="com.photo.api.model.photo.Photo">
-		select * from photo where photo_id = #{photoId}
+
+<resultMap id="Base_Result_Model" type="com.photo.api.model.photo.Photo">
+		<result column="photo_id" property="photoId"/> 
+		<result column="img_url" property="imgUrl"/>
+		<result column="group_id" property="groupId"/>
+		<result column="user_id" property="userId"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="create_user" property="createUser"/>
+		<result column="update_user" property="updateUser"/>
+		<result column="is_hot" property="isHot"/>
+		<result column="status" property="status"/>
+		<result column="flag" property="flag"/>
+		<result column="sort" property="sort"/>
+		<result column="is_free" property="isFree"/>
+		<result column="coins" property="coins"/>
+		<result column="discount" property="discount"/>
+		<result column="app_id" property="appId"/>
+		<result column="package_name" property="packageName"/>
+	</resultMap>
+	
+	<resultMap type="HashMap" id="Base_Result_HashMap"></resultMap>
+	
+	<sql id="sqlId">
+		photo_id,
+		img_url,
+		group_id,
+		user_id,
+		create_user,
+		create_time,
+		update_user,
+		update_time,
+		is_hot,
+		status,
+		flag,
+		sort,
+		is_free,
+		coins,
+		discount,
+		app_id,
+		package_name
+	</sql>
+	
+	<select id="findById" resultMap="Base_Result_Model">
+		select <include refid="sqlId"/> from photo where photo_id = #{photoId}
 	</select>
-	<select id="findPhotosByGroupId" resultType="com.photo.api.model.photo.Photo">
-		select * from photo where group_id = #{groupId}
+	<select id="findPhotosByGroupId" resultMap="Base_Result_Model">
+		select <include refid="sqlId"/> from photo where group_id = #{groupId}
 	</select>
-	<select id="findByPage" resultType="com.photo.api.model.photo.Photo">
-		select * from photo
+	<select id="findByPage" resultMap="Base_Result_Model">
+		select <include refid="sqlId"/> from photo
 		<where>
 			<trim prefixOverrides="and ">
 				<if test="userId != null and userId != ''">

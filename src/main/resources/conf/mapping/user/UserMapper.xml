@@ -1,17 +1,78 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="UserMapper">
-	<select id="findById" resultType="com.photo.api.model.user.User">
-		select * from user where user_id = #{userId}
+
+
+	<resultMap id="Base_Result_Model" type="com.photo.api.model.user.User">
+		<result column="user_id" property="userId"/> 
+		<result column="nick_name" property="nickName"/>
+		<result column="head_img" property="headImg"/>
+		<result column="user_type" property="userType"/>
+		<result column="status" property="status"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="update_user" property="updateUser"/>
+		<result column="coins" property="coins"/>
+		<result column="sign" property="sign"/>
+		<result column="email" property="email"/>
+		<result column="password" property="password"/>
+		<result column="sex" property="sex"/>
+		<result column="bir" property="bir"/>
+		<result column="app_id" property="appId"/>
+		<result column="package_name" property="packageName"/>
+	</resultMap>
+	
+	<resultMap type="HashMap" id="Base_Result_HashMap"></resultMap>
+	
+	<sql id="sqlId">
+		user_id,
+		nick_name,
+		head_img,
+		user_type,
+		status,
+		create_time,
+		update_user,
+		update_time,
+		coins,
+		sign,
+		email,
+		password,
+		sex,
+		bir,
+		app_id,
+		package_name
+
+	</sql>
+	
+
+
+	<select id="findById" resultMap="Base_Result_Model">
+		select 
+		<include refid="sqlId"/> 
+		from user where user_id = #{userId}
 	</select>
-	<select id="findWithMap" resultType="map">
-		select * from user where user_id = #{userId}
+	<select id="findWithUserIdAndName" resultMap="Base_Result_Model">
+		select 
+		<include refid="sqlId"/> 
+		from user where user_id = #{userId} and nick_name = #{nickName} limit 0,1
 	</select>
-	<select id="findByPage" resultType="com.photo.api.model.user.User">
-		select * from user limit #{offset},#{limit}
+	<select id="findByNickName" resultMap="Base_Result_Model">
+		select 
+		<include refid="sqlId"/> 
+		from user where nick_name = #{nickName} limit 0,1
+	</select>
+	<select id="findUserByEmail" resultMap="Base_Result_Model">
+		select 
+		<include refid="sqlId"/> 
+		from user where email = #{email} limit 0,1
+	</select>
+	<select id="findByPage" resultMap="Base_Result_Model">
+		select 
+		<include refid="sqlId"/> 
+		from user limit #{offset},#{limit}
 	</select>
 	<select id="findCountByPage" resultType="Integer">
-		select count(*) from user
+		select count(1) from user
 	</select>
 	
 	<insert id="add" parameterType="com.photo.api.model.user.User">
@@ -20,8 +81,8 @@
 			<if test="userId != null and userId != ''">
 				user_id,
 			</if>
-			<if test="nickname != null and nickname != ''">
-				nickname,
+			<if test="nickName != null and nickName != ''">
+				nick_name,
 			</if>
 			<if test="headImg != null and headImg != ''">
 				head_img,
@@ -34,6 +95,12 @@
 			</if>
 			<if test="updateUser != null and updateUser != ''">
 				update_user,
+			</if>
+			<if test="appId != null and appId != ''">
+				app_id,
+			</if>
+			<if test="packageName != null and packageName != ''">
+				package_name,
 			</if>
 			<if test="userType != null">
 				user_type,
@@ -55,8 +122,8 @@
 			<if test="userId != null and userId != ''">
 				#{userId},
 			</if>
-			<if test="nickname != null and nickname != ''">
-				#{nickname},
+			<if test="nickName != null and nickName != ''">
+				#{nickName},
 			</if>
 			<if test="headImg != null and headImg != ''">
 				#{headImg},
@@ -69,6 +136,12 @@
 			</if>
 			<if test="updateUser != null and updateUser != ''">
 				#{updateUser},
+			</if>
+			<if test="appId != null and appId != ''">
+				#{appId},
+			</if>
+			<if test="packageName != null and packageName != ''">
+				#{packageName},
 			</if>
 			<if test="userType != null">
 				#{userType},
@@ -92,8 +165,8 @@
 		update user 
 		<set>
 			<trim suffixOverrides=",">
-				<if test="nickname != null and nickname!=''">
-					nickname = #{nickname},
+				<if test="nickName != null and nickName!=''">
+					nick_name = #{nickName},
 				</if>
 				<if test="headImg != null  and headImg!=''">
 					head_img = #{headImg},
@@ -107,10 +180,16 @@
 				<if test="email != null and email !=''">
 					email = #{email},
 				</if>
+				<if test="appId != null and appId != ''">
+					app_id = #{appId},
+				</if>
+				<if test="packageName != null and packageName != ''">
+					package_name = #{packageName},
+				</if>
 				<if test="status != null">
 					status = #{status},
 				</if>
-					sign = NOW(),
+					update_time = NOW(),
 			</trim>
 		</set>
 		<where>

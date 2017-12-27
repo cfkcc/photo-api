@@ -4,29 +4,28 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import com.photo.api.common.util.Page;
+import org.springframework.stereotype.Service;
+
 import com.photo.api.dao.pay.PayChannelDao;
 import com.photo.api.model.pay.PayChannel;
 import com.photo.api.service.pay.PayChannelService;
 
+@Service("payChannelService")
 public class PayChannelServiceImpl implements PayChannelService {
 	
 	@Resource(name="payChannelDao")
 	private PayChannelDao payChannelDao;
 
-	
-	public PayChannel findById(String cId) {
-		return payChannelDao.findById(cId);
+	@Override
+	public List<PayChannel> findListByParams(String systemType, Integer isAbroad, String appId,
+			String packageName) {
+		return payChannelDao.findListByParams(systemType, isAbroad, appId, packageName);
+	}
+
+	@Override
+	public PayChannel findById(String channelId) {
+		return payChannelDao.findById(channelId);
 	}
 
 	
-	public Page findByPage(Page page) {
-		return payChannelDao.findByPage(page);
-	}
-
-	
-	public List<PayChannel> findList() {
-		return payChannelDao.findAll();
-	}
-
 }

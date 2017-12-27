@@ -16,6 +16,11 @@ public class ServiceException extends Exception {
 		super(errMsg);
 		this.errCode = errCode;
 	}
+	
+	public ServiceException(Throwable e, String errMsg) {
+		super(errMsg);
+		this.errCode = errCode;
+	}
 
 	public ServiceException(String errCode, String errMsg, Throwable throwable) {
 		super(errMsg, throwable);

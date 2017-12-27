@@ -18,12 +18,15 @@ public interface PayOrderDao extends PageDao<PayOrder> {
 	 * @return
 	 */
 	public List<PayOrder> findListByUserId(String userId);
+	
 	/**
-	 * 根据支付的产品ID获取所有的订单
-	 * @param payId
+	 * 根据参数获取支付
+	 * @param appId
+	 * @param packageName
+	 * @param channelId
 	 * @return
 	 */
-	public List<PayOrder> findByPayId(String payId);
+	public List<PayOrder> findPayOrderList(String appId, String packageName, String channelId);
 	/**
 	 * 根据苹果的交易号获取订单信息
 	 * @param transactionId

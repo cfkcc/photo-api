@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserLoginRecordMapper">
+
+	<resultMap id="Base_Result_Model" type="com.photo.api.model.user.UserLoginRecord">
+		<result column="login_record_id" property="loginRecordId"/>
+		<result column="user_id" property="userId"/> 
+		<result column="login_ip" property="loginIp"/> 
+		<result column="login_type" property="loginType"/> 
+		<result column="create_user" property="createUser"/> 
+		<result column="create_time" property="createTime"/>
+		<result column="token" property="token"/>
+		<result column="app_id" property="appId"/> 
+		<result column="package_name" property="packageName"/> 
+	</resultMap>
+	
+	<resultMap type="HashMap" id="Base_Result_HashMap"></resultMap>
+	
+	<sql id="sqlId">
+		login_record_id,
+		user_id,
+		create_time,
+		create_user,
+		login_ip,
+		login_type,
+		token,
+		app_id,
+		package_name
+	</sql>
+	
+	<select id="findById" resultMap="Base_Result_Model">
+		select 
+		<include refid="sqlId"/> 
+		from user_login_record login_record_id user_id = #{loginRecordId}
+	</select>
+	<select id="findLatestRerordByUserId" resultMap="Base_Result_Model">
+		select <include refid="sqlId"/>  from user_login_record where user_id = #{userId} order by create_time desc limit 0,1
+	</select>
+	
+	<insert id="add" parameterType="com.photo.api.model.user.UserLoginRecord">
+		insert into user_login_record
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null and userId != ''">
+				user_id,
+			</if>
+			<if test="loginRecordId != null and loginRecordId != ''">
+				login_record_id,
+			</if>
+			<if test="loginIp != null and loginIp != ''">
+				login_ip,
+			</if>
+			<if test="token != null and token != ''">
+				token,
+			</if>
+			<if test="createUser != null and createUser != ''">
+				create_user,
+			</if>
+			<if test="loginType != null">
+				login_type,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+		</trim>
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null and userId != ''">
+				#{userId},
+			</if>
+			<if test="loginRecordId != null and loginRecordId != ''">
+				#{loginRecordId},
+			</if>
+			<if test="loginIp != null and loginIp != ''">
+				#{loginIp},
+			</if>
+			<if test="token != null and token != ''">
+				#{token},
+			</if>
+			<if test="createUser != null and createUser != ''">
+				#{createUser},
+			</if>
+			<if test="loginType != null">
+				#{loginType},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="com.photo.api.model.user.UserLoginRecord">
+		update user_login_record 
+		<set>
+			<trim suffixOverrides=",">
+				<if test="userId != null and userId != ''">
+					user_id = #{userId},
+				</if>
+				<if test="token != null  and token != ''">
+					token = #{token},
+				</if>
+				<if test="loginIp != null and loginIp != ''">
+					login_ip = #{loginIp},
+				</if>
+				<if test="loginType != null">
+					login_type = #{loginType},
+				</if>
+			</trim>
+		</set>
+		<where>
+			<trim prefixOverrides="and ">
+				<if test="loginRecordId != null and loginRecordId != ''">
+					and login_record_id = #{loginRecordId}
+				</if>
+			</trim>
+		</where>
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		delete from user_login_record where login_record_id in
+		<foreach item="idItem" collection="array" open="(" separator="," close=")">
+			#{idItem}
+		</foreach>
+	</delete>
+</mapper>

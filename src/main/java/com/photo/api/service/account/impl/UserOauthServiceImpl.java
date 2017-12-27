@@ -1,5 +1,4 @@
 package com.photo.api.service.account.impl;
-
 import java.util.Date;
 
 import javax.annotation.Resource;
@@ -22,22 +21,31 @@ public class UserOauthServiceImpl implements UserOauthService {
     private UserOauthDao userOauthDao;
 
     
-    public UserOauth findUserOauthByOpenId(String openId, int clientType) {
-        return userOauthDao.findUserOauthByOpenId(openId,clientType);
+    public UserOauth findUserOauthByOpenId(String oid, int clientType) {
+        return userOauthDao.findUserOauthByOpenId(oid,clientType);
     }
 
     
     public void addUserOauth(String openId, String userId, String accessToken, int clientType) {
         UserOauth userOauth = new UserOauth();
-        userOauth.setBingId(CommonUtil.getUUID());
-        userOauth.setOpenId(openId);
+        userOauth.setOauthId(CommonUtil.getUUID());
+        userOauth.setOid(openId);
         userOauth.setUserId(userId);
         userOauth.setAccessToken(accessToken);
-        userOauth.setClientType(clientType);
+        userOauth.setType(clientType);
         userOauth.setCreateTime(new Date());
-        userOauthDao.add(userOauth);
+        addUserOauth(userOauth);
     }
-    
 
 
+	@Override
+	public void addUserOauth(UserOauth uo) {
+		userOauthDao.add(uo);
+	}
+
+
+	@Override
+	public void updateUserOauth(UserOauth uo) {
+		userOauthDao.update(uo);		
+	}
 }

@@ -7,27 +7,37 @@ import com.photo.api.model.pay.PayOrder;
 
 public interface PayOrderService {
 	/**
-	 * 根据流水号查询流水
-	 * @param orderNo
+     * addPayOrder:保存订单
+     * @param payOrder
+     * @return
+     */
+	public PayOrder addPayOrder(PayOrder payOrder);
+	/**
+	 * updatePayOrder:更新订单
+	 * @param payOrder
 	 * @return
 	 */
-	public PayOrder findById(String orderNo);
+	public PayOrder updatePayOrder(PayOrder payOrder);
+	
 	/**
-	 * 分页查询流水记录
+	 * 根据参数获取支付
+	 * @param appId
+	 * @param packageName
+	 * @param channelId
+	 * @return
+	 */
+	public List<PayOrder> findPayOrderList(String appId, String packageName, String channelId);
+	/**
+	 * 分页查询支付账单
 	 * @param page
 	 * @return
 	 */
 	public Page findByPage(Page page);
 	/**
-	 * 获取所有的流水记录
-	 * @param userId
+	 * 根据账单流水号获取账单信息
+	 * @param orderNo
 	 * @return
 	 */
-	public List<PayOrder> findListByUserId(String userId);
-	/**
-	 * 添加流水记录
-	 * @param payOrder
-	 */
-	public void addPayOrder(PayOrder payOrder);
+	public PayOrder findById(String orderNo);
 
 }

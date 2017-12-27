@@ -17,19 +17,39 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 	@Resource(name="productInfoDao")
 	private ProductInfoDao productInfoDao;
 
-	
-	public ProductInfo findById(String proId) {
-		return productInfoDao.findById(proId);
+	@Override
+	public List<ProductInfo> findProductInfoList(String channelId,String appId, String packageName) {
+		List<ProductInfo> productInfos = productInfoDao.findProductInfoList(channelId, appId, packageName);
+        /*if (productInfos != null && !productInfos.isEmpty()) {
+            Date now = new Date(), start = null, end = null;
+            for (ProductInfo productInfo : productInfos) {
+                start = productInfo.getDiscountStartTime();
+                end = productInfo.getDiscountEndTime();
+                if (start != null && end != null) {
+                    productInfo.setDiscountable(start.before(now) && end.after(now));
+                } else if (start != null) {
+                    productInfo.setDiscountable(start.before(now));
+                } else if (end != null) {
+                    productInfo.setDiscountable(end.after(now));
+                }
+            }
+        }*/
+        return productInfos;
 	}
 
-	
-	public List<ProductInfo> findListByChannel(String channelId) {
-		return productInfoDao.findListByChannel(channelId);
+	@Override
+	public ProductInfo findById(String productId) {
+		return productInfoDao.findById(productId);
 	}
 
-	
+	@Override
 	public Page findByPage(Page page) {
 		return productInfoDao.findByPage(page);
+	}
+
+	@Override
+	public ProductInfo findByParams(String productId, String channelId, String appId, String packageName) {
+		return productInfoDao.findByParams(productId, channelId, appId, packageName);
 	}
 
 }

@@ -39,4 +39,10 @@ public class UserEmailCodeServiceImpl implements UserEmailCodeService {
 		return userEmailCodeDao.findByCode(code);
 	}
 
+
+	@Override
+	public void commitEmailCode(String email, int status, String code) {
+		
+	}
+
 }

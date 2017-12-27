@@ -6,56 +6,78 @@ import java.util.Date;
 public class UserOauth implements Serializable {
     private static final long serialVersionUID = -7155247680281656965L;
 
-    private String bingId;
-
-    private String openId;
-
+    private String oauthId;
+    private String oid;
     private String userId;
-
     private String accessToken;
-
-    private Integer clientType;
-
+    private Integer type;
+    private Integer status;
     private Date createTime;
-    public String getBingId() {
-        return bingId;
-    }
+    private String openIcon;
+    private String openName;
+	public UserOauth() {
+		super();
+	}
+	
+	public UserOauth(String oid, String userId, String accessToken, Integer type, String openIcon, String openName) {
+		super();
+		this.oid = oid;
+		this.userId = userId;
+		this.accessToken = accessToken;
+		this.type = type;
+		this.openIcon = openIcon;
+		this.openName = openName;
+	}
 
-    public void setBingId(String bingId) {
-        this.bingId = bingId;
-    }
 
-    public String getOpenId() {
-        return openId;
-    }
 
-    public void setOpenId(String openId) {
-        this.openId = openId;
-    }
+	public String getOauthId() {
+		return oauthId;
+	}
 
-    public String getUserId() {
-        return userId;
-    }
+	public void setOauthId(String oauthId) {
+		this.oauthId = oauthId;
+	}
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+	public String getOid() {
+		return oid;
+	}
 
-    public String getAccessToken() {
-        return accessToken;
-    }
+	public void setOid(String oid) {
+		this.oid = oid;
+	}
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
+	public String getUserId() {
+		return userId;
+	}
 
-    public Integer getClientType() {
-        return clientType;
-    }
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
-    public void setClientType(Integer clientType) {
-        this.clientType = clientType;
-    }
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 	public Date getCreateTime() {
 		return createTime;
@@ -65,10 +87,27 @@ public class UserOauth implements Serializable {
 		this.createTime = createTime;
 	}
 
+	public String getOpenIcon() {
+		return openIcon;
+	}
+
+	public void setOpenIcon(String openIcon) {
+		this.openIcon = openIcon;
+	}
+
+	public String getOpenName() {
+		return openName;
+	}
+
+	public void setOpenName(String openName) {
+		this.openName = openName;
+	}
+
 	@Override
 	public String toString() {
-		return "UserOauth [bingId=" + bingId + ", openId=" + openId + ", userId=" + userId + ", accessToken="
-				+ accessToken + ", clientType=" + clientType + "]";
+		return "UserOauth [oauthId=" + oauthId + ", oid=" + oid + ", userId=" + userId + ", accessToken=" + accessToken
+				+ ", type=" + type + ", status=" + status + ", createTime="
+				+ createTime + ", openIcon=" + openIcon + ", openName=" + openName + "]";
 	}
 
 }

@@ -1,8 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="UserEmailCodeMapper">
-	<select id="findByParam" resultType="com.photo.api.model.user.UserEmailCode">
-		select * from user_email_code 
+
+<resultMap id="Base_Result_Model" type="com.photo.api.model.user.UserEmailCode">
+		<result column="code_id" property="codeId"/>
+		<result column="user_id" property="userId"/> 
+		<result column="status" property="status"/> 
+		<result column="type" property="type"/> 
+		<result column="email" property="email"/>
+		<result column="code" property="code"/> 
+		<result column="create_time" property="createTime"/>
+		<result column="expire_time" property="expireTime"/> 
+	</resultMap>
+	
+	<resultMap type="HashMap" id="Base_Result_HashMap"></resultMap>
+	
+	<sql id="sqlId">
+		code_id,
+		user_id,
+		status,
+		type,
+		email,
+		code,
+		create_time,
+		expire_time
+
+	</sql>
+	<select id="findByParam" resultMap="Base_Result_Model">
+		select <include refid="sqlId"/> from user_email_code 
 		<where>
 		<trim prefixOverrides="and">
 			<if test="userId != null and userId != ''">
@@ -16,8 +41,8 @@
 		order by create_time desc limit 0,1
 	</select>
 	
-	<select id="findByCode" resultType="com.photo.api.model.user.UserEmailCode">
-		select * from user_email_code 
+	<select id="findByCode" resultMap="Base_Result_Model">
+		select <include refid="sqlId"/> from user_email_code 
 		where code=#{code}
 		order by create_time desc limit 0,1
 	</select>

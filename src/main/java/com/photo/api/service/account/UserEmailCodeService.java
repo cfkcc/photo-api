@@ -13,5 +13,7 @@ public interface UserEmailCodeService {
 	public UserEmailCode findByParam(String userId, String email);
 	
 	public UserEmailCode findByCode(String code);
+	
+	public void commitEmailCode(String email, int status, String code);
 
 }

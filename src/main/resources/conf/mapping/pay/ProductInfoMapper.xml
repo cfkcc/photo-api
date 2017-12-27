@@ -1,22 +1,101 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ProductInfoMapper">
 
-	<select id="findById" resultType="com.photo.api.model.pay.ProductInfo">
-		select * from product_info where product_id = #{productId}
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.photo.api.model.pay.ProductInfo">
+		<id column="product_id" property="productId" />
+		<result column="product_name" property="productName" />
+		<result column="product_desc" property="productDesc" />
+		<result column="product_price" property="productPrice" />
+		<result column="coins" property="coins" />
+		<result column="discount_ratio" property="discountRatio" />
+		<result column="product_type" property="productType" />
+		<result column="channel_id" property="channelId" />
+		<result column="currency" property="currency" />
+		<result column="product_state" property="productState" />
+		<result column="product_img" property="productImg" />
+		<result column="discount_desc" property="discountDesc" />
+		<result column="discount_start_time" property="discountStartTime" />
+		<result column="discount_end_time" property="discountEndTime" />
+		<result column="create_time" property="createTime" />
+		<result column="create_user" property="createUser" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_user" property="updateUser" />
+		<result column="app_id" property="appId" />
+		<result column="package_name" property="packageName" />
+	</resultMap>
+	
+	<sql id="sqlId">
+		product_id,
+		product_name,
+		product_desc,
+		product_price,
+		coins,
+		discount_ratio,
+		product_type,
+		channel_id,
+		currency,
+		product_state,
+		product_img,
+		discount_desc,
+		discount_start_time,
+		discount_end_time,
+		create_time,
+		create_user,
+		update_time,
+		update_user,
+		app_id,
+		package_name
+	</sql>
+	
+	<select id="findProductInfoList" resultMap="BaseResultMap">
+		select
+			<include refid="sqlId"/>
+		from
+		product_info
+		where
+		app_id = #{appId}
+		AND channel_id = #{channelId}
+		AND package_name = #{packageName}
+		AND product_state != 1
+		ORDER BY product_price asc
 	</select>
-	<select id="findListByChannel" resultType="com.photo.api.model.pay.ProductInfo">
-		select * from product_info where pay_channel_id = #{payChannelId}
+	
+	<select id="findById" resultMap="BaseResultMap">
+		select
+			<include refid="sqlId"/>
+		from
+		product_info
+		where
+		product_id = #{productId}
 	</select>
-	<select id="findByPage" resultType="com.photo.api.model.pay.ProductInfo">
-		select * from product_info
+	<select id="findByParams" resultMap="BaseResultMap">
+		select
+			<include refid="sqlId"/>
+		from
+		product_info
+		where
+		product_id = #{productId}
+		and app_id = #{appId}
+		and channel_id = #{channelId}
+		and package_name = #{packageName} 
+	</select>
+	
+	<select id="findByPage" resultMap="BaseResultMap">
+		select
+			<include refid="sqlId"/>
+		from product_info
 		<where>
 			<trim prefixOverrides="and ">
-				<if test="payChannelId != null and payChannelId != ''">
-					and pay_channel_id = #{payChannelId}
+				<if test="appId != null and appId != ''">
+					and app_id = #{appId}
 				</if>
-				<if test="productState != null">
-					and product_state = #{productState}
+				<if test="packageName != null and packageName != ''">
+					and package_name = #{packageName}
+				</if>
+				<if test="channelId != null and channelId != ''">
+					and channel_id = #{channelId}
 				</if>
 			</trim>
 			<if test="ordering != null">
@@ -25,18 +104,21 @@
 		</where>
 		limit #{offset},#{limit}
 	</select>
-	
 	<select id="findCountByPage" resultType="Integer">
 		select count(*) from product_info
 		<where>
 			<trim prefixOverrides="and ">
-				<if test="payChannelId != null and payChannelId != ''">
-					and pay_channel_id = #{payChannelId}
+				<if test="appId != null and appId != ''">
+					and app_id = #{appId}
 				</if>
-				<if test="productState != null">
-					and product_state = #{productState}
+				<if test="packageName != null and packageName != ''">
+					and package_name = #{packageName}
+				</if>
+				<if test="channelId != null and channelId != ''">
+					and channel_id = #{channelId}
 				</if>
 			</trim>
 		</where>
 	</select>
+
 </mapper>

@@ -119,10 +119,9 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 				boolean isFollowed = Boolean.FALSE;
 				boolean isLike = Boolean.FALSE;
 				if (user != null) {
-					photoMap.put("nickName", user.getNickname());
+					photoMap.put("nickName", user.getNickName());
 					photoMap.put("userId", user.getUserId());
 					photoMap.put("headImg", user.getHeadImg());
-					photoMap.put("nickName", user.getNickname());
 					isFollowed = userFansService.isFans(user.getUserId(), uid);
 					isLike = userLikeService.isLike(user.getUserId(), uid);
 				}
@@ -176,10 +175,9 @@ public class PhotoApiServiceImpl implements PhotosApiService {
 				boolean isFollowed = Boolean.FALSE;
 				boolean isLike = Boolean.FALSE;
 				if (user != null) {
-					photoGroupMap.put("nickName", user.getNickname());
+					photoGroupMap.put("nickName", user.getNickName());
 					photoGroupMap.put("userId", user.getUserId());
 					photoGroupMap.put("headImg", user.getHeadImg());
-					photoGroupMap.put("nickName", user.getNickname());
 					isFollowed = userFansService.isFans(user.getUserId(), uid);
 					isLike = userLikeService.isLike(user.getUserId(), uid);
 				}
